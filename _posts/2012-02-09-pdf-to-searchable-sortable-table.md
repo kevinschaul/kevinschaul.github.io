@@ -3,6 +3,7 @@ date: 2012-02-09 03:30:03+00:00
 layout: post
 slug: 2012-02-09-pdf-to-searchable-sortable-table
 title: 'Tutorial: From pdf to searchable, sortable table'
+show_on_homepage: true
 ---
 
 At MinnPost, we wanted to find a good way to turn pdf files into a searchable, sortable database. With many election finance reports going public in the past few weeks, I figured I'd share what I've learned &mdash; now's the perfect time.

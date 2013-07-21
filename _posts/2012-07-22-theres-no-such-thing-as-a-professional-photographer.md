@@ -4,6 +4,7 @@ layout: post
 slug: 2012-07-22-theres-no-such-thing-as-a-professional-photographer
 title: '"There''s no such thing as a professional photographer."'
 wordpress_id: 212
+show_on_homepage: true
 ---
 
 Those were the words I heard the other day, from Seattle Times photojournalist [Bettina Hansen](http://bettinahansen.com/). With today's technology, everyone is a pro at taking photos. Shell out $600 for a decent DSLR and watch a 15 minute YouTube tutorial video, and you'll impress your friends with the results.

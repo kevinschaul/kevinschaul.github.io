@@ -4,6 +4,7 @@ layout: post
 slug: 2012-10-22-why-i-am-in-this-field
 title: Why I am in this field (continued from NICAR-L)
 wordpress_id: 1286
+show_on_homepage: true
 ---
 
 Over the past two days, an exceptional conversation has crawled out of a seemingly innocent post. The focus changed from a question on fair compensation for multifaceted journalists to case studies on why some of us are in this field.

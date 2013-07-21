@@ -4,6 +4,7 @@ layout: post
 slug: 2012-09-18-how-software-development-processes-apply-to-new
 title: How software development processes apply to news
 wordpress_id: 1254
+blurb: It's interesting that you compare these software processes to building wrist watches. As a journalism and computer science double major, I am always looking to apply techniques from one area of study to the other.
 ---
 
 _The following is an excerpt from a blog post I quickly wrote for my Program Design and Development class._
