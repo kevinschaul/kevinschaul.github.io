@@ -1,0 +1,24 @@
+---
+date: 2013-05-28 18:44:14+00:00
+layout: post
+slug: 2013-05-28-new-job-new-school-year
+title: A new job for a new school year
+wordpress_id: 1465
+---
+
+It's not every day that you get to write your own job description, but the good folks at the Star Tribune let me do just that.
+
+After a short summer gig in New York, I'll be heading back to the Strib as more than an intern (but still not full-time, so I can finish my degree). Take a look at the job posting we decided on.
+
+**Digital news developer**
+
+* Pitch, report on and build standalone interactive editorial content for StarTribune.com and mobile platforms
+* Be available to provide preliminary data and statistical analysis services to reporters and editors (at the discretion of his or her self, and that of his or her editor)
+* Work with developers on large-scale projects with editorial stake, such as live election results
+* Improve mobile experiences by communicating technical advice between designers and developers
+* Develop open source newsroom tools to improve workflow for digital content beyond written articles and traditional multimedia
+* Develop open source software to capture, analyze and display data
+* Build the Star Tribune's presence in the open source community
+
+If that isn't a wonderful job, I don't know what is. I'm in for a wild ride in my next few months.
+

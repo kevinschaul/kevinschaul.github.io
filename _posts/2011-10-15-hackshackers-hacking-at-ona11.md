@@ -1,0 +1,26 @@
+---
+date: 2011-10-15 03:59:07+00:00
+layout: post
+slug: hackshackers-hacking-at-ona11
+title: 'Hacks/Hackers Hacking at #ONA11'
+wordpress_id: 18
+---
+
+Our Hacks/Hackers group came together around the idea of building a tool for reporters with no technical background to be able to create an interactive element. We decided on [Google Charts](http://code.google.com/apis/chart/) because of their popularity and simplicity. Since we had only six hours, we focused solely on bar graphs.
+
+We had five programmers and one journalist on our team, although everyone had experience in newsroom environments. We had a good mix of developers and designers.
+
+I was particularly impressed by how well project management went, since that's always been the hardest part for me. We used GitHub, and split the project into about four separate tasks. My task, along with another programmer, was to parse the input data into something useful. Another pair worked on the design (we wanted this to be a simple web app), and two others worked on using Google's API and deployment.
+
+We didn't end up finishing in the six hours, but we got very close, and we all promised to continue working on it. Two weeks later, <del>it still isn't completed</del>, but it's further along than when we left Boston. _[It works now](http://www.kevinschaul.com/work/interactive_charts_for_dummies/) ([source available here](https://github.com/pazzypunk/interactive_charts_for_dummies#readme))._
+
+Some additional key points:
+
+  * We frequently asked ourselves if this would be helpful for reporters, especially those with no technical background.
+
+  * We chose an iterative development process. We wanted the final product to do more than just bar charts, but we (almost) finished bar charts before we moved on to other flashy features.
+
+  * Splitting up the design and development sped up the process, but it only worked because we outlined exactly what the final product would be. Without this exact vision, designers would have to rework when features were added/dropped.
+
+  * The energy was great. Everyone was completely focused and just wanted to have fun. The projects went where we wanted them to, not where management did.
+

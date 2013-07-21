@@ -1,0 +1,26 @@
+---
+date: 2012-04-05 18:00:52+00:00
+layout: post
+slug: 2012-04-05-looking-back
+title: Looking back
+wordpress_id: 140
+---
+
+These past two years have been unbelievable.
+
+I never would have guessed that I'd be where I am today. I already have my dream job, I am surrounded by people who encourage me to do my best and I absolutely love (most) of my classes at the University of Minnesota.
+
+Even better, next year I will be able to enjoy them for free. AP and Google have graciously decided to award me a $20,000 scholarship for my dedication to new media. And I couldn't be more thankful.
+
+My family has done an impeccable job preparing me for the real world. I thank them all for never letting me settle with what I already have, and for believing in me when I needed that extra push. To my closest friends, I owe the same thanks. They have encouraged me, listened to my complaints, given advice and been there when I needed help, and I couldn't ask for better.
+
+I owe much of my progress in the past year to Dr. Seth Lewis, my journalism advisor. He has given me advice about school, careers and life in general. I couldn't be more blessed than to have him as a resource. Professor Kathleen Hansen convinced me to pursue both computer science and journalism at the beginning of my freshman year. I thought she was crazy, but here I am. I thank her deeply for that.
+
+I thank MinnPost for taking a huge gamble on hiring me. Not many news organizations would hire a college freshman with minimal real-world experience, but I think the work we've done since justifies the risk.
+
+I also have to give a shout-out to the news apps team at the Chicago Tribune. Their work encouraged me to pursue the intersection of these two fields and got me introduced to the wonderful culture of news development.
+
+To all the rest (and there are a _ton_), I sincerely appreciate every interaction we've had. Every moment at ONA11 and NICAR12, dueling blog post, email, and witty exchange via Twitter has left its mark on me. I'd be lost without the countless people who have helped me along the way and the open source community. I can't think of a more encouraging field to be in, and I thank you all for that.
+
+Now, let's get back to building the future of journalism.
+

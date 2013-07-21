@@ -1,0 +1,22 @@
+---
+date: 2013-02-04 15:31:20+00:00
+layout: post
+slug: data-driven-opinion
+title: Data-driven opinion
+wordpress_id: 1357
+---
+
+In yesterday's New York Times, I ran across [an unusual opinion piece on gerrymandering](http://www.nytimes.com/2013/02/03/opinion/sunday/the-great-gerrymander-of-2012.html). Sam Wang, the column's author, made his argument with data.
+
+"Using statistical tools that are common in fields like my own, neuroscience, I have found strong evidence that this historic aberration arises from partisan disenfranchisement," Wang said. [A graphic ran alongside the piece](http://www.nytimes.com/interactive/2013/02/03/sunday-review/imbalance-of-power.html) further explaining Wang's statistical findings.
+
+Of course, statistics (in traditional and visual forms) can be a wonderful tool to removing emotion from reality and giving us a raw version of what's really happening. But we also know that statistics and visualizations can be used to mislead.
+
+So, do statistics and graphics belong in the opinion section?
+
+My initial reaction is that they absolutely do. The public already takes an extremely critical view of anything published by a news company. Readers should treat a data-driven piece no differently. Opinion writers have the duty to promote worthwhile discussion and encourage change, and the best do this by admitting anything worth debating is not black-and-white. Statistical methods are powerful and must be used to enhance this discussion, not to alter truth.
+
+I see it as an ethical duty of opinion writers to be fair about their data, just as they shouldn't mislead with anything they write. For complete clarity, I would have liked to see both Wang and graphics editor Bill Marsh publish their methodology in a related post.
+
+The technique is young, but it isn't likely to go away. I'd love more discussion on this.
+
