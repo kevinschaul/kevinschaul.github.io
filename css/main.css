@@ -1,0 +1,97 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: #FFF;
+  font-family: 'PT Serif', Georgia, serif;
+  font-size: 16px;
+  color: #333;
+}
+a {
+  color: #275D97;
+  text-decoration: none;
+}
+a:visited {
+  color: #275D97;
+}
+a:hover {
+  color: #666;
+}
+p {
+  margin: 10px 0;
+}
+.clear {
+  clear: both;
+}
+
+.wrapper {
+  width: 700px;
+  margin: 20px auto;
+}
+.header {
+  margin: 20px 0;
+}
+.header > h1 {
+  float: left;
+  font-size: 50px;
+  font-family: 'News Cycle', Helvetica, Arial, sans-serif;
+}
+.header > h1 > a {
+  color: #333;
+}
+.header > h1 > a:hover {
+  color: #666;
+}
+.contact {
+  float: right;
+  margin-top: 14px;
+  text-align: right;
+  font-size: 13px;
+}
+
+/* Home */
+.post {
+  margin: 40px 0;
+}
+.post .for {
+  float: left;
+  margin-right: 5px;
+}
+.post .for img {
+  max-height: 25px;
+  margin-bottom: 3px;
+}
+.post .title {
+  font-size: 15px;
+  line-height: 25px;
+  margin-bottom: 3px;
+}
+.post .tease {
+  border: 1px solid #ccc;
+  height: 150px;
+  float: left;
+  margin-right: 20px;
+}
+.post .tease img {
+  width: 470px;
+  height: 150px;
+}
+.blurb {
+  float: left;
+  width: 208px;
+  font-size: 14px;
+}
+.blurb .date {
+  font-family: 'News Cycle', Helvetica, serif;
+}
+
+.about {
+  width: 472px;
+}
+
+/* Post */
+#post .content {
+  width: 470px;
+}
+

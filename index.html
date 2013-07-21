@@ -1,0 +1,45 @@
+---
+layout: default
+title: Kevin Schaul
+---
+
+<div id="home">
+
+  <div class="posts">
+    {% for post in site.posts %}
+      <div class="post">
+
+        {% if post.for_icon %}
+          <div class="for">
+            <img src="{{ site.url }}/assets/icons/{{ post.for_icon }}" />
+          </div>
+        {% endif %}
+
+        <div class="title">
+          <a {% if post.external_url %} target="_blank" {% endif %} href="{% if post.external_url %}{{ post.external_url }}{% else %}{{ post.url }}{% endif %}">{{ post.title }}</a>
+          <div class="clear"></div>
+        </div>
+
+        <div class="tease">
+          <a {% if post.external_url %} target="_blank" {% endif %} href="{% if post.external_url %}{{ post.external_url }}{% else %}{{ post.url }}{% endif %}"><img src="{{ site.url }}/assets/posts/{{ post.slug }}/tease.png" /></a>
+        </div>
+
+        <div class="blurb">
+          <div class="date">{{ post.date | date_to_string }}</div>
+          <p>{% if post.blurb %}{{ post.blurb }}{% else %}{{ post.excerpt }}{% endif %}</p>
+        </div>
+
+        <div class="clear"></div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="about">
+    <h1>About Kevin</h1>
+    <p>Kevin Schaul is an aspiring data nerd, with an interest in journalism and real-world applications.</p>
+    <p>He is a Chicago suburb native, currently studying computer science at the University of Minnesota. He has worked internships at numerous media companies, and is joining the New York Times graphics team for the summer.</p>
+    <p>In his free time, Kevin dabbles in photography and distance running.</p>
+  </div>
+
+</div>
+
