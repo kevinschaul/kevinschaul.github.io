@@ -5,6 +5,7 @@ slug: 2013-06-27-csvpys-a-welcome-addition-to-csvkit
 title: csvpys - A welcome addition to csvkit
 wordpress_id: 1470
 show_on_homepage: true
+blurb: The brilliant Krzysztof Dorosz has developed csvpys, an extension to the data journalist must-have csvkit.
 ---
 
 The open source community has come through yet again.

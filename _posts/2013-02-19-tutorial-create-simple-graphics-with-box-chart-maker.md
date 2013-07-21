@@ -6,6 +6,7 @@ title: 'Tutorial: Create simple graphics with Box Chart Maker'
 wordpress_id: 1366
 show_on_homepage: true
 tease: true
+blurb: As part of my AP-Google journalism in technology scholarship, I developed a tool to help jouranlists create simple graphics for online.
 ---
 
 As part of my AP-Google journalism in technology scholarship, I developed a tool to help journalists create simple graphics for online. I call it [Box Chart Maker](http://www.kevinschaul.com/projects/box-chart-maker/). I'll walk through the creation of a chart using the tool.

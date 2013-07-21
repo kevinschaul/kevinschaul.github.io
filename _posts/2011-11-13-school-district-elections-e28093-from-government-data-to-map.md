@@ -4,6 +4,7 @@ layout: post
 slug: 2011-11-13-school-district-elections-from-government-data-to-map
 title: "School district elections - From government data to map"
 wordpress_id: 65
+blurb: This past week, I worked with election data for the first time. Beth Hawkins, education reporter at MinnPost, wanted to do something special for the school district levy election. She forwarded me a document from the Minnesota Secretary of State containing information about the then upcoming election. She was hoping for a way to display, on a map, which school districts passed their referendums.
 ---
 
 _Note: This isn't meant to be a tutorial. It's merely a representation of the steps I had to take to produce [this map](http://www.minnpost.com/data/schoollevies/), so that journalists can better understand the process. As has been said, it isn't magic, and more transparency helps everyone. I tried to authentically represent the complexity of this programming problem, and not over- or under-simplify it._

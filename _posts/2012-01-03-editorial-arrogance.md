@@ -4,6 +4,7 @@ layout: post
 slug: 2012-01-03-editorial-arrogance
 title: "Editorial arrogance"
 wordpress_id: 96
+blurb: I finally got around to seeing Page One last night, a documentary about the New York Times, and a certain point hit harder than the rest.
 ---
 
 _Update: Edin Beslagic wrote a smart reply [here](http://pp19dd.com/2012/01/page-one-discussion-metrics-behind-the-wheel/ )._

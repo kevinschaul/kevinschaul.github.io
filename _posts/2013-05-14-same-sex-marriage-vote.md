@@ -6,7 +6,7 @@ slug: 2013-05-14-same-sex-marriage-vote
 for_icon: star-tribune.png
 show_on_homepage: true
 tease: true
-blurb:
+blurb: After a historic moment for same-sex marriage in Minnesota, we break down how the legislators voted.
 external_url: http://www.startribune.com/politics/statelocal/207233251.html
 ---
 

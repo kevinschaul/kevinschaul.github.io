@@ -7,6 +7,7 @@ wordpress_id: 241
 for_icon: seattle-times.png
 show_on_homepage: true
 tease: true
+blurb: For the 2012 Summer Olympics, we built a results tracker for Olympians with ties to Washington State.
 ---
 
 Two weeks ago, sports producer Amy Bergstrom came to me with a simple request: let's figure out a way to "dress up" this spreadsheet.
