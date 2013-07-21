@@ -72,18 +72,21 @@ p {
   height: 150px;
   float: left;
   margin-right: 20px;
+  width: 470px;
 }
 .post .tease img {
   width: 470px;
   height: 150px;
 }
 .blurb {
-  float: left;
-  width: 208px;
   font-size: 14px;
 }
 .blurb .date {
   font-family: 'News Cycle', Helvetica, serif;
+}
+.tease-blurb {
+  float: left;
+  width: 208px;
 }
 
 .about {

@@ -4,6 +4,7 @@ title:  "Seattle Times Election Guide"
 date:   2012-08-22 17:39:02
 slug: 2012-08-22-seattle-times-election-guide
 for_icon: seattle-times.png
+tease: true
 ---
 
 Four short weeks ago, Eric Ulken sat me down to divvy up the rest of my time at the Seattle Times. We'd been toying with a couple complex project ideas, but he wanted to be sure I'd have time to complete whatever we began by the end of my internship.

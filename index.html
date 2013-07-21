@@ -20,14 +20,21 @@ title: Kevin Schaul
           <div class="clear"></div>
         </div>
 
-        <div class="tease">
-          <a {% if post.external_url %} target="_blank" {% endif %} href="{% if post.external_url %}{{ post.external_url }}{% else %}{{ post.url }}{% endif %}"><img src="{{ site.url }}/assets/posts/{{ post.slug }}/tease.png" /></a>
-        </div>
+        {% if post.tease %}
+          <div class="tease">
+            <a {% if post.external_url %} target="_blank" {% endif %} href="{% if post.external_url %}{{ post.external_url }}{% else %}{{ post.url }}{% endif %}"><img src="{{ site.url }}/assets/posts/{{ post.slug }}/tease.png" /></a>
+          </div>
 
-        <div class="blurb">
-          <div class="date">{{ post.date | date_to_string }}</div>
-          <p>{% if post.blurb %}{{ post.blurb }}{% else %}{{ post.excerpt }}{% endif %}</p>
-        </div>
+          <div class="tease-blurb blurb">
+            <div class="date">{{ post.date | date_to_string }}</div>
+            <p>{% if post.blurb %}{{ post.blurb }}{% else %}{{ post.excerpt }}{% endif %}</p>
+          </div>
+        {% else %}
+          <div class="no-tease blurb">
+            <div class="date">{{ post.date | date_to_string }}</div>
+            <p>{% if post.blurb %}{{ post.blurb }}{% else %}{{ post.excerpt }}{% endif %}</p>
+          </div>
+        {% endif %}
 
         <div class="clear"></div>
       </div>
