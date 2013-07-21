@@ -97,4 +97,19 @@ p {
 #post .content {
   width: 470px;
 }
+#post pre {
+  width: 700px;
+  overflow: scroll;
+}
+#post .lineno {
+  display: inline-block;
+  width: 28px;
+  padding: 1px 5px;
+  text-align: right;
+  color: #666;
+  background-color: #eee;
+  border-right: 1px solid #ccc;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
 
