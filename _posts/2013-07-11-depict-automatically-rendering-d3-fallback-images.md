@@ -3,6 +3,7 @@ layout: post
 title:  "Depict - For automatically rendering d3.js fallback images"
 date:   2013-07-11 22:39:02
 slug: 2013-07-11-depict
+show_on_homepage: true
 ---
 
 While standards-compliant browsers are gaining marketshare, most media organizations still must support Internet Explorer 8, in some fashion. Creating fallback images for svg elements is a pain (though much easier with the handy [SVG Crowbar][svg-crowbar]).

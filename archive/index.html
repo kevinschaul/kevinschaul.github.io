@@ -1,0 +1,27 @@
+---
+layout: default
+title: Archive | Kevin Schaul
+---
+
+<div id="archive">
+
+  <div class="posts">
+    {% for post in site.posts %}
+      <div class="post">
+        <div class="title">
+          <a {% if post.external_url %} target="_blank" {% endif %} href="{% if post.external_url %}{{ post.external_url }}{% else %}{{ post.url }}{% endif %}">{{ post.title }}</a>
+          <div class="clear"></div>
+        </div>
+
+          <div class="no-tease blurb">
+            <div class="date">{{ post.date | date_to_string }}</div>
+            <p>{% if post.blurb %}{{ post.blurb }}{% else %}{{ post.excerpt }}{% endif %}</p>
+          </div>
+
+        <div class="clear"></div>
+      </div>
+    {% endfor %}
+  </div>
+
+</div>
+
