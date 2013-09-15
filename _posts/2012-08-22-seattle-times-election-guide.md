@@ -13,7 +13,7 @@ Four short weeks ago, Eric Ulken sat me down to divvy up the rest of my time at 
 
 Well, we made it, and with two days to spare.
 
-I'm pleased to finally unveil my summer internship pet project: the Seattle Times Election Guide.
+I'm pleased to finally unveil my summer internship pet project: [The Seattle Times Election Guide](http://elections.seattletimes.com).
 
 From the about page:
 The Seattle Times 2012 election guide was built to encourage better voter literacy at the polls. We've simplified getting the latest news and basic information for the candidates that matter most to you.
