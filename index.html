@@ -27,7 +27,6 @@ title: Kevin Schaul
             </div>
 
             <div class="tease-blurb blurb">
-              <div class="date">{{ post.date | date_to_string }}</div>
               <p>{% if post.blurb %}{{ post.blurb }}{% else %}{{ post.excerpt }}{% endif %}</p>
             </div>
           {% else %}
