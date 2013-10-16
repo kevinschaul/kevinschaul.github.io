@@ -73,13 +73,14 @@ p {
   margin: 0 10px;
 }
 .post .tease {
+  text-align: center;
+}
+.post .tease img {
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   width: 100%;
+  max-width: 470px;
   margin: auto;
-}
-.post .tease img {
-  max-width: 100%;
 }
 .blurb {
   font-size: 1em;
@@ -91,6 +92,22 @@ p {
 .tease-blurb {
   float: left;
   margin: 0 10px;
+}
+
+@media all and (min-width: 470px) {
+  .post .tease img {
+    border: 1px solid #ccc;
+  }
+}
+
+@media all and (min-width: 490px) {
+  .wrapper {
+    max-width: 490px;
+    margin: auto;
+  }
+  .post .tease {
+    margin: 0 10px;
+  }
 }
 
 /* TODO */
@@ -126,3 +143,4 @@ p {
 #post img {
   max-width: 700px;
 }
+
