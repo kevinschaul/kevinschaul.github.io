@@ -27,10 +27,10 @@ p {
 
 .wrapper {
   width: 100%;
-  margin: 20px auto;
+  margin: 10px auto;
 }
 .header {
-  margin: 20px 10px;
+  margin: 10px 10px 20px 10px;
 }
 .header .title h1 {
   font-size: 3em;
