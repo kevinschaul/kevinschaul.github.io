@@ -88,6 +88,7 @@ p {
 }
 .blurb .date {
   font-family: 'News Cycle', Helvetica, serif;
+  display: none;
 }
 .tease-blurb {
   float: left;
@@ -107,6 +108,28 @@ p {
   }
   .post .tease {
     margin: 0 10px;
+  }
+}
+
+@media all and (min-width: 700px) {
+  .wrapper {
+    max-width: 720px;
+  }
+  .post .title {
+    font-size: 1em;
+  }
+  .post .tease {
+    float: left;
+  }
+  .post .blurb {
+    font-size: 0.9em;
+  }
+  .post .tease-blurb {
+    width: 208px;
+    margin-left: 0px;
+  }
+  .blurb .date {
+    display: block;
   }
 }
 
