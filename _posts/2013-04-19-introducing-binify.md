@@ -23,7 +23,7 @@ Many dot density maps suffer from crowding of points. Binify uses hexagon binnin
 
 Performing hexagon binning on deadline isn't easy. [Mmqgis](http://michaelminn.com/linux/mmqgis/), a useful [QGIS](http://qgis.org/) plugin, can help with the step of creating the grid, but it requires using a GUI and is finicky. It can't easily be automated. And it certainly can't end up in a Makefile, [as we'd prefer all our data manipulation to](http://bost.ocks.org/mike/make/).
 
-**Introducing: Binify** &mdaph; A command-line tool to better visualize crowded dot density maps. (That's bin-i-FY, for you phonetics.)
+**Introducing: Binify** &mdash; A command-line tool to better visualize crowded dot density maps. (That's bin-i-FY, for you phonetics.)
 
 Binify takes all the meticulous guesswork out of hexagon binning. Simply give the program a point shapefile, and it'll output a calculated hexagon grid version of the data ready to be visualized.
 
