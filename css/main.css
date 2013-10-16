@@ -46,7 +46,7 @@ p {
   font-size: 0.9em;
 }
 .more {
-  margin-top: 40px;
+  margin: 40px 10px;
   font-size: 0.9em;
 }
 .more a {
@@ -55,7 +55,7 @@ p {
 
 /* Home */
 .post {
-  margin: 40px 0;
+  margin: 30px 0;
 }
 .post .for {
   float: left;
@@ -86,6 +86,9 @@ p {
   font-size: 1em;
   margin: 0 10px;
 }
+.blurb p {
+  margin: 0;
+}
 .blurb .date {
   font-family: 'News Cycle', Helvetica, serif;
   display: none;
@@ -93,6 +96,17 @@ p {
 .tease-blurb {
   float: left;
   margin: 0 10px;
+}
+
+@media all and (min-width: 460px) {
+  .header .title h1 {
+    float: left;
+  }
+  .contact {
+    float: right;
+    margin-top: 5px;
+    text-align: right;
+  }
 }
 
 @media all and (min-width: 470px) {
@@ -104,7 +118,6 @@ p {
 @media all and (min-width: 490px) {
   .wrapper {
     max-width: 490px;
-    margin: auto;
   }
   .post .tease {
     margin: 0 10px;
@@ -114,6 +127,9 @@ p {
 @media all and (min-width: 720px) {
   .wrapper {
     max-width: 720px;
+  }
+  .post {
+    margin: 40px 0;
   }
   .post .title {
     font-size: 1em;
