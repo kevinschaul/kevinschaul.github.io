@@ -26,32 +26,28 @@ p {
 }
 
 .wrapper {
-  width: 700px;
+  width: 100%;
   margin: 20px auto;
 }
 .header {
-  margin: 20px 0;
+  margin: 20px 10px;
 }
-.header > h1 {
-  float: left;
-  font-size: 50px;
+.header .title h1 {
+  font-size: 3em;
   font-family: 'News Cycle', Helvetica, Arial, sans-serif;
 }
-.header > h1 > a {
+.header .title h1 a {
   color: #333;
 }
-.header > h1 > a:hover {
+.header .title h1 a:hover {
   color: #666;
 }
 .contact {
-  float: right;
-  margin-top: 11px;
-  text-align: right;
-  font-size: 13px;
+  font-size: 0.9em;
 }
 .more {
-  margin-top: 40px;
-  font-size: 13px;
+  margin: 40px 10px;
+  font-size: 0.9em;
 }
 .more a {
   margin-right: 20px;
@@ -59,53 +55,111 @@ p {
 
 /* Home */
 .post {
-  margin: 40px 0;
+  margin: 30px 0;
 }
 .post .for {
   float: left;
   margin-right: 5px;
+  margin-left: 10px;
 }
 .post .for img {
   max-height: 25px;
   margin-bottom: 3px;
 }
 .post .title {
-  font-size: 15px;
+  font-size: 1.1em;
   line-height: 25px;
   margin-bottom: 3px;
+  margin: 0 10px;
 }
 .post .tease {
-  border: 1px solid #ccc;
-  height: 150px;
-  float: left;
-  margin-right: 20px;
-  width: 470px;
+  text-align: center;
 }
 .post .tease img {
-  width: 470px;
-  height: 150px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  max-width: 470px;
+  margin: auto;
 }
 .blurb {
-  font-size: 14px;
+  font-size: 1em;
+  margin: 0 10px;
+}
+.blurb p {
+  margin: 0;
 }
 .blurb .date {
   font-family: 'News Cycle', Helvetica, serif;
+  display: none;
 }
 .tease-blurb {
   float: left;
-  width: 208px;
+  margin: 0 10px;
 }
 
+@media all and (min-width: 460px) {
+  .header .title h1 {
+    float: left;
+  }
+  .contact {
+    float: right;
+    margin-top: 5px;
+    text-align: right;
+  }
+}
+
+@media all and (min-width: 470px) {
+  .post .tease img {
+    border: 1px solid #ccc;
+  }
+}
+
+@media all and (min-width: 490px) {
+  .wrapper {
+    max-width: 490px;
+  }
+  .post .tease {
+    margin: 0 10px;
+  }
+}
+
+@media all and (min-width: 720px) {
+  .wrapper {
+    max-width: 720px;
+  }
+  .post {
+    margin: 40px 0;
+  }
+  .post .title {
+    font-size: 1em;
+  }
+  .post .tease {
+    float: left;
+  }
+  .post .blurb {
+    font-size: 0.9em;
+  }
+  .post .tease-blurb {
+    width: 208px;
+    margin-left: 0px;
+  }
+  .blurb .date {
+    display: block;
+  }
+}
+
+/* TODO */
 /* Post */
+#post {
+  margin: 0 10px;
+}
 #post p {
   margin: 14px 0;
   line-height: 24px;
-}
-#post .content {
-  width: 470px;
+  font-size: 1em;
 }
 #post pre {
-  width: 700px;
   overflow: scroll;
   padding: 10px 0;
 }
@@ -126,6 +180,6 @@ p {
   font-size: 16px;
 }
 #post img {
-  max-width: 700px;
+  max-width: 100%;
 }
 
