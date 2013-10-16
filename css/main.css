@@ -149,7 +149,6 @@ p {
   }
 }
 
-/* TODO */
 /* Post */
 #post {
   margin: 0 10px;
@@ -181,5 +180,10 @@ p {
 }
 #post img {
   max-width: 100%;
+}
+
+/* About */
+#about {
+  margin: 0 10px;
 }
 
