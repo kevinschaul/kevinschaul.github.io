@@ -26,32 +26,28 @@ p {
 }
 
 .wrapper {
-  width: 700px;
+  width: 100%;
   margin: 20px auto;
 }
 .header {
-  margin: 20px 0;
+  margin: 20px 10px;
 }
-.header > h1 {
-  float: left;
-  font-size: 50px;
+.header .title h1 {
+  font-size: 3em;
   font-family: 'News Cycle', Helvetica, Arial, sans-serif;
 }
-.header > h1 > a {
+.header .title h1 a {
   color: #333;
 }
-.header > h1 > a:hover {
+.header .title h1 a:hover {
   color: #666;
 }
 .contact {
-  float: right;
-  margin-top: 11px;
-  text-align: right;
-  font-size: 13px;
+  font-size: 0.9em;
 }
 .more {
   margin-top: 40px;
-  font-size: 13px;
+  font-size: 0.9em;
 }
 .more a {
   margin-right: 20px;
@@ -64,38 +60,40 @@ p {
 .post .for {
   float: left;
   margin-right: 5px;
+  margin-left: 10px;
 }
 .post .for img {
   max-height: 25px;
   margin-bottom: 3px;
 }
 .post .title {
-  font-size: 15px;
+  font-size: 1.1em;
   line-height: 25px;
   margin-bottom: 3px;
+  margin: 0 10px;
 }
 .post .tease {
-  border: 1px solid #ccc;
-  height: 150px;
-  float: left;
-  margin-right: 20px;
-  width: 470px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  margin: auto;
 }
 .post .tease img {
-  width: 470px;
-  height: 150px;
+  max-width: 100%;
 }
 .blurb {
-  font-size: 14px;
+  font-size: 1em;
+  margin: 0 10px;
 }
 .blurb .date {
   font-family: 'News Cycle', Helvetica, serif;
 }
 .tease-blurb {
   float: left;
-  width: 208px;
+  margin: 0 10px;
 }
 
+/* TODO */
 /* Post */
 #post p {
   margin: 14px 0;
@@ -128,4 +126,3 @@ p {
 #post img {
   max-width: 700px;
 }
-
