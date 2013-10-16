@@ -4,7 +4,6 @@ layout: post
 slug: 2013-07-06-undefined-data-in-d3-charts
 title: "Tutorial: Undefined data in d3 charts"
 wordpress_id: 1484
-show_on_homepage: true
 tease: true
 ---
 

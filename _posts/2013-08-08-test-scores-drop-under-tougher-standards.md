@@ -4,7 +4,6 @@ title:  "Test Scores Drop Under Tougher Standards"
 date:   2013-08-08 17:39:02
 slug: 2013-08-08-test-scores-drop-under-tougher-standards
 for_icon: new-york-times.png
-show_on_homepage: true
 tease: true
 blurb: "Test scores in NYC have fallen since last year, but cut through the obvious, and you'll find an important divergence. (A graphic for print.)"
 external_url: http://www.nytimes.com/interactive/2013/08/08/nyregion/test-scores-drop-under-tougher-standards.html

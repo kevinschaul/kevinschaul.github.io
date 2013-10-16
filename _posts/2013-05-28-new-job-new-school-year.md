@@ -4,7 +4,6 @@ layout: post
 slug: 2013-05-28-new-job-new-school-year
 title: A new job for a new school year
 wordpress_id: 1465
-show_on_homepage: true
 ---
 
 It's not every day that you get to write your own job description, but the good folks at the Star Tribune let me do just that.
