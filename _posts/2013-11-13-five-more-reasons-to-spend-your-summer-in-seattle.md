@@ -36,10 +36,10 @@ decisions my professors lectured about.) My bosses didn't mind if I
 wasn't producing something to help the company's bottom line. It was a
 learning experience through-and-through.
 
-### 6. Bring your pet projects and watch them grow Large companies aren't
-known for flexibility and openness to experiment, but my coworkers
-helped me find a way to disrupt their routine. I told my boss about [my
-pie-in-the-sky project
+### 6. Bring your pet projects and watch them grow
+Large companies aren't known for flexibility and openness to experiment,
+but my coworkers helped me find a way to disrupt their routine. I told
+my boss about [my pie-in-the-sky project
 idea](http://kevin.schaul.io/2012/08/22/seattle-times-election-guide/),
 and we executed it *without tradeoffs*. Talk about getting great clips.
 
