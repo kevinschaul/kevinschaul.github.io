@@ -23,5 +23,7 @@ with them.
 
 My role will begin part time in April from Minneapolis as I finish up my
 computer science degree. I'll transition to full time when I move to
-Washington in early June. D.C. pro tips are very welcome.
+Washington in early June.
+
+All pro tips on living in the D.C. area are much appreciated.
 
