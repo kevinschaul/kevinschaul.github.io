@@ -159,7 +159,7 @@ p {
   font-size: 1em;
 }
 #post pre {
-  overflow: scroll;
+  overflow: auto;
   padding: 10px 0;
 }
 #post .lineno {
