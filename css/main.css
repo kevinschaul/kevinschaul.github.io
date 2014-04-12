@@ -8,6 +8,12 @@ body {
   font-size: 16px;
   color: #333;
 }
+h2,h3,h4 {
+  padding-top: 8px;
+}
+h3 {
+  font-size: 1.15em;
+}
 a {
   color: #275D97;
   text-decoration: none;
