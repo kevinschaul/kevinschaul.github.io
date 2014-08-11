@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "The circular files"
+date:   2014-05-13 17:37:02
+slug: 2014-05-03-the-circular-files
+for_icon: washington-post.png
+show_on_homepage: false
+tease: true
+blurb: "For decades, Congress has been trying to keep track of the federal bureaucracy by mandating that agencies turn in written reports about their work. Legislators have asked for far more reports than they can keep track of."
+external_url: http://www.washingtonpost.com/wp-srv/special/national/government-reports/
+---
+
