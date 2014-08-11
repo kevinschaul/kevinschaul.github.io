@@ -5,7 +5,7 @@ slug: 2012-07-26-news-app-release-washingtons-local-olympians
 title: "News app release: Washington's local Olympians"
 wordpress_id: 241
 for_icon: seattle-times.png
-show_on_homepage: true
+show_on_homepage: false
 tease: true
 blurb: For the 2012 Summer Olympics, we built a results tracker for Olympians with ties to Washington State.
 ---

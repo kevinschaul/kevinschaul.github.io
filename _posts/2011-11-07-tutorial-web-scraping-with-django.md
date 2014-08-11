@@ -4,7 +4,7 @@ layout: post
 slug: 2011-11-07-tutorial-web-scraping-with-django
 title: "Tutorial: Web scraping with Django"
 wordpress_id: 45
-show_on_homepage: true
+show_on_homepage: false
 ---
 
 For a recent [MinnPost](http://www.minnpost.com) project, we wanted to scrape court dockets, so I figured I'd break out a python script in the wonderful [ScraperWiki](https://scraperwiki.com/). One of my favorite features is that you can schedule a scraper to run automatically. One of my least favorite features is that the limit on automatic scrapers is once per day. We needed something to run every half hour.

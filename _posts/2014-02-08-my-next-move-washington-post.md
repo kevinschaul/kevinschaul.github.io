@@ -3,7 +3,7 @@ date: 2014-02-08 09:58:49+00:00
 layout: post
 slug: 2014-02-08-my-next-move-washington-post
 title: "My Next Move: The Washington Post"
-show_on_homepage: true
+show_on_homepage: false
 blurb: "I'll be kicking off my career with the Washington Post in April as a graphics editor, and I am absolutely thrilled."
 ---
 

@@ -4,7 +4,7 @@ title:  "Seattle Times Election Guide"
 date:   2012-08-22 17:39:02
 slug: 2012-08-22-seattle-times-election-guide
 for_icon: seattle-times.png
-show_on_homepage: true
+show_on_homepage: false
 tease: true
 blurb: There's nothing more frustrating than poor voter literacy. We built a responsive election guide for readers to find out information about their future legislators.
 ---

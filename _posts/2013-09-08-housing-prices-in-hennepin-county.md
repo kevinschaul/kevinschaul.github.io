@@ -4,7 +4,7 @@ title:  "Housing prices in Hennepin County"
 date:   2013-09-08 17:39:02
 slug: 2013-09-08-housing-prices-in-hennepin-county
 for_icon: star-tribune.png
-show_on_homepage: true
+show_on_homepage: false
 tease: true
 blurb: "Since the housing bubble collapse, lower income cities are struggling far more than their richer counterparts."
 external_url: http://apps.startribune.com/newsgraphics/20130908homes/

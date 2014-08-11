@@ -4,7 +4,7 @@ layout: post
 slug: 2013-02-19-tutorial-create-simple-graphics-with-box-chart-maker
 title: 'Tutorial: Create simple graphics with Box Chart Maker'
 wordpress_id: 1366
-show_on_homepage: true
+show_on_homepage: false
 tease: true
 blurb: As part of my AP-Google journalism in technology scholarship, I developed a tool to help journalists create simple graphics for online.
 ---
