@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "Intensive care for a damaged dome"
+date:   2014-04-16 17:37:02
+slug: 2014-04-16-intensive-care-for-a-damaged-dome
+for_icon: washington-post.png
+show_on_homepage: false
+tease: true
+blurb: "Extensive repairs have begun on the 1,000 or so cracks, leaks, and patches of corrosion dotting the cast-iron dome that has stood atop the U.S. Capitol since the Civil War."
+external_url: http://www.washingtonpost.com/wp-srv/special/local/capitol-dome/
+---
+
