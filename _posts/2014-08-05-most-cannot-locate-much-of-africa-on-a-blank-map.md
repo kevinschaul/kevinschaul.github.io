@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "Most cannot locate much of Africa on a blank map"
+date:   2014-08-05 17:37:02
+slug: 2014-08-05-most-cannot-locate-much-of-africa-on-a-blank-map
+for_icon: washington-post.png
+show_on_homepage: false
+tease: true
+blurb: "We asked readers to locate African countries on a blank map. Most earned failing grades — correctly recognizing less than half of the continent’s countries."
+external_url: http://www.washingtonpost.com/blogs/worldviews/wp/2014/08/05/what-you-dont-know-about-africa-according-to-our-readers-quiz/
+---
+
