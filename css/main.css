@@ -194,3 +194,13 @@ p {
   margin: 0 10px;
 }
 
+/* PGP */
+#PGP h3,
+#PGP pre,
+#PGP p {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+#PGP pre {
+  margin-top: 20px;
+}
