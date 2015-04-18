@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "What will change if Scotland goes solo?"
+date:   2014-09-17 17:37:02
+slug: 2014-09-14-scotland-secession
+for_icon: washington-post.png
+show_on_homepage: false
+tease: false
+blurb: "If Scots vote to bid cheerio to the United Kingdom, the country would be independent as of March 2016. Here are some of the biggest changes that would occur."
+external_url: http://www.washingtonpost.com/wp-srv/special/world/scotland-secession/
+---
+

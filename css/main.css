@@ -10,6 +10,7 @@ body {
 }
 h2,h3,h4 {
   padding-top: 8px;
+  margin: 0 10px;
 }
 h3 {
   font-size: 1.15em;
@@ -54,6 +55,7 @@ p {
 .more {
   margin: 40px 10px;
   font-size: 0.9em;
+  line-height: 2em;
 }
 .more a {
   margin-right: 20px;
@@ -73,7 +75,6 @@ p {
   margin-bottom: 3px;
 }
 .post .title {
-  font-size: 1.1em;
   line-height: 25px;
   margin-bottom: 3px;
   margin: 0 10px;
