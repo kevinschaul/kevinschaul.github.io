@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "Eight countries. 2,055 nuclear tests. 71 years."
+date:   2015-11-27 17:37:02
+slug: 2015-11-27-nuclear-tests
+for_icon: washington-post.png
+show_on_homepage: true
+tease: true
+blurb: "In the name of national security, eight countries have tested nuclear weapons all over the world since 1945, frequently near populated places."
+external_url: https://www.washingtonpost.com/graphics/world/nuclear-tests/
+---
+

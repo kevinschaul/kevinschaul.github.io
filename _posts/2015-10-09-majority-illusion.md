@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "A quick puzzle to tell whether you know what people are thinking"
+date:   2015-10-09 17:37:02
+slug: 2015-10-09-majority-illusion
+for_icon: washington-post.png
+show_on_homepage: true
+tease: true
+blurb: "A mathematical quirk where the majority think they’re actually the minority."
+external_url: "https://www.washingtonpost.com/graphics/business/wonkblog/majority-illusion/"
+---
+
