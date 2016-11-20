@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ page.title }}</title>
 
-  <!-- syntax highlighting CSS -->
   <link rel="stylesheet" href="/css/syntax.css">
-
-  <!-- Custom CSS -->
   <link rel="stylesheet" href="/css/main.css">
 
   <style>
@@ -33,26 +30,25 @@
   <div class="wrapper">
     <div class="header">
       <div class="title">
-        <h1><a href="/">{{ site.name }}</a></h1>
+        <h1><a class="black" href="/">{{ site.name }}</a></h1>
+        <p>journalism, graphics, data</p>
       </div>
-      <div class="contact">
-        <p><a target="_blank" href="http://www.twitter.com/kevinschaul">@kevinschaul</a></p>
-        <p><a target="_blank" href="mailto:kevin.schaul@gmail.com">kevin.schaul@gmail.com</a></p>
+      <div class="links">
+        <p>
+          <a class="inline" href="/favorites">Favorite links</a>
+          <a class="inline" href="/archive">Archive</a>
+          <a class="inline" href="/contact">Contact</a>
+        </p>
+        <p>
+          <a target="_blank" href="mailto:kevin.schaul@gmail.com">kevin.schaul@gmail.com</a>
+        </p>
       </div>
       <div class="clear"></div>
     </div>
 
     {{ content }}
 
-    <div class="more">
-      <a href="/archive">View all posts</a>
-      <a href="/about">About Kevin</a>
-      <a href="/resume.pdf">Resume</a>
-      <a href="/pgp">PGP</a>
-      <a target="_blank" href="https://github.com/kevinschaul">On GitHub</a>
-    </div>
+  </div>
 
-  </div> <!-- /wrapper -->
-
-  </body>
+</body>
 </html>

@@ -10,7 +10,7 @@ I came up with a fun idea last night, on my everlasting quest to provide journal
 
 Box chart maker is a simple tool for journalists who want to spice up their articles. Influenced by the [wonderful presidential pardon interactive graphic](http://apps.washingtonpost.com/national/pardons/) by the Washington Post, box chart maker helps non-technical people create beautiful, simple graphics.
 
-Try out the [live demo](http://www.kevinschaul.com/projects/box-chart-maker/), and give me some feedback. It's pretty creaky (not at all user-friendly), but it isn't bad for a day of coding between classes and life.
+Try out the [live demo](http://kevin.schaul.io/projects/box-chart-maker/), and give me some feedback. It's pretty creaky (not at all user-friendly), but it isn't bad for a day of coding between classes and life.
 
 There are a ton of features I'd like to add. This is iterative development at its finest.
 

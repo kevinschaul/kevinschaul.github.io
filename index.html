@@ -9,35 +9,17 @@ title: Kevin Schaul
     {% for post in site.posts %}
       {% if post.show_on_homepage %}
         <div class="post">
-
-          {% if post.for_icon %}
-            <div class="for">
-              <img src="{{ site.url }}/assets/icons/{{ post.for_icon }}" />
-            </div>
-          {% endif %}
-
-          <div class="title">
-            <a {% if post.external_url %} target="_blank" {% endif %} href="{% if post.external_url %}{{ post.external_url }}{% else %}{{ post.url }}{% endif %}">{{ post.title }}</a>
-            <div class="clear"></div>
-          </div>
-
           {% if post.tease %}
             <div class="tease">
               <a {% if post.external_url %} target="_blank" {% endif %} href="{% if post.external_url %}{{ post.external_url }}{% else %}{{ post.url }}{% endif %}"><img src="{{ site.url }}/assets/posts/{{ post.slug }}/tease.png" /></a>
             </div>
-
-            <div class="tease-blurb blurb">
-              <div class="date">{{ post.date | date_to_string }}</div>
-              <p>{% if post.blurb %}{{ post.blurb }}{% else %}{{ post.excerpt }}{% endif %}</p>
-            </div>
-          {% else %}
-            <div class="no-tease blurb">
-              <div class="date">{{ post.date | date_to_string }}</div>
-              <p>{% if post.blurb %}{{ post.blurb }}{% else %}{{ post.excerpt }}{% endif %}</p>
-            </div>
           {% endif %}
 
-          <div class="clear"></div>
+          <div class="title">
+            <a class="black" {% if post.external_url %} target="_blank" {% endif %} href="{% if post.external_url %}{{ post.external_url }}{% else %}{{ post.url }}{% endif %}">{{ post.title }}</a>
+            <span class="date">{{ post.date | date: "%B %-d, %Y" }}</span>
+          </div>
+
         </div>
       {% endif %}
     {% endfor %}

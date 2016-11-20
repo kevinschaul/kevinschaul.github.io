@@ -4,6 +4,7 @@ title:  "How we made our beer matchmaker"
 date:   2014-03-29 17:37:02
 slug: 2014-03-29-how-we-made-our-beer-matchmaker
 show_on_homepage: true
+tease: true
 ---
 
 A few months ago, my colleague and fellow beer lover [Chris

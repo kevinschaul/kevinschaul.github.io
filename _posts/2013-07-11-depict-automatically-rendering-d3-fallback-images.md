@@ -3,7 +3,7 @@ layout: post
 title:  "Depict - For automatically rendering d3.js fallback images"
 date:   2013-07-11 22:39:02
 slug: 2013-07-11-depict
-show_on_homepage: true
+show_on_homepage: false
 blurb: Depict aims to easily render fallback images for complex visualizations. (IE 8, I'm looking at you.) Given a url and css selector, depict outputs a .png of the rendered element. With depict, charts based on living data can be rendered into flat images at regular intervals, no human interaction required.
 ---
 

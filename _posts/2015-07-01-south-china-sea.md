@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Photos: China’s rapid island-building strategy continues"
+title:  "China’s rapid island-building strategy continues"
 date:   2015-07-01 17:37:02
 slug: 2015-07-01-south-china-sea
 for_icon: washington-post.png
