@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "These former Obama strongholds sealed the election for Trump"
+date:   2016-11-09 17:37:02
+slug: 2016-11-09-obama-trump-counties
+for_icon: washington-post.png
+show_on_homepage: false
+tease: true
+blurb: "Across swing states — and others previously thought to be safe for Democrats — Trump colored dozens of counties red that hadn’t gone Republican in decades."
+external_url: "https://www.washingtonpost.com/graphics/politics/2016-election/obama-trump-counties/"
+---
+

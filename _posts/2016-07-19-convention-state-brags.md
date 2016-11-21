@@ -1,0 +1,13 @@
+---
+layout: post
+title: "‘Best state for duck hunting’? Name that GOP convention brag."
+date: 2016-07-19 17:37:02
+slug: 2016-07-19-convention-state-brags
+for_icon: washington-post.png
+show_on_homepage: false
+tease: false
+blurb: "As state representatives listed off their delegate totals on the floor of Quicken Loans Arena, they also had some nice things to say about their home states."
+external_url: "https://www.washingtonpost.com/graphics/politics/2016-election/conventions/name-that-gop-state-brag/"
+---
+
+
