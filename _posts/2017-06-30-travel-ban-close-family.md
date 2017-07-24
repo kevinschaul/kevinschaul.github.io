@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "Which of your family members could visit under the travel ban"
+date:   2017-06-30 17:37:02
+slug: 2017-06-30-travel-ban-close-family
+for_icon: washington-post.png
+show_on_homepage: false
+tease: false
+blurb: "A breakdown of who can get in under the new restrictions"
+external_url: "https://www.washingtonpost.com/graphics/2017/world/travel-ban-who-is-close-family/"
+---
+

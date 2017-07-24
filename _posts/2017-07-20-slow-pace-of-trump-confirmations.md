@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "Trump is falling further behind on confirmations"
+date:   2017-07-20 17:37:02
+slug: 2017-07-20-slow-pace-of-trump-confirmations
+for_icon: washington-post.png
+show_on_homepage: false
+tease: false
+blurb: "Senate delays have played a role, but the White House has also been slow to put forward nominees for consideration."
+external_url: "https://www.washingtonpost.com/graphics/2017/politics/slow-pace-of-trump-confirmations/"
+---
+

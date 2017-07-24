@@ -61,14 +61,9 @@ li {
     float: left;
 }
 .header .title h1 {
-  font-size: 2.1em;
-  line-height: 1.4em;
+  font-size: 2.9em;
+  line-height: 1.95em;
   font-family: 'News Cycle', Helvetica, Arial, sans-serif;
-  margin-bottom: 0.05em;
-}
-.header .title p {
-  color: #999;
-  font-size: 0.9em;
 }
 .header .links {
     float: right;

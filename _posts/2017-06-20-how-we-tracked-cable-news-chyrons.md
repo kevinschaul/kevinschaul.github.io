@@ -1,0 +1,10 @@
+---
+layout: post
+title: "How we tracked cable news chyrons"
+date: 2017-06-20 17:37:02
+slug: 2017-06-20-how-we-tracked-cable-news-chyrons
+show_on_homepage: false
+blurb: Our quick-and-dirty app for scraping and juxtaposing TV commentary in real time
+external_url: "https://source.opennews.org/articles/how-we-tracked-cable-news-chyrons/"
+---
+
