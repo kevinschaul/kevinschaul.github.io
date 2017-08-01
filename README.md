@@ -8,3 +8,8 @@
 
     jekyll serve
 
+## Deploy
+
+    jekyll build
+    s3_website push
+
