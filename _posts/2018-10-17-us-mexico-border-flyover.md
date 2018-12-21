@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "Borderline: Navigating the invisible boundary and physical barriers that define the U.S.-Mexico border"
+date:   2018-10-17 17:37:02
+slug: 2018-10-17-us-mexico-border-flyover
+for_icon: washington-post.png
+show_on_homepage: false
+tease: false
+blurb: "Navigating the invisible boundary and physical barriers that define the U.S.-Mexico border"
+external_url: "https://www.washingtonpost.com/graphics/2018/national/us-mexico-border-flyover/"
+---
+

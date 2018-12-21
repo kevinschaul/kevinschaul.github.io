@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "The generational gulf between House Democrats is shaping their leadership fight"
+date:   2018-11-14 17:37:02
+slug: 2018-11-14-young-democrats-pelosi-opposition
+for_icon: washington-post.png
+show_on_homepage: false
+tease: false
+blurb: "There’s a new crop of lawmakers coming to Capitol Hill, about three generations removed from the current Democratic leadership."
+external_url: "http://www.washingtonpost.com/graphics/2018/politics/young-democrats-pelosi-opposition/"
+---
+

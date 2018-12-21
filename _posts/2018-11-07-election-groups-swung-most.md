@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "The groups that swung the most to give Democrats the House"
+date:   2018-11-07 17:37:02
+slug: 2018-11-07-election-groups-swung-most
+for_icon: washington-post.png
+show_on_homepage: false
+tease: false
+blurb: "Democrats’ gains in the U.S. House on Tuesday reflected a stronger showing across white neighborhoods and suburbs of battleground districts."
+external_url: "http://www.washingtonpost.com/graphics/2018/politics/election-groups-that-swung-most/"
+---
+

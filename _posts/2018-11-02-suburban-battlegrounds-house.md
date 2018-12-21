@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "How suburban voters could alter the House on Tuesday and the White House in 2020"
+date:   2018-11-02 17:37:02
+slug: 2018-11-02-suburban-battlegrounds-house
+for_icon: washington-post.png
+show_on_homepage: false
+tease: false
+blurb: "Suburbs have the largest numbers of voters, so their subtle shifts can yield a decisive margin in votes."
+external_url: "http://www.washingtonpost.com/graphics/2018/politics/suburban-battlegrounds-house/"
+---
+
