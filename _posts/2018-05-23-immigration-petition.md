@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Three reasons moderate Republicans are backing an immigration vote"
-date:   2018-04-11 17:37:02
-slug: 2018-04-11
+date:   2018-05-23 17:37:02
+slug: 2018-05-23-immigration-petition
 for_icon: washington-post.png
 show_on_homepage: false
 tease: false

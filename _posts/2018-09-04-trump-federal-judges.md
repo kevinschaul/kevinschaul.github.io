@@ -2,7 +2,7 @@
 layout: post
 title:  "How Trump is shifting the most important courts in the country"
 date:   2018-09-04 17:37:02
-slug: 2018-09-04
+slug: 2018-09-04-trump-federal-judges
 for_icon: washington-post.png
 show_on_homepage: false
 tease: false

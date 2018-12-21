@@ -2,7 +2,7 @@
 layout: post
 title:  "Surviving Harvey: ‘Where are we supposed to go?’"
 date:   2017-08-30 17:37:02
-slug: 2017-08-30
+slug: 2017-08-30-harvey-rescues
 for_icon: washington-post.png
 show_on_homepage: false
 tease: false

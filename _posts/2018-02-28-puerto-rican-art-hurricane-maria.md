@@ -4,8 +4,8 @@ title:  "How Puerto Rican artists are channeling grief and loss to restore joy a
 date:   2018-02-28 17:37:02
 slug: 2018-02-28-puerto-rican-art-hurricane-maria
 for_icon: washington-post.png
-show_on_homepage: false
-tease: false
+show_on_homepage: true
+tease: true
 blurb: "Hurricane Maria knocked out the island’s power, but local artists created new light."
 external_url: "https://www.washingtonpost.com/graphics/2018/national/puerto-rican-art-hurricane-maria/"
 ---
