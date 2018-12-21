@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "Some tax breaks are for the rich. Others for the poor. Which are for you?"
+date:   2017-09-27 17:37:02
+slug: 2017-09-27-tax-breaks
+for_icon: washington-post.png
+show_on_homepage: true
+tease: true
+blurb: "House Republicans released their long-awaited tax plan Nov. 2. How could the proposed changes to these policies affect your taxes?"
+external_url: "https://www.washingtonpost.com/graphics/2017/politics/tax-breaks/"
+---
+
