@@ -11,5 +11,6 @@
 ## Deploy
 
     jekyll build
-    s3_website push
+
+    aws s3 sync _site/ s3://kschaul --exclude ".DS_Store" --delete
 
