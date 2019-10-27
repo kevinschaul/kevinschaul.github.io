@@ -2,7 +2,7 @@
 
 ## Installation
 
-    gem install jekyll
+    bundle install
 
 ## Development
 

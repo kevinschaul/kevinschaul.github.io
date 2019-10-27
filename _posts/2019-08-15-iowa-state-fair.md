@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "‘They’re clogging up the system’: How 59 Iowans see the 2020 Democratic field"
+date:   2019-08-15 10:00:00
+slug: 2019-08-15-iowa-state-fair
+for_icon: washington-post.png
+show_on_homepage: true
+tease: true
+blurb: "We asked Iowa State Fairgoers to circle the candidates they could name."
+external_url: "https://www.washingtonpost.com/graphics/2019/politics/iowa-state-fair-candidate-recognition/"
+---
+

@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "The 10 areas where Mueller investigated Trump for obstruction"
+date:   2019-04-18 10:00:00
+slug: 2019-04-18-mueller-obstruction
+for_icon: washington-post.png
+show_on_homepage: false
+tease: false
+blurb: "Mueller did so even as he declined to make a traditional judgment about whether Trump committed a crime."
+external_url: "https://www.washingtonpost.com/graphics/2019/politics/mueller-obstruction-evidence/"
+---
+
