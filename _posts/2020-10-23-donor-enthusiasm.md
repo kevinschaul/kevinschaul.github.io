@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "Biden has surged ahead of Trump in donors – including in the states that matter most"
+date: 2020-10-23 10:00:00
+slug: 2020-10-23-donor-enthusaism
+for_icon: washington-post.png
+show_on_homepage: true
+tease: true
+blurb: ""
+external_url: "https://www.washingtonpost.com/graphics/2020/elections/donor-enthusiasm-biden-trump/"
+---
+
