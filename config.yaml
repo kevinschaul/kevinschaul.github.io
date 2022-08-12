@@ -9,7 +9,7 @@ preserveTaxonomyNames: true
 footnotereturnlinkcontents: ↩
 
 permalinks:
-  til: /note/:year/:month/:day/:slug/
+  til: /til/:year/:month/:day/:slug/
   archive: /post/:year/:month/:day/:slug/
 
 menu:

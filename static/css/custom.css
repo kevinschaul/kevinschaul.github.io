@@ -1,3 +1,52 @@
-.hljs {
-  padding: 1em;
+/* Home */
+.posts {
+  text-align: center;
+}
+.post {
+  display: inline-block;
+  width: 50%;
+  margin: 1em -2px 2em;
+  vertical-align: top;
+  text-align: left;
+}
+.post img {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+}
+.post:nth-child(2n - 1) {
+  padding-right: 1em;
+}
+.post:nth-child(2n) {
+  padding-left: 1em;
+}
+.post a {
+  border-bottom: 0;
+}
+.post .title {
+  line-height: 1.2;
+}
+.post .title a {
+  margin-right: 0.2em;
+}
+.post .title .date {
+  font-family: Arial, sans-serif;
+  font-size: 0.7em;
+  color: #999;
+  white-space: nowrap;
+}
+.post .blurb {
+  font-family: Arial, sans-serif;
+  font-size: 0.8em;
+  margin-top: 0.5em;
+}
+@media(max-width: 685px) {
+  .post {
+    width: 100%;
+  }
+  .post:nth-child(2n - 1),
+  .post:nth-child(2n) {
+    padding: 0;
+  }
 }

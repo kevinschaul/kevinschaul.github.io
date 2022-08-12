@@ -1,0 +1,33 @@
+---
+date: 2012-08-26 20:02:34+00:00
+layout: post
+slug: 2012-08-26-simple-solution-integrating-django-wordpress-rss
+title: A simple solution for integrating Django and WordPress RSS
+wordpress_id: 1024
+---
+
+
+
+<p>Today I am releasing <a href="https://github.com/kevinschaul/django-wordpress-rss">django-wordpress-rss</a> – a Django template tag for integrating Wordpress articles. It’s available today via <a href="http://pypi.python.org/pypi/django-wordpress-rss/0.1.0">PyPI</a>.</p>
+<p>This code was developed as an integral piece of the <a href="http://elections.seattletimes.com/">Seattle Times Election Guide</a>. I made it simple to dynamically pull in content based on a WordPress category.</p>
+<p>How simple?</p>
+<p>{% highlight bash linenos %}
+pip install django-wordpress-rss
+{% endhighlight %}</p>
+<p>{% highlight bash linenos %}
+WORDPRESS_RSS_BASE_URL = ‘<a href="http://www.kevinschaul.com" class="uri">http://www.kevinschaul.com</a>’
+{% endhighlight %}</p>
+{% highlight html linenos %}
+{% raw %}
+{% load wordpress_rss %}
+{% wordpress_rss rss_category 10 as rss_results %}
+<ul>
+{% for item in rss_results %}
+<li>
+<a href="{{ item.href }}">{{ item.title }}</a>
+</li>
+</ul>
+<p>{% endfor %}
+{% endraw %}
+{% endhighlight %}</p>
+<p>Have ideas for improvement? <a href="https://github.com/kevinschaul/django-wordpress-rss/issues">Open up an issue on GitHub</a>.</p>

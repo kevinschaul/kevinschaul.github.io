@@ -1,0 +1,18 @@
+---
+layout: post
+title:  "Depict - For automatically rendering d3.js fallback images"
+date:   2013-07-11 22:39:02
+slug: 2013-07-11-depict
+show_on_homepage: false
+blurb: Depict aims to easily render fallback images for complex visualizations. (IE 8, I'm looking at you.) Given a url and css selector, depict outputs a .png of the rendered element. With depict, charts based on living data can be rendered into flat images at regular intervals, no human interaction required.
+---
+
+
+
+<p>While standards-compliant browsers are gaining marketshare, most media organizations still must support Internet Explorer 8, in some fashion. Creating fallback images for svg elements is a pain (though much easier with the handy <a href="http://nytimes.github.io/svg-crowbar/">SVG Crowbar</a>).</p>
+<p>Wouldn’t it be great if a program could render out fallback images for SVGs automatically? <a href="https://github.com/kevinschaul/depict">Depict</a> aims to do just that.</p>
+<p>(Don’t get too excited; it still has a long way to go.)</p>
+<p>As it stands today, <code>depict</code> is a command-line tool that converts an SVG element into a .png image. Fill in a JavaScript function with some <a href="http://www.kevinschaul.com/2013/07/11/depict-automatically-rendering-d3-fallback-images/d3js.org">d3.js</a> code, and the script will do the rest.</p>
+<p>The depict package comes with <code>depict-init</code>, which sets up example code that works out of the box with <code>depict</code>.</p>
+<p>The tool isn’t especially useful today, but the potential is there. If you have any ideas or want to collaborate, let’s get in touch.</p>
+<p><a href="https://github.com/kevinschaul/depict">Depict on GitHub</a></p>
