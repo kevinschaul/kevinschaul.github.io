@@ -1,4 +1,5 @@
 .DS_Store
 .Rproj.user
+.Rhistory
 Thumbs.db
 .hugo_build.lock
