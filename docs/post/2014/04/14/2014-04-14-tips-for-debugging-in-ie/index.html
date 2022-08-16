@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Tips for debugging in Internet Explorer - Kevin Schaul</title>
+    <meta property="og:title" content="Tips for debugging in Internet Explorer - Kevin Schaul">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="Debugging in old browsers hurts. Here are some tips I use to ease the pain.
+[&amp;hellip;] Instead of having to keep old, rusty Windows XP/Vista/whatever laying around with specific versions of Internet &amp;hellip;">
+      <meta property="og:description" content="Debugging in old browsers hurts. Here are some tips I use to ease the pain.
+[&amp;hellip;] Instead of having to keep old, rusty Windows XP/Vista/whatever laying around with specific versions of Internet &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="post">
+    <header class="masthead">
+      <h1><a href="/">Kevin Schaul</a></h1>
+
+
+
+      <nav class="menu">
+  <input id="menu-check" type="checkbox" hidden/>
+  <label id="menu-label" for="menu-check" class="unselectable" hidden>
+    <span class="icon close-icon">✕</span>
+    <span class="icon open-icon">☰</span>
+    <span class="text">Menu</span>
+  </label>
+  <ul>
+  
+  
+  <li><a href="/contact/">Contact</a></li>
+  
+  <li><a href="/favorites/">Favorite links</a></li>
+  
+  <li><a href="/til/">Today I Learned</a></li>
+  
+  <li><a href="/post/">Archive</a></li>
+  
+  
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>Tips for debugging in Internet Explorer</h1>
+<h3>April 14, 2014</h3>
+<hr>
+
+      </header>
+
+
+
+
+
+
+
+
+<p>Debugging in old browsers hurts. Here are some tips I use to ease the pain.</p>
+<div id="use-virtual-machines" class="section level3">
+<h3>Use virtual machines</h3>
+<p>Instead of having to keep old, rusty Windows XP/Vista/whatever laying around
+with specific versions of Internet Explorer, just use virtual machines.
+It’s remarkably painless with <a href="https://www.virtualbox.org/">VirtualBox</a>
+and a fantastic script called <a href="https://github.com/xdissent/ievms"><code>ievms</code></a>.</p>
+<p><code>ievms</code> sets up VirtualBox with machines pre-installed with whichever versions
+of Internet Explorer you choose. Fair warning: It takes a solid amount of time
+to download and install everything.</p>
+</div>
+<div id="run-a-local-server-access-it-from-your-virtual-machines" class="section level3">
+<h3>Run a local server, access it from your virtual machines</h3>
+<p>The real power of virtual machines comes from creating pathways between them
+and the physical machine running them. To run a Python web server (from the
+command line):</p>
+<pre><code>$ python -m SimpleHTTPServer</code></pre>
+<p>Your content will be server at <a href="http://0.0.0.0:8000">http://0.0.0.0:8000</a>.</p>
+<p><em>Bonus tip</em>: Devices on the same network can access what you’re
+serving, too, making mobile debugging equally easy (read: still not that easy).
+Find your IP address (on OS X, it’s shown under <code>System Preferences</code> -&gt;
+<code>Network</code>), and visit
+<a href="http://your.ip.address.here:8000">http://your.ip.address.here:8000</a> from your
+phone.</p>
+</div>
+<div id="when-things-hopelessly-break-use-depict" class="section level3">
+<h3>When things hopelessly break, use Depict</h3>
+<p>A lot of new techniques for data visualization simply do not work in old
+versions of Internet Explorer. If all else fails,
+<a href="https://github.com/kevinschaul/depict"><code>depict</code></a> makes it easy to generate
+fallback images to replace the “broken” content.</p>
+<p><code>depict</code> takes a screenshot of a given HTML element. It can be used quite
+creatively, but in it’s simplest form looks something like this:</p>
+<pre><code>$ depict http://0.0.0.0:1337 complex-chart.png -s &#39;#chart&#39;</code></pre>
+<p>Those are all of my IE-debugging secrets. I’d love to hear yours.</p>
+</div>
+
+
+
+  <footer>
+    
+
+    
+  
+  
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/tex.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/js.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+  </footer>
+  </article>
+  </body>
+</html>

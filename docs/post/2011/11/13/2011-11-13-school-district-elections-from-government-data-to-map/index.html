@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>School district elections - From government data to map - Kevin Schaul</title>
+    <meta property="og:title" content="School district elections - From government data to map - Kevin Schaul">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="Note: This isn’t meant to be a tutorial. It’s merely a representation of the steps I had to take to produce this map, so that journalists can better understand the process. As has been said, it isn’t &amp;hellip;">
+      <meta property="og:description" content="Note: This isn’t meant to be a tutorial. It’s merely a representation of the steps I had to take to produce this map, so that journalists can better understand the process. As has been said, it isn’t &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="post">
+    <header class="masthead">
+      <h1><a href="/">Kevin Schaul</a></h1>
+
+
+
+      <nav class="menu">
+  <input id="menu-check" type="checkbox" hidden/>
+  <label id="menu-label" for="menu-check" class="unselectable" hidden>
+    <span class="icon close-icon">✕</span>
+    <span class="icon open-icon">☰</span>
+    <span class="text">Menu</span>
+  </label>
+  <ul>
+  
+  
+  <li><a href="/contact/">Contact</a></li>
+  
+  <li><a href="/favorites/">Favorite links</a></li>
+  
+  <li><a href="/til/">Today I Learned</a></li>
+  
+  <li><a href="/post/">Archive</a></li>
+  
+  
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>School district elections - From government data to map</h1>
+<h3>November 13, 2011</h3>
+<hr>
+
+      </header>
+
+
+
+
+
+
+
+
+<p><em>Note: This isn’t meant to be a tutorial. It’s merely a representation of the steps I had to take to produce <a href="http://www.minnpost.com/data/schoollevies/">this map</a>, so that journalists can better understand the process. As has been said, it isn’t magic, and more transparency helps everyone. I tried to authentically represent the complexity of this programming problem, and not over- or under-simplify it.</em></p>
+<p>This past week, I worked with election data for the first time. Beth Hawkins, education reporter at MinnPost, wanted to do something special for the school district levy election. She forwarded me a document from the Minnesota Secretary of State containing information about the then upcoming election. She was hoping for a way to display, on a map, which school districts passed their referendums.</p>
+<p>Simple, right?</p>
+<p><strong>Clean that data</strong></p>
+<p>Working with data is all about its transformation into information. Here’s a piece of the file <a href="http://electionresults.sos.state.mn.us/20111108/">from the state</a>.</p>
+<pre><code>MN;;;5031;SCHOOL DISTRICT QUESTION 1 (ISD #11);000011;9001;YES;;;NP;36;36;20698;63.03255474007900;32837
+MN;;;5031;SCHOOL DISTRICT QUESTION 1 (ISD #11);000011;9002;NO;;;NP;36;36;12139;36.96744525992000;32837
+MN;;;5032;SCHOOL DISTRICT QUESTION 2 (ISD #11);000011;9001;YES;;;NP;36;36;16580;50.59968871120300;32767
+MN;;;5032;SCHOOL DISTRICT QUESTION 2 (ISD #11);000011;9002;NO;;;NP;36;36;16187;49.40031128879600;32767
+MN;;;5033;SCHOOL DISTRICT QUESTION 3 (ISD #11);000011;9001;YES;;;NP;36;36;14725;45.00993428091000;32715
+MN;;;5033;SCHOOL DISTRICT QUESTION 3 (ISD #11);000011;9002;NO;;;NP;36;36;17990;54.99006571908900;32715</code></pre>
+<p>Luckily, they also provide files that explain what those numbers mean. Another file lays out codes for each school district.</p>
+<pre><code>11;ANOKA-HENNEPIN;2;Anoka
+11;ANOKA-HENNEPIN;27;Hennepin</code></pre>
+<p>If you piece these two together, you’ll find that these results are for Anoka-Hennepin School District (see the “000011” in each line above? That corresponds to the “11” in the second file).</p>
+<p>The other numbers represent the different votes (YES/NO), votes for, precincts reporting and a few other fields. We’re only interested in the percent of yes votes – since all the precincts have reported and the results are final, we can assume that 50 percent or above means the levy passed.</p>
+<p>But before we can jump into that, we need to turn the semicolon-delimited files into .csv files (a form of Excel spreadsheets). I created a csv file (questions-results.csv) that contained only a line of headings, so I could easily keep track of which number means what. I then appended ( “&gt;&gt;” ) the election results data to this file, making it a traditional .csv file with <a href="http://readthedocs.org/docs/csvkit/en/0.2.0/scripts/csvcut.html">csvcut</a>.</p>
+<pre><code>csvcut -d &#39;;&#39; school-questions-results.csv &gt;&gt; questions-results.csv</code></pre>
+<p>Now that the data is in proper format, it can be opened in Excel to be further examined (or if you’re a hardcore ninja like Jeff Guntzel, you can <a href="http://www.jsguntzel.com/skinnynotebook/2011/10/28/super-quick-data-audit-with-this-csvkit-shell-script/">perform an audit with his masterful script</a>).</p>
+<p><strong>Prep a shapefile</strong></p>
+<p>This data is useless unless we show our readers what’s interesting. I got the shapefile for Minesota school districts from <a href="http://www.census.gov/cgi-bin/geo/shapefiles2010/main">here</a> (if you ever need a shapefile, look here).</p>
+<p>I used the wonderful <a href="http://shpescape.com/">ShpEscape</a> site to convert the shapefile into a Google Fusion Table. For those following along at home, click on visualize -&gt; map to see the shapefile.</p>
+<p>I needed to join our election data with the shapefile stuff, so I exported the Fusion Table as a csv. Excel didn’t like the formatting, so I imported the csv into Google Docs as a spreadsheet. Here’s where the fun began.</p>
+<p>I discovered that the shapefile had an ID for each district, but it wasn’t the same ID as our election data. To make matters worse, the names didn’t closely match up, either.</p>
+<p>Sometimes a hacker has to give it up and do things manually. This was one of those times. I went through the election data file, adding a column with the election’s ID to each district in the shapefile.  Since it was something I knew I’d only have to do once, it wasn’t a huge deal.</p>
+<p>I exported this new file as a csv and wrote one of the craziest python scripts in my life.</p>
+<p><strong>What story can this data tell?</strong></p>
+<p>I met with our editor to figure out the best way to display the data. The school districts voted on different levies, some passed three, some passed one, some passed none. Since they didn’t vote on something universal, we decided to simple show the percentage of levies that each school district passed.</p>
+<p>My script looks at each line in the election results data, looping through the shapefile to find the corresponding district. Since each district voted on a different number of ballots and each on question was on its own line, I created a dict (python’s version of key/value pairs) and put all the data I cared about in it.</p>
+<p>I extracted two cases:</p>
+<ol style="list-style-type: decimal">
+<li><p>This is the first question that we are looking at for this district, so add the shapefile information and calculate the percent of yes/no votes (obviously 100 or 0).</p></li>
+<li><p>This is another question for the same district, so recalculate the percentage and add it to the information already established.</p></li>
+</ol>
+<p>Finally, I loop through the dict and write a new csv file. My final file had only the rows I wanted: geometry (shapefile info), name of school district, percent of levies passed, number of levies passed, and total number of levies voted on.</p>
+<p>This script is clearly not optimized, but since it’s only run once to generate the data, it really doesn’t matter.</p>
+<p><strong>Put this on the map</strong></p>
+<p>Finally, the data was ready to tell a story. I uploaded my new csv file into Fusion Tables, and Kaeti Hinck picked out some colors to display the different percentages. We then embedded it into our site.</p>
+<p><strong>Takeaway</strong></p>
+<p>Data journalism ins’t magic, and traditional journalists should know that. If you want to be better at your job, work to understand the process behind other fields, too.</p>
+<p>Obviously every programming problem is different, but this should be a nice insight to the process. Let’s start discussions in newsrooms to promote programming literacy.</p>
+<p>View the final map <a href="http://www.minnpost.com/data/schoollevies/">here</a>.</p>
+
+
+
+  <footer>
+    
+
+    
+  
+  
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/tex.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/js.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+  </footer>
+  </article>
+  </body>
+</html>

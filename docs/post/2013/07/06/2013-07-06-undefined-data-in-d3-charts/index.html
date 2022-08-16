@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Tutorial: Undefined data in d3 charts - Kevin Schaul</title>
+    <meta property="og:title" content="Tutorial: Undefined data in d3 charts - Kevin Schaul">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="As I began building charts for my first major New York Times interactive feature, A Nation of Wineries, I stumbled across a familiar problem: our data had large gaps in it, and the charts had to show &amp;hellip;">
+      <meta property="og:description" content="As I began building charts for my first major New York Times interactive feature, A Nation of Wineries, I stumbled across a familiar problem: our data had large gaps in it, and the charts had to show &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="post">
+    <header class="masthead">
+      <h1><a href="/">Kevin Schaul</a></h1>
+
+
+
+      <nav class="menu">
+  <input id="menu-check" type="checkbox" hidden/>
+  <label id="menu-label" for="menu-check" class="unselectable" hidden>
+    <span class="icon close-icon">✕</span>
+    <span class="icon open-icon">☰</span>
+    <span class="text">Menu</span>
+  </label>
+  <ul>
+  
+  
+  <li><a href="/contact/">Contact</a></li>
+  
+  <li><a href="/favorites/">Favorite links</a></li>
+  
+  <li><a href="/til/">Today I Learned</a></li>
+  
+  <li><a href="/post/">Archive</a></li>
+  
+  
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>Tutorial: Undefined data in d3 charts</h1>
+<h3>July 6, 2013</h3>
+<hr>
+
+      </header>
+
+
+
+
+
+
+
+
+<p>As I began building charts for my first major New York Times interactive feature, <a href="http://www.nytimes.com/interactive/2013/07/07/business/a-nation-of-wineries.html">A Nation of Wineries</a>, I stumbled across a familiar problem: our data had large gaps in it, and the charts had to show this.</p>
+<p>The problem is easy to solve for print; simply change the portion of the line where data is undefined to a dashed line. On the interactive web, though, such a solution isn’t as easy to implement.</p>
+<p>Without taking undefined data into consideration, a naive d3 implementation lies to its viewers:</p>
+<p><a href="http://bl.ocks.org/kevinschaul/5940443"><img src="take1.png" alt="Take 1" /></a></p>
+<p><em>Click image to view source</em></p>
+<p>Obviously, this is unacceptable. A better solution uses d3’s handy <a href="https://github.com/mbostock/d3/wiki/SVG-Shapes#wiki-line_defined">line.undefined property</a> to tell the truth:</p>
+<p><a href="http://bl.ocks.org/kevinschaul/5940451"><img src="take2.png" alt="Take 2" /></a></p>
+<p><em>Click image to view source</em></p>
+<p>Of course, we’d like to interpolate between these undefined values, and show an approximate path between the undefined years. Because of the way svg paths work, this isn’t an easy task. We can’t simply decide which points are defined, and give them a different class. We’ll have to draw multiple paths; one for defined points, and others for the undefined paths. Of course, these undefined paths have undefined values, so we must approximate them from the values we do have.</p>
+<p>That’s exactly what the function <a href="http://bl.ocks.org/kevinschaul/5940459#index.html"><code>findCriticalPoints</code></a> does. It loops through all the points on the chart, and decides which points are “critical,” i.e. which come just before or after a region of undefined points.</p>
+<p><a href="http://bl.ocks.org/kevinschaul/5940560"><img src="take3.png" alt="Take 3" /></a></p>
+<p><em>Click image to view source</em></p>
+<p>Using them, we can draw a path between undefined regions, and style it differently so our viewers can tell the difference.</p>
+<p><a href="http://bl.ocks.org/kevinschaul/5940459"><img src="take4.png" alt="Take 4" /></a></p>
+<p><em>Click image to view source</em></p>
+<p>Huzzah!</p>
+
+
+
+  <footer>
+    
+
+    
+  
+  
+
+  </footer>
+  </article>
+  </body>
+</html>
