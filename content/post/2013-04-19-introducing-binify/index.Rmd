@@ -17,7 +17,7 @@ A successful dot density map requires a specific data set. The points must be de
 
 Hexagon binning can alleviate these issues. In hexagon binning, a grid of a hexagons is placed over the extent of the points, and the number of points intersecting each shape is saved with the grid. The grid can then be visualized based on this accumulation, enabling better comparisons between dense areas of a dataset. Since there are no points, there is no overlapping. The locations of the individual points are replaced by a less fine-grain grid, revealing the interesting **–** and many times more pertinent **–** trend data.
 
-![Many dot density maps suffer from crowding of points. Binify uses hexagon binning to alleviate this pain and better display trends.]({{ site.url }}/assets/posts/2013-04-19-introducing-binify/binify-before-after.png)
+![Many dot density maps suffer from crowding of points. Binify uses hexagon binning to alleviate this pain and better display trends.](binify-before-after.png)
 
 Many dot density maps suffer from crowding of points. Binify uses hexagon binning to alleviate this pain and better display trends.
 

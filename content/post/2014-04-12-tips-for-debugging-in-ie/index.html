@@ -24,9 +24,7 @@ to download and install everything.</p>
 <p>The real power of virtual machines comes from creating pathways between them
 and the physical machine running them. To run a Python web server (from the
 command line):</p>
-<p>{% highlight bash %}
-$ python -m SimpleHTTPServer
-{% endhighlight %}</p>
+<pre><code>$ python -m SimpleHTTPServer</code></pre>
 <p>Your content will be server at <a href="http://0.0.0.0:8000">http://0.0.0.0:8000</a>.</p>
 <p><em>Bonus tip</em>: Devices on the same network can access what you’re
 serving, too, making mobile debugging equally easy (read: still not that easy).
@@ -43,8 +41,6 @@ versions of Internet Explorer. If all else fails,
 fallback images to replace the “broken” content.</p>
 <p><code>depict</code> takes a screenshot of a given HTML element. It can be used quite
 creatively, but in it’s simplest form looks something like this:</p>
-<p>{% highlight bash %}
-$ depict <a href="http://0.0.0.0:1337" class="uri">http://0.0.0.0:1337</a> complex-chart.png -s ‘#chart’
-{% endhighlight %}</p>
+<pre><code>$ depict http://0.0.0.0:1337 complex-chart.png -s &#39;#chart&#39;</code></pre>
 <p>Those are all of my IE-debugging secrets. I’d love to hear yours.</p>
 </div>

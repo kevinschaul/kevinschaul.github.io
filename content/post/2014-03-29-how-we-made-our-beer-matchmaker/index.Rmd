@@ -50,12 +50,12 @@ the code uses a version of the distance formula to find the closest match.
 
 In a two-dimensional world, the distance between two points is:
 
-![distance]({{ site.url }}/assets/posts/2014-03-29-how-we-made-our-beer-matchmaker/distance.gif)
+![distance](distance.gif)
 
 It's easy to expand the distance formula to a generic world of `n`
 dimensions:
 
-![distance-n]({{ site.url }}/assets/posts/2014-03-29-how-we-made-our-beer-matchmaker/distance-n.gif)
+![distance-n](distance-n.gif)
 
 Of course, our beer world had five dimensions: IBUs, SRM, Aroma, ABV, and Body.
 Since these attributes had different ranges, we first had to normalize them.
@@ -63,7 +63,7 @@ Otherwise, a 10-point difference in IBUs would mask a 0.10 difference in ABV,
 though the latter is more substantial.
 
 The mathematics in JavaScript:
-{% highlight javascript linenos %}
+```
 // Distances will be saved in a two-dimensional array. The first
 // dimension will be the source node, and the second will be the
 // destination. The value will be the distance between them.
@@ -80,7 +80,7 @@ _.each(normalized, function(src) {
     );
   });
 });
-{% endhighlight %}
+```
 
 Visualizing the data was simple with
 [`d3.starPlot()`](https://github.com/kevinschaul/d3-star-plot), which I refined
@@ -88,7 +88,7 @@ over the course of the project. To introduce readers to this type of chart, we
 live-visualized their attribute choices. On slider `change`, I called the
 following function:
 
-{% highlight javascript linenos %}
+```
 function updateCustomChart() {
   innerChart
     .datum({
@@ -105,7 +105,7 @@ function updateCustomChart() {
       return srmColor(d.srm);
     });
 }
-{% endhighlight %}
+```
 
 It&rsquo;s pretty simple, but to fun (and surprisingly helpful) effect. I leave
 building a national version as an exercise for the reader.

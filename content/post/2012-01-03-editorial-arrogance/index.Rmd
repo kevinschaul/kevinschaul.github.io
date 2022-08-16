@@ -31,7 +31,7 @@ Yes, to a point. But I doubt they would make a huge difference. We can all think
 
 Take a look at the [USA Today college](http://www.usatodayeducate.com/staging/) home page:
 
-![USA Today]({{ site.url }}/assets/posts/2012-01-03-editorial-arrogance/usa-today.png)
+![USA Today](usa-today.png)
 
 Have you ever seen stories like this placed prominently in a decent print newspaper?
 

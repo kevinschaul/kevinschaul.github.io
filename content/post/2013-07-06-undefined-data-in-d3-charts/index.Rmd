@@ -13,13 +13,13 @@ The problem is easy to solve for print; simply change the portion of the line wh
 
 Without taking undefined data into consideration, a naive d3 implementation lies to its viewers:
 
-[![Take 1]({{ site.url }}/assets/posts/2013-07-06-undefined-data-in-d3-charts/take1.png)](http://bl.ocks.org/kevinschaul/5940443)
+[![Take 1](take1.png)](http://bl.ocks.org/kevinschaul/5940443)
 
 _Click image to view source_
 
 Obviously, this is unacceptable. A better solution uses d3's handy [line.undefined property](https://github.com/mbostock/d3/wiki/SVG-Shapes#wiki-line_defined) to tell the truth:
 
-[![Take 2]({{ site.url }}/assets/posts/2013-07-06-undefined-data-in-d3-charts/take2.png)](http://bl.ocks.org/kevinschaul/5940451)
+[![Take 2](take2.png)](http://bl.ocks.org/kevinschaul/5940451)
 
 _Click image to view source_
 
@@ -27,13 +27,13 @@ Of course, we'd like to interpolate between these undefined values, and show an 
 
 That's exactly what the function [`findCriticalPoints`](http://bl.ocks.org/kevinschaul/5940459#index.html) does. It loops through all the points on the chart, and decides which points are "critical," i.e. which come just before or after a region of undefined points.
 
-[![Take 3]({{ site.url }}/assets/posts/2013-07-06-undefined-data-in-d3-charts/take3.png)](http://bl.ocks.org/kevinschaul/5940560)
+[![Take 3](take3.png)](http://bl.ocks.org/kevinschaul/5940560)
 
 _Click image to view source_
 
 Using them, we can draw a path between undefined regions, and style it differently so our viewers can tell the difference.
 
-[![Take 4]({{ site.url }}/assets/posts/2013-07-06-undefined-data-in-d3-charts/take4.png)](http://bl.ocks.org/kevinschaul/5940459)
+[![Take 4](take4.png)](http://bl.ocks.org/kevinschaul/5940459)
 
 _Click image to view source_
 

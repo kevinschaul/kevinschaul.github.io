@@ -1,0 +1,12 @@
+<div class="post">
+  {{ if .Params.tease }}
+    <div class="tease">
+      <a {{ if .Params.external_url }} target="_blank" {{ end }} href="{{ if .Params.external_url }}{{ .Params.external_url }}{{ else }}{{ .RelPermalink }}{{ end }}"><img src="{{ .RelPermalink }}tease.png" /></a>
+    </div>
+  {{ end }}
+  
+  <div class="title">
+    <a {{ if .Params.external_url }} target="_blank" {{ end }} href="{{ if .Params.external_url }}{{ .Params.external_url }}{{ else }}{{ .RelPermalink }}{{ end }}">{{ .Title }}</a>
+    <span class="date">{{ .Date.Format "January 2, 2006" }}</span>
+  </div>
+</div>

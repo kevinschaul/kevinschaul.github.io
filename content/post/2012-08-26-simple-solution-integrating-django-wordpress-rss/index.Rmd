@@ -12,26 +12,26 @@ This code was developed as an integral piece of the [Seattle Times Election Guid
 
 How simple?
 
-{% highlight bash linenos %}
+```
 pip install django-wordpress-rss
-{% endhighlight %}
+```
 
     
-{% highlight bash linenos %}
+```
 WORDPRESS_RSS_BASE_URL = 'http://www.kevinschaul.com'
-{% endhighlight %}
+```
 
     
-{% highlight html linenos %}
-{% raw %}
-{% load wordpress_rss %}
-{% wordpress_rss rss_category 10 as rss_results %}
-<ul>{% for item in rss_results %}
+```
+```
+```
+```
+<ul>```
     <li><a href="{{ item.href }}">{{ item.title }}</a></li>
 </ul>
-{% endfor %}
-{% endraw %}
-{% endhighlight %}
+```
+```
+```
 
 Have ideas for improvement? [Open up an issue on GitHub](https://github.com/kevinschaul/django-wordpress-rss/issues).
 

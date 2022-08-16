@@ -1,0 +1,29 @@
+{{ partial "header.html" . }}
+
+{{ .Content }}
+
+<p>
+  <b>Browse by topic:</b>&nbsp;
+  {{ range .Site.Taxonomies.tags }}
+    <a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a>&nbsp;({{ .Count }})&nbsp;&nbsp;
+  {{ end }}
+</p>
+
+{{ if .IsHome }}
+{{ $.Scratch.Set "pages" .Site.RegularPages }}
+{{ else }}
+{{ $.Scratch.Set "pages" .Pages }}
+{{ end }}
+
+<h3>Recent TILs</h3>
+
+<ul>
+  {{ range (where ($.Scratch.Get "pages") "Section" "!=" "") }}
+  <li>
+    <span class="date">{{ .Date.Format "January 2, 2006" }}</span>
+    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+  </li>
+  {{ end }}
+</ul>
+
+{{ partial "footer.html" . }}

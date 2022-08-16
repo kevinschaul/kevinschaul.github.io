@@ -8,7 +8,7 @@ wordpress_id: 1016
 
 Ten short weeks ago, I walked through this same airport. I was apprehensive of the situation: [A brand new city](http://storify.com/laurenmichell/a-midwesterners-impressions-of-the-pacific-northwe), a new job, not a soul within 20 hours' drive that I personally knew. I put my Midwestern life on hold in pursuit of a strange career.
 
-![Lauren Rabaino with sad coffee]({{ site.url }}/assets/posts/2012-08-25-stay-classy-seattle/lauren.jpg)  
+![Lauren Rabaino with sad coffee](lauren.jpg)  
 
 The Seattle Times is an intimidating place to a 20-year-old computer science major. It all seemed so frantic. (Not to mention, I can't say how many times I had to timidly ask for directions to a meeting.)
 

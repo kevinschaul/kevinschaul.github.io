@@ -1,16 +1,16 @@
-baseurl: /
+baseurl: https://www.kschaul.com/
 languageCode: en-us
 title: Kevin Schaul
 theme: "hugo-ivy"
-googleAnalytics: ""
-disqusShortname: ""
 ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\\.md$"]
-preserveTaxonomyNames: true
 footnotereturnlinkcontents: ↩
 
 permalinks:
   til: /til/:year/:month/:day/:slug/
-  archive: /post/:year/:month/:day/:slug/
+  post: /post/:year/:month/:day/:slug/
+
+taxonomies:
+  tag: tags
 
 menu:
   main:
@@ -23,7 +23,7 @@ menu:
     - name: "Today I Learned"
       url: "/til/"
       weight: 3
-    - name: "Posts"
+    - name: "Archive"
       url: "/post/"
       weight: 4
 
@@ -31,7 +31,7 @@ params:
   description: ""
   footer: ""
   highlightjsCDN: "//cdn.bootcss.com"
-  highlightjsLang: ["r", "yaml", "tex"]
+  highlightjsLang: ["r", "yaml", "tex", "js"]
   highlightjsTheme: "github"
   highlightjsVersion: "9.12.0"
 
@@ -39,3 +39,4 @@ markup:
   goldmark:
     renderer:
       unsafe: true
+

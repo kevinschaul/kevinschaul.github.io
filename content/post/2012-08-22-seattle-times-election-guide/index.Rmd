@@ -20,11 +20,11 @@ The Seattle Times 2012 election guide was built to encourage better voter litera
 
 It's informative. It's local. It's responsive. It has the most beautiful iOS icon ever. (Credit Lauren Rabaino for that gem.)
 
-![iphone-screenshot]({{ site.url }}/assets/posts/2012-08-22-seattle-times-election-guide/iphone-screenshot.png)
+![iphone-screenshot](iphone-screenshot.png)
 
 It's a new form of journalism, a new way to bring value to the digital platform, a new way to present facts. It's a working example of what can happen with a healthy balance of direction and freedom to experiment.
 
-![desktop-screenshot]({{ site.url }}/assets/posts/2012-08-22-seattle-times-election-guide/desktop-screenshot.png)
+![desktop-screenshot](desktop-screenshot.png)
 
 It's the product of something journalism won't be saved without taking: a calculated risk.
 
