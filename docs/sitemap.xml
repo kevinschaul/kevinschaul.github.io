@@ -2,19 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://www.kschaul.com/til/2022/08/15/create-a-new-til/</loc>
-    <lastmod>2022-08-15T00:00:00+00:00</lastmod>
+    <loc>https://www.kschaul.com/til/2022/08/18/caching-r-code-with-cache-rds/</loc>
+    <lastmod>2022-08-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/</loc>
-    <lastmod>2022-08-15T00:00:00+00:00</lastmod>
+    <lastmod>2022-08-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/tags/r/</loc>
-    <lastmod>2022-08-15T00:00:00+00:00</lastmod>
+    <lastmod>2022-08-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/tags/</loc>
-    <lastmod>2022-08-15T00:00:00+00:00</lastmod>
+    <lastmod>2022-08-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/til/</loc>
+    <lastmod>2022-08-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/til/2022/08/15/create-a-new-til/</loc>
     <lastmod>2022-08-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/post/2022/02/16/housing-market-investors/</loc>
