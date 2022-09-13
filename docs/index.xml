@@ -6,7 +6,18 @@
     <description>Recent content in Home on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 13 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Coloring emoji/unicode characters on iOS Safari</title>
+      <link>https://www.kschaul.com/til/2022/09/13/coloring-emoji-unicode-characters-on-ios-safari/</link>
+      <pubDate>Tue, 13 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2022/09/13/coloring-emoji-unicode-characters-on-ios-safari/</guid>
+      <description>Unicode characters such as ■ (black square U+25A0) can be super useful to use for icons without needing to load an icon font. And they can typically be styled using CSS, like: color: steelblue;.
+But on iOS safari (and likely Android and other devices), these are rendered in the cartooney, emoji style — which means trying to color them with CSS doesn’t work.
+Fortunately there is an easy (but cryptic) fix: Simply append &amp;amp;#xFE0E; immediately following your unicode character, like ■&amp;amp;#xFE0E;.</description>
+    </item>
+    
     <item>
       <title>Caching R code with cache_rds()</title>
       <link>https://www.kschaul.com/til/2022/08/18/caching-r-code-with-cache-rds/</link>
