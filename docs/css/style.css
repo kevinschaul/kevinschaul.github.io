@@ -42,7 +42,6 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: 32px;
-  font-weight: normal;
 }
 
 h2 {
@@ -101,7 +100,6 @@ li {
 a {
   color: black;
   text-decoration: none;
-  padding-bottom: 2px;
   border-bottom: 1px solid;
 }
 
@@ -178,6 +176,7 @@ body {
   text-align: right;
   font-size: 46px;
   line-height: 58px;
+  font-weight: 300;
 }
 
 .masthead h1 a {
@@ -208,19 +207,12 @@ body {
   content: "•\00a\000a0\00a0"
 }
 
-#menu-check {
-  display: none;
-}
-
-#menu-label {
-  display: none;
-}
-
 /* Main */
 
 .main .title h1 {
   margin-top: 0;
   margin-bottom: 40px;
+  font-weight: bold;
 }
 
 .title h3 {
@@ -304,23 +296,23 @@ thead, tfoot, tr:nth-child(even) {
   .masthead {
     width: auto;
     float: none;
-    padding: 20px 0 60px;
-    text-align: center;
+    padding: 20px 0 20px;
     margin-left: 10px;
     margin-right: 10px;
-    border-bottom: 3px solid black;
   }
 
   .main {
     width: auto;
-    padding: 40px 10px;
+    padding: 20px 10px;
     margin-left: 0;
     border-left: none;
     min-height: auto;
   }
 
   .masthead h1 {
-    text-align: center;
+    text-align: left;
+    font-size: 2.4rem;
+    margin-bottom: 16px;
   }
 
   .masthead .tagline {
@@ -329,99 +321,34 @@ thead, tfoot, tr:nth-child(even) {
 
   .masthead .menu {
     direction: ltr;
-    max-width: 300px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-right: 0;
   }
 
   .masthead .menu ul {
     text-align: left;
     margin: 0;
     padding: 0;
-  }
-
-  .masthead .menu ul ul {
-    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    max-width: 440px;
+    font-size: 14px;
   }
 
   .masthead .menu li {
-    border-bottom: 1px solid;
     list-style: none;
     margin: 0;
     padding: 0;
+    white-space: nowrap;
   }
-
-  .masthead .menu li:first-child {
-    border-top: 1px solid;
+  
+  .title h1 {
+    text-align: left;
   }
-
-  .masthead .menu li li:last-child {
-    border-bottom: none;
-  }
-
-  .masthead .menu a {
-    display: block;
-    padding: 15px 20px;
-    border-bottom: none;
-  }
-
-  .masthead .menu li li a {
-    padding-left: 30px;
-  }
-
-  .masthead .menu li li::before {
-    content: none;
-  }
-
-  .masthead .menu li li a::before {
-    content: "•\00a0\00a0\00a0";
-  }
-
-  #menu-label {
-    display: inline-block;
-    padding: 0 20px;
-    height: 50px;
-    border: 1px solid;
-    cursor: pointer;
-    line-height: 50px;
-    color: #333;
-    font-size: 20px;
-    margin-top: 10px;
-  }
-
-  #menu-label:hover, #menu-label:focus {
-    border: 1px solid #888;
-  }
-
-  #menu-label .icon {
-    padding-right: 8px;
-    width: 30px;
-  }
-
-  #menu-check ~ label .close-icon {
-    display: none;
-  }
-
-  #menu-check ~ label .open-icon {
-    display: inline-block;
-  }
-
-  #menu-check:checked ~ label .close-icon {
-    display: inline-block;
-  }
-
-  #menu-check:checked ~ label .open-icon {
-    display: none;
-  }
-
-  #menu-check ~ ul {
-    display: none;
-  }
-
-  #menu-check:checked ~ ul {
-    display: block;
-    margin-top: 50px;
-    margin-bottom: 0;
+  
+  hr {
+    max-width: none;
   }
 }
 
