@@ -9,4 +9,10 @@
     <a {{ if .Params.external_url }} target="_blank" {{ end }} href="{{ if .Params.external_url }}{{ .Params.external_url }}{{ else }}{{ .RelPermalink }}{{ end }}">{{ .Title }}</a>
     <span class="date">{{ .Date.Format "January 2, 2006" }}</span>
   </div>
+  
+  {{ if not .Params.tease }}
+    {{ if .Params.blurb }}
+      <div class="blurb">{{ .Params.blurb }}</div>
+    {{ end }}
+  {{ end }}
 </div>

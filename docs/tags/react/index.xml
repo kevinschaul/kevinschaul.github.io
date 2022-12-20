@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>React on Kevin Schaul</title>
+    <link>https://www.kschaul.com/tags/react/</link>
+    <description>Recent content in React on Kevin Schaul</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 19 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.kschaul.com/tags/react/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Writing D3 in React with an escape hatch</title>
+      <link>https://www.kschaul.com/til/2022/12/19/writing-d3-in-react-with-an-escape-hatch/</link>
+      <pubDate>Mon, 19 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2022/12/19/writing-d3-in-react-with-an-escape-hatch/</guid>
+      <description>Most of The Washington Post has moved to React for site rendering. This is hugely beneficial overall but for many graphics reporters it’s yet another thing to learn to get stories published.
+It’s already overwhelming to learn HTML/CSS/JS, data analysis, some way to build charts, some mapping tool. I’m interested in lowering the barriers to entry for this field.
+Fortunately there’s a fairly simple pattern we can build into our tooling to bring back some simplicity of the pre-React frontend development.</description>
+    </item>
+    
+  </channel>
+</rss>

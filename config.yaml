@@ -28,6 +28,8 @@ menu:
       url: "/post/"
       weight: 4
 
+rssLimit: 10
+
 params:
   description: ""
   footer: ""

@@ -6,13 +6,31 @@
     <description>Recent content in Tags on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.kschaul.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 19 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.kschaul.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>D3</title>
+      <link>https://www.kschaul.com/tags/d3/</link>
+      <pubDate>Mon, 19 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.kschaul.com/tags/d3/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>frontend</title>
       <link>https://www.kschaul.com/tags/frontend/</link>
-      <pubDate>Tue, 13 Sep 2022 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 19 Dec 2022 00:00:00 +0000</pubDate>
       
       <guid>https://www.kschaul.com/tags/frontend/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>React</title>
+      <link>https://www.kschaul.com/tags/react/</link>
+      <pubDate>Mon, 19 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.kschaul.com/tags/react/</guid>
       <description></description>
     </item>
     

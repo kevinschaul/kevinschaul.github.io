@@ -10,4 +10,4 @@ He grew up in the Windy City suburbs of Gurnee and Lake Forest, where he develop
 
 * [GitHub](https://www.github.com/kevinschaul)
 * [Washington Post archive](https://www.washingtonpost.com/people/kevin-schaul/)
-* [@kevinschaul on Twitter](https://www.twitter.com/kevinschaul)
+* [RSS](/index.xml)

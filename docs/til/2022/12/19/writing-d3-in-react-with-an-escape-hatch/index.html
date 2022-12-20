@@ -1,0 +1,266 @@
+
+
+  <!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Writing D3 in React with an escape hatch - Kevin Schaul</title>
+    <meta property="og:title" content="Writing D3 in React with an escape hatch - Kevin Schaul">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="Most of The Washington Post has moved to React for site rendering. This is hugely beneficial overall but for many graphics reporters it’s yet another thing to learn to get stories published.
+It’s &amp;hellip;">
+      <meta property="og:description" content="Most of The Washington Post has moved to React for site rendering. This is hugely beneficial overall but for many graphics reporters it’s yet another thing to learn to get stories published.
+It’s &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+
+    <style> @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;800&display=swap'); </style>
+    
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="til">
+    <header class="masthead">
+      <h1><a href="/">Kevin Schaul</a></h1>
+
+
+
+      <nav class="menu">
+  <ul>
+  
+  
+  <li><a href="/contact/">Contact</a></li>
+  
+  <li><a href="/favorites/">Favorite links</a></li>
+  
+  <li><a href="/til/">Today I Learned</a></li>
+  
+  <li><a href="/post/">Archive</a></li>
+  
+  
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>Writing D3 in React with an escape hatch</h1>
+<h3>December 19, 2022</h3>
+
+      </header>
+
+  
+  
+  
+  
+  
+
+
+<p>Most of The Washington Post has moved to React for site rendering. This is hugely beneficial overall but for many graphics reporters it’s yet another thing to learn to get stories published.</p>
+<p>It’s already overwhelming to learn HTML/CSS/JS, data analysis, some way to build charts, some mapping tool. I’m interested in lowering the barriers to entry for this field.</p>
+<p>Fortunately there’s a fairly simple pattern we can build into our tooling to bring back some simplicity of the pre-React frontend development.</p>
+<p>Here are the React bits:</p>
+<pre class="js"><code>// EscapedChart.js
+
+import React, { useEffect, useRef } from &#39;react&#39;
+
+// chart.js is the file that&#39;ll use d3 to render a chart
+import chart from &#39;./chart.js&#39;
+
+const EscapedChart = props =&gt; {
+  const ref = useRef(null)
+  
+  useEffect(() =&gt; {
+    // Store a local version of the element
+    const el = ref.current
+    
+    // Run the `chart.js` file&#39;s default function
+    chart(el)
+    
+    // As a cleanup, set the element&#39;s contents to be the empty string
+    // This is helpful for hot reloading
+    return function cleanup() {
+      el.innerHTML = &#39;&#39;
+    }
+  }, [])
+  
+  return &lt;div ref={ref} /&gt;
+}
+export default EscapedChart</code></pre>
+<script type="text/javascript">
+// EscapedChart.js
+
+import React, { useEffect, useRef } from 'react'
+
+// chart.js is the file that'll use d3 to render a chart
+import chart from './chart.js'
+
+const EscapedChart = props => {
+  const ref = useRef(null)
+  
+  useEffect(() => {
+    // Store a local version of the element
+    const el = ref.current
+    
+    // Run the `chart.js` file's default function
+    chart(el)
+    
+    // As a cleanup, set the element's contents to be the empty string
+    // This is helpful for hot reloading
+    return function cleanup() {
+      el.innerHTML = ''
+    }
+  }, [])
+  
+  return <div ref={ref} />
+}
+export default EscapedChart
+</script>
+<p>And here’s the part our graphics reporters can write d3 (or whatever) in:</p>
+<pre class="js"><code>// chart.js
+
+export default function chart(el) {
+  // `el` is the element to put your chart in! go nuts with it
+}</code></pre>
+<script type="text/javascript">
+// chart.js
+
+export default function chart(el) {
+  // `el` is the element to put your chart in! go nuts with it
+}
+</script>
+<p>The code within the <code>chart</code> function should run just once – React should not need to touch that div.</p>
+<p>A more full example shows how to write d3 within React, without needing to know React:</p>
+<pre class="js"><code>// chart.js
+
+import { select } from &#39;d3-selection&#39;
+import { scaleLinear } from &#39;d3-scale&#39;
+
+export default function chart(el) {
+  const { width } = el.getBoundingClientRect()
+  const height = 50
+  
+  const data = [1, 2, 3, 5, 4]
+  const barWidth = width / data.length
+  
+  const svg = select(el)
+    .append(&#39;svg&#39;)
+    .attr(&#39;width&#39;, width)
+    .attr(&#39;height&#39;, height)
+  
+  const y = scaleLinear()
+    .domain([0, 5])
+    .range([0, height])
+
+  svg.selectAll(&#39;rect&#39;)
+    .data(data)
+    .enter().append(&#39;rect&#39;)
+    .attr(&#39;x&#39;, (d, i) =&gt; i * barWidth)
+    .attr(&#39;width&#39;, barWidth)
+    .attr(&#39;y&#39;, d =&gt; height - y(d))
+    .attr(&#39;height&#39;, d =&gt; y(d))
+}</code></pre>
+<script type="text/javascript">
+// chart.js
+
+import { select } from 'd3-selection'
+import { scaleLinear } from 'd3-scale'
+
+export default function chart(el) {
+  const { width } = el.getBoundingClientRect()
+  const height = 50
+  
+  const data = [1, 2, 3, 5, 4]
+  const barWidth = width / data.length
+  
+  const svg = select(el)
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height)
+  
+  const y = scaleLinear()
+    .domain([0, 5])
+    .range([0, height])
+
+  svg.selectAll('rect')
+    .data(data)
+    .enter().append('rect')
+    .attr('x', (d, i) => i * barWidth)
+    .attr('width', barWidth)
+    .attr('y', d => height - y(d))
+    .attr('height', d => y(d))
+}
+</script>
+<p>That code is a lot friendlier looking to graphics folks than a bunch of refs and calls to <code>useEffect()</code>, I think.</p>
+
+  
+  
+    <footer>
+    
+    <p>
+      <i>
+      Tags:
+      
+        <a href="https://www.kschaul.com/tags/d3/">D3</a>&nbsp;
+      
+        <a href="https://www.kschaul.com/tags/react/">React</a>&nbsp;
+      
+        <a href="https://www.kschaul.com/tags/frontend/">frontend</a>&nbsp;
+      
+      </i>
+    </p>
+    
+
+    
+  
+  
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/tex.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/js.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+  </footer>
+  </article>
+  </body>
+</html>
+

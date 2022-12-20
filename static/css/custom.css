@@ -39,6 +39,7 @@
 .posts .post .blurb {
   font-family: Arial, sans-serif;
   font-size: 0.8em;
+  line-height: 1.4em;
   margin-top: 0.5em;
 }
 @media(max-width: 685px) {
