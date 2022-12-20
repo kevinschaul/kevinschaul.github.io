@@ -329,9 +329,8 @@ thead, tfoot, tr:nth-child(even) {
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 8px 24px;
     max-width: 440px;
     font-size: 14px;
   }
