@@ -6,7 +6,18 @@
     <description>Recent content on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Extract mbtiles into zxy files with tippecanoe</title>
+      <link>https://www.kschaul.com/til/2022/12/29/extract-mbtiles-to-zxy-files-with-tippecanoe/</link>
+      <pubDate>Thu, 29 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2022/12/29/extract-mbtiles-to-zxy-files-with-tippecanoe/</guid>
+      <description>The next time you need to extract an .mbtiles file into tile files, reach for tippecanoe. I’ve used it often for creating .mbtiles files but not for extracting tiles out of them.
+It turns out you can the embedded command tile-join for this task:
+$ tile-join --force --no-tile-compression --no-tile-size-limit --output-to-directory tiles 2017-07-03_north-america.mbtiles --minimum-zoom 6 --maximum-zoom 10 h/t yuiseki</description>
+    </item>
+    
     <item>
       <title>Writing D3 in React with an escape hatch</title>
       <link>https://www.kschaul.com/til/2022/12/19/writing-d3-in-react-with-an-escape-hatch/</link>
@@ -93,15 +104,6 @@ library(blogdown) blogdown::new_post(&amp;#39;your-new-til-slug-here&amp;#39;, k
       <pubDate>Sun, 03 Oct 2021 10:00:00 +0000</pubDate>
       
       <guid>https://www.washingtonpost.com/business/interactive/2021/pandora-papers-offshore-finance/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>DeJoy’s USPS slowdown plan will delay the mail. What’s it mean for your Zip code?</title>
-      <link>https://www.washingtonpost.com/business/interactive/2021/dejoy-usps-delays-by-zip-code-map/</link>
-      <pubDate>Thu, 24 Jun 2021 10:00:00 +0000</pubDate>
-      
-      <guid>https://www.washingtonpost.com/business/interactive/2021/dejoy-usps-delays-by-zip-code-map/</guid>
       <description></description>
     </item>
     

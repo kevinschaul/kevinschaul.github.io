@@ -1,0 +1,128 @@
+
+
+  <!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Extract mbtiles into zxy files with tippecanoe - Kevin Schaul</title>
+    <meta property="og:title" content="Extract mbtiles into zxy files with tippecanoe - Kevin Schaul">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="The next time you need to extract an .mbtiles file into tile files, reach for tippecanoe. I’ve used it often for creating .mbtiles files but not for extracting tiles out of them.
+It turns out you can &amp;hellip;">
+      <meta property="og:description" content="The next time you need to extract an .mbtiles file into tile files, reach for tippecanoe. I’ve used it often for creating .mbtiles files but not for extracting tiles out of them.
+It turns out you can &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+
+    <style> @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;800&display=swap'); </style>
+    
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="til">
+    <header class="masthead">
+      <h1><a href="/">Kevin Schaul</a></h1>
+
+
+
+      <nav class="menu">
+  <ul>
+  
+  
+  <li><a href="/contact/">Contact</a></li>
+  
+  <li><a href="/favorites/">Favorite links</a></li>
+  
+  <li><a href="/til/">Today I Learned</a></li>
+  
+  <li><a href="/post/">Archive</a></li>
+  
+  <li><a href="/til/2022/12/29/extract-mbtiles-to-zxy-files-with-tippecanoe/">RSS</a></li>
+<li style="display: none;"><a rel="me" href="https://mastodon.garden/@kevinschaul">Mastodon</a></li>
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>Extract mbtiles into zxy files with tippecanoe</h1>
+<h3>December 29, 2022</h3>
+
+      </header>
+
+  
+  
+  
+  
+  <p>The next time you need to extract an .mbtiles file into tile files, reach for <a href="https://github.com/mapbox/tippecanoe">tippecanoe</a>. I’ve used it often for creating .mbtiles files but not for extracting tiles out of them.</p>
+<p>It turns out you can the embedded command <a href="https://github.com/mapbox/tippecanoe#tile-join"><code>tile-join</code></a> for this task:</p>
+<pre tabindex="0"><code>$ tile-join --force --no-tile-compression --no-tile-size-limit --output-to-directory tiles 2017-07-03_north-america.mbtiles --minimum-zoom 6 --maximum-zoom 10
+</code></pre><p>h/t <a href="https://scrapbox.io/yuiseki/How_to_create_your_own_vector_tile_web_maps">yuiseki</a></p>
+
+  
+  
+    <footer>
+    
+    <p>
+      <i>
+      Tags:
+      
+        <a href="https://www.kschaul.com/tags/gis/">gis</a>&nbsp;
+      
+      </i>
+    </p>
+    
+
+    
+  
+  
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/tex.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/languages/js.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+  </footer>
+  </article>
+  </body>
+</html>
+
