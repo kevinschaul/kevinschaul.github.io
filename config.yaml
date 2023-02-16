@@ -5,6 +5,7 @@ theme: "hugo-ivy"
 ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\\.md$"]
 footnotereturnlinkcontents: ↩
 publishDir: docs
+timeZone: America/Chicago
 
 permalinks:
   til: /til/:year/:month/:day/:slug/

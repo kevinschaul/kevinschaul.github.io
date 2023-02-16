@@ -6,11 +6,11 @@
     <description>Recent content in R on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.kschaul.com/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 18 Aug 2022 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/tags/r/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Caching R code with cache_rds()</title>
       <link>https://www.kschaul.com/til/2022/08/18/caching-r-code-with-cache-rds/</link>
-      <pubDate>Thu, 18 Aug 2022 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 18 Aug 2022 00:00:00 -0500</pubDate>
       
       <guid>https://www.kschaul.com/til/2022/08/18/caching-r-code-with-cache-rds/</guid>
       <description>If you&amp;rsquo;ve got R code that takes a while to run (a query? complex analysis?), check out the fantastic cache_rds() function from Yihui Xie’s xfun package.
@@ -22,7 +22,7 @@ cbsa_pop &amp;lt;- cache_rds({ get_decennial(geography=&amp;#39;cbsa&amp;#39;, v
     <item>
       <title>Create a new TIL</title>
       <link>https://www.kschaul.com/til/2022/08/15/create-a-new-til/</link>
-      <pubDate>Mon, 15 Aug 2022 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 15 Aug 2022 00:00:00 -0500</pubDate>
       
       <guid>https://www.kschaul.com/til/2022/08/15/create-a-new-til/</guid>
       <description>To create a new TIL post using blogdown/Hugo:

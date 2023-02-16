@@ -6,11 +6,11 @@
     <description>Recent content in React on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.kschaul.com/tags/react/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 19 Dec 2022 00:00:00 -0600</lastBuildDate><atom:link href="https://www.kschaul.com/tags/react/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Writing D3 in React with an escape hatch</title>
       <link>https://www.kschaul.com/til/2022/12/19/writing-d3-in-react-with-an-escape-hatch/</link>
-      <pubDate>Mon, 19 Dec 2022 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 19 Dec 2022 00:00:00 -0600</pubDate>
       
       <guid>https://www.kschaul.com/til/2022/12/19/writing-d3-in-react-with-an-escape-hatch/</guid>
       <description>Most of The Washington Post has moved to React for site rendering. This is hugely beneficial overall but for many graphics reporters it’s yet another thing to learn to get stories published.

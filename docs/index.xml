@@ -6,11 +6,21 @@
     <description>Recent content on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 16 Feb 2023 00:00:00 -0600</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How The Post is replacing Mapbox with open source solutions</title>
+      <link>https://www.kschaul.com/post/2023/02/16/how-the-post-is-replacing-mapbox-with-open-source-solutions/</link>
+      <pubDate>Thu, 16 Feb 2023 00:00:00 -0600</pubDate>
+      
+      <guid>https://www.kschaul.com/post/2023/02/16/how-the-post-is-replacing-mapbox-with-open-source-solutions/</guid>
+      <description>Last week I published a story for The Washington Post that required an interactive slippy map. Lookup maps like this are a common pattern to show a geographic trend and let readers explore the data for their areas.
+For about five years, my instinct when working on these stories is to reach for Mapbox, which has continually pushed the field ahead with innovations like vector tiles, a style specification and tools like tippecanoe.</description>
+    </item>
+    
     <item>
       <title>Extract mbtiles into zxy files with tippecanoe</title>
       <link>https://www.kschaul.com/til/2022/12/29/extract-mbtiles-to-zxy-files-with-tippecanoe/</link>
-      <pubDate>Thu, 29 Dec 2022 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 29 Dec 2022 00:00:00 -0600</pubDate>
       
       <guid>https://www.kschaul.com/til/2022/12/29/extract-mbtiles-to-zxy-files-with-tippecanoe/</guid>
       <description>The next time you need to extract an .mbtiles file into tile files, reach for tippecanoe. I’ve used it often for creating .mbtiles files but not for extracting tiles out of them.
@@ -21,7 +31,7 @@ $ tile-join --force --no-tile-compression --no-tile-size-limit --output-to-direc
     <item>
       <title>Writing D3 in React with an escape hatch</title>
       <link>https://www.kschaul.com/til/2022/12/19/writing-d3-in-react-with-an-escape-hatch/</link>
-      <pubDate>Mon, 19 Dec 2022 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 19 Dec 2022 00:00:00 -0600</pubDate>
       
       <guid>https://www.kschaul.com/til/2022/12/19/writing-d3-in-react-with-an-escape-hatch/</guid>
       <description>Most of The Washington Post has moved to React for site rendering. This is hugely beneficial overall but for many graphics reporters it’s yet another thing to learn to get stories published.
@@ -32,7 +42,7 @@ Fortunately there’s a fairly simple pattern we can build into our tooling to b
     <item>
       <title>AI can now create images out of thin air. See how it works.</title>
       <link>https://www.washingtonpost.com/technology/interactive/2022/ai-image-generator/</link>
-      <pubDate>Fri, 16 Dec 2022 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 16 Dec 2022 00:00:00 -0600</pubDate>
       
       <guid>https://www.washingtonpost.com/technology/interactive/2022/ai-image-generator/</guid>
       <description></description>
@@ -41,7 +51,7 @@ Fortunately there’s a fairly simple pattern we can build into our tooling to b
     <item>
       <title>The housing market is cooling. What’s it like in your area?</title>
       <link>https://www.washingtonpost.com/business/interactive/2022/cooling-housing-market/</link>
-      <pubDate>Tue, 20 Sep 2022 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 20 Sep 2022 00:00:00 -0500</pubDate>
       
       <guid>https://www.washingtonpost.com/business/interactive/2022/cooling-housing-market/</guid>
       <description></description>
@@ -50,7 +60,7 @@ Fortunately there’s a fairly simple pattern we can build into our tooling to b
     <item>
       <title>Coloring emoji/unicode characters on iOS Safari</title>
       <link>https://www.kschaul.com/til/2022/09/13/coloring-emoji-unicode-characters-on-ios-safari/</link>
-      <pubDate>Tue, 13 Sep 2022 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 13 Sep 2022 00:00:00 -0500</pubDate>
       
       <guid>https://www.kschaul.com/til/2022/09/13/coloring-emoji-unicode-characters-on-ios-safari/</guid>
       <description>Unicode characters such as ■ (black square U+25A0) can be super useful to use for icons without needing to load an icon font. And they can typically be styled using CSS, like: color: steelblue;.
@@ -61,7 +71,7 @@ Fortunately there is an easy (but cryptic) fix: Simply append &amp;amp;#xFE0E; i
     <item>
       <title>Caching R code with cache_rds()</title>
       <link>https://www.kschaul.com/til/2022/08/18/caching-r-code-with-cache-rds/</link>
-      <pubDate>Thu, 18 Aug 2022 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 18 Aug 2022 00:00:00 -0500</pubDate>
       
       <guid>https://www.kschaul.com/til/2022/08/18/caching-r-code-with-cache-rds/</guid>
       <description>If you&amp;rsquo;ve got R code that takes a while to run (a query? complex analysis?), check out the fantastic cache_rds() function from Yihui Xie’s xfun package.
@@ -73,7 +83,7 @@ cbsa_pop &amp;lt;- cache_rds({ get_decennial(geography=&amp;#39;cbsa&amp;#39;, v
     <item>
       <title>Create a new TIL</title>
       <link>https://www.kschaul.com/til/2022/08/15/create-a-new-til/</link>
-      <pubDate>Mon, 15 Aug 2022 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 15 Aug 2022 00:00:00 -0500</pubDate>
       
       <guid>https://www.kschaul.com/til/2022/08/15/create-a-new-til/</guid>
       <description>To create a new TIL post using blogdown/Hugo:
@@ -83,7 +93,7 @@ library(blogdown) blogdown::new_post(&amp;#39;your-new-til-slug-here&amp;#39;, k
     <item>
       <title>Investors bought a record share of homes in 2021. See where.</title>
       <link>https://www.washingtonpost.com/business/interactive/2022/housing-market-investors/</link>
-      <pubDate>Wed, 16 Feb 2022 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 16 Feb 2022 00:00:00 -0600</pubDate>
       
       <guid>https://www.washingtonpost.com/business/interactive/2022/housing-market-investors/</guid>
       <description></description>
@@ -92,18 +102,9 @@ library(blogdown) blogdown::new_post(&amp;#39;your-new-til-slug-here&amp;#39;, k
     <item>
       <title>A tool to create printable, scannable cards for albums on Spotify</title>
       <link>https://github.com/kevinschaul/spotify-album-cards</link>
-      <pubDate>Wed, 03 Nov 2021 10:00:00 +0000</pubDate>
+      <pubDate>Wed, 03 Nov 2021 10:00:00 -0500</pubDate>
       
       <guid>https://github.com/kevinschaul/spotify-album-cards</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Pandora Papers: Billions beyond reach</title>
-      <link>https://www.washingtonpost.com/business/interactive/2021/pandora-papers-offshore-finance/</link>
-      <pubDate>Sun, 03 Oct 2021 10:00:00 +0000</pubDate>
-      
-      <guid>https://www.washingtonpost.com/business/interactive/2021/pandora-papers-offshore-finance/</guid>
       <description></description>
     </item>
     

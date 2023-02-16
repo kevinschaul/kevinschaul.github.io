@@ -6,20 +6,29 @@
     <description>Recent content in Tags on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.kschaul.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 16 Feb 2023 00:00:00 -0600</lastBuildDate><atom:link href="https://www.kschaul.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>gis</title>
       <link>https://www.kschaul.com/tags/gis/</link>
-      <pubDate>Thu, 29 Dec 2022 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 16 Feb 2023 00:00:00 -0600</pubDate>
       
       <guid>https://www.kschaul.com/tags/gis/</guid>
       <description></description>
     </item>
     
     <item>
+      <title>oss</title>
+      <link>https://www.kschaul.com/tags/oss/</link>
+      <pubDate>Thu, 16 Feb 2023 00:00:00 -0600</pubDate>
+      
+      <guid>https://www.kschaul.com/tags/oss/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>D3</title>
       <link>https://www.kschaul.com/tags/d3/</link>
-      <pubDate>Mon, 19 Dec 2022 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 19 Dec 2022 00:00:00 -0600</pubDate>
       
       <guid>https://www.kschaul.com/tags/d3/</guid>
       <description></description>
@@ -28,7 +37,7 @@
     <item>
       <title>frontend</title>
       <link>https://www.kschaul.com/tags/frontend/</link>
-      <pubDate>Mon, 19 Dec 2022 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 19 Dec 2022 00:00:00 -0600</pubDate>
       
       <guid>https://www.kschaul.com/tags/frontend/</guid>
       <description></description>
@@ -37,7 +46,7 @@
     <item>
       <title>React</title>
       <link>https://www.kschaul.com/tags/react/</link>
-      <pubDate>Mon, 19 Dec 2022 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 19 Dec 2022 00:00:00 -0600</pubDate>
       
       <guid>https://www.kschaul.com/tags/react/</guid>
       <description></description>
@@ -46,7 +55,7 @@
     <item>
       <title>R</title>
       <link>https://www.kschaul.com/tags/r/</link>
-      <pubDate>Thu, 18 Aug 2022 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 18 Aug 2022 00:00:00 -0500</pubDate>
       
       <guid>https://www.kschaul.com/tags/r/</guid>
       <description></description>
