@@ -6,7 +6,7 @@
     <description>Recent content on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Feb 2023 00:00:00 -0600</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 06 Mar 2023 16:28:31 -0600</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>How The Post is replacing Mapbox with open source solutions</title>
       <link>https://www.kschaul.com/post/2023/02/16/how-the-post-is-replacing-mapbox-with-open-source-solutions/</link>
@@ -15,6 +15,11 @@
       <guid>https://www.kschaul.com/post/2023/02/16/how-the-post-is-replacing-mapbox-with-open-source-solutions/</guid>
       <description>Last week I published a story for The Washington Post that required an interactive slippy map. Lookup maps like this are a common pattern to show a geographic trend and let readers explore the data for their areas.
 For about five years, my instinct when working on these stories is to reach for Mapbox, which has continually pushed the field ahead with innovations like vector tiles, a style specification and tools like tippecanoe.</description>
+      
+      <category>gis</category>
+      
+      <category>oss</category>
+      
     </item>
     
     <item>
@@ -26,6 +31,9 @@ For about five years, my instinct when working on these stories is to reach for 
       <description>The next time you need to extract an .mbtiles file into tile files, reach for tippecanoe. I’ve used it often for creating .mbtiles files but not for extracting tiles out of them.
 It turns out you can the embedded command tile-join for this task:
 $ tile-join --force --no-tile-compression --no-tile-size-limit --output-to-directory tiles 2017-07-03_north-america.mbtiles --minimum-zoom 6 --maximum-zoom 10 h/t yuiseki</description>
+      
+      <category>gis</category>
+      
     </item>
     
     <item>
@@ -37,6 +45,13 @@ $ tile-join --force --no-tile-compression --no-tile-size-limit --output-to-direc
       <description>Most of The Washington Post has moved to React for site rendering. This is hugely beneficial overall but for many graphics reporters it’s yet another thing to learn to get stories published.
 It’s already overwhelming to learn HTML/CSS/JS, data analysis, some way to build charts, some mapping tool. I’m interested in lowering the barriers to entry for this field.
 Fortunately there’s a fairly simple pattern we can build into our tooling to bring back some simplicity of the pre-React frontend development.</description>
+      
+      <category>D3</category>
+      
+      <category>React</category>
+      
+      <category>frontend</category>
+      
     </item>
     
     <item>
@@ -46,6 +61,7 @@ Fortunately there’s a fairly simple pattern we can build into our tooling to b
       
       <guid>https://www.washingtonpost.com/technology/interactive/2022/ai-image-generator/</guid>
       <description></description>
+      
     </item>
     
     <item>
@@ -55,6 +71,7 @@ Fortunately there’s a fairly simple pattern we can build into our tooling to b
       
       <guid>https://www.washingtonpost.com/business/interactive/2022/cooling-housing-market/</guid>
       <description></description>
+      
     </item>
     
     <item>
@@ -66,6 +83,9 @@ Fortunately there’s a fairly simple pattern we can build into our tooling to b
       <description>Unicode characters such as ■ (black square U+25A0) can be super useful to use for icons without needing to load an icon font. And they can typically be styled using CSS, like: color: steelblue;.
 But on iOS safari (and likely Android and other devices), these are rendered in the cartooney, emoji style — which means trying to color them with CSS doesn’t work.
 Fortunately there is an easy (but cryptic) fix: Simply append &amp;amp;#xFE0E; immediately following your unicode character, like ■&amp;amp;#xFE0E;.</description>
+      
+      <category>frontend</category>
+      
     </item>
     
     <item>
@@ -78,6 +98,9 @@ Fortunately there is an easy (but cryptic) fix: Simply append &amp;amp;#xFE0E; i
 Let&amp;rsquo;s say you want to get census data from tidycensus, but you don’t want to keep hitting the API. Instead of writing:
 cbsa_pop &amp;lt;- get_decennial(geography=&amp;#39;cbsa&amp;#39;, variables=&amp;#39;P1_001N&amp;#39;, year=2020) You write:
 cbsa_pop &amp;lt;- cache_rds({ get_decennial(geography=&amp;#39;cbsa&amp;#39;, variables=&amp;#39;P1_001N&amp;#39;, year=2020) }) The first time you run it, it will hit the census API like usual.</description>
+      
+      <category>R</category>
+      
     </item>
     
     <item>
@@ -88,6 +111,9 @@ cbsa_pop &amp;lt;- cache_rds({ get_decennial(geography=&amp;#39;cbsa&amp;#39;, v
       <guid>https://www.kschaul.com/til/2022/08/15/create-a-new-til/</guid>
       <description>To create a new TIL post using blogdown/Hugo:
 library(blogdown) blogdown::new_post(&amp;#39;your-new-til-slug-here&amp;#39;, kind=&amp;#39;til&amp;#39;, subdir=&amp;#39;til&amp;#39;) </description>
+      
+      <category>R</category>
+      
     </item>
     
     <item>
@@ -97,6 +123,7 @@ library(blogdown) blogdown::new_post(&amp;#39;your-new-til-slug-here&amp;#39;, k
       
       <guid>https://www.washingtonpost.com/business/interactive/2022/housing-market-investors/</guid>
       <description></description>
+      
     </item>
     
     <item>
@@ -106,6 +133,7 @@ library(blogdown) blogdown::new_post(&amp;#39;your-new-til-slug-here&amp;#39;, k
       
       <guid>https://github.com/kevinschaul/spotify-album-cards</guid>
       <description></description>
+      
     </item>
     
   </channel>

@@ -2,7 +2,7 @@
 {{- if .IsHome -}}{{ $pctx = .Site }}{{- end -}}
 {{- $pages := slice -}}
 {{- if or $.IsHome $.IsSection -}}
-{{- $pages = where $pctx.RegularPages "Type" "in" site.Params.mainSections -}}
+{{- $pages = where .RegularPages "Type" "in" "link" -}}
 {{- else -}}
 {{- $pages = $pctx.Pages -}}
 pages
@@ -14,7 +14,7 @@ pages
 {{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{{ if eq  .Title  .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{.}} on {{ end }}{{ .Site.Title }}{{ end }}</title>
+    <title>{{ .Site.Title }}: Blogmarks</title>
     <link>{{ .Permalink }}</link>
     <description>Recent content {{ if ne  .Title  .Site.Title }}{{ with .Title }}in {{.}} {{ end }}{{ end }}on {{ .Site.Title }}</description>
     <generator>Hugo -- gohugo.io</generator>{{ with .Site.LanguageCode }}

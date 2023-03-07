@@ -19,8 +19,8 @@ menu:
     - name: "Contact"
       url: "/contact/"
       weight: 1
-    - name: "Favorite links"
-      url: "/favorites/"
+    - name: "Blogmarks"
+      url: "/link/"
       weight: 2
     - name: "Today I Learned"
       url: "/til/"
@@ -39,6 +39,9 @@ params:
   highlightjsLang: ["r", "yaml", "tex", "js"]
   highlightjsTheme: "github"
   highlightjsVersion: "9.12.0"
+  mainSections:
+    - post
+    - til
 
 markup:
   goldmark:
