@@ -1,4 +1,4 @@
-{{ if and (not .Params.disable_highlight) (in (string .Content) "</pre>") }}
+{{ if and (not .Site.Params.disable_highlight) (not .Params.disable_highlight) (in (string .Content) "</pre>") }}
 {{ $highVer := .Site.Params.highlightjsVersion }}
 {{ $highCDN := (.Site.Params.highlightjsCDN | default "//cdn.bootcss.com") }}
 {{ if (not (eq $highVer "")) }}

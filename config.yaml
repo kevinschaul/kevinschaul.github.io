@@ -34,6 +34,7 @@ rssLimit: 10
 params:
   description: ""
   footer: ""
+  disable_highlight: true
   highlightjsCDN: "//cdn.bootcss.com"
   highlightjsLang: ["r", "yaml", "tex", "js"]
   highlightjsTheme: "github"
