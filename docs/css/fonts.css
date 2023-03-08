@@ -1,0 +1,10 @@
+body {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+}
+code {
+  font-family: "Lucida Console", 'Andale Mono', 'STKaiti', 'KaiTi', 'SimKai', monospace;
+}
+pre code {
+  font-family: Consolas, "Lucida Console", Monaco, 'STKaiti', 'KaiTi', 'SimKai', monospace;
+}

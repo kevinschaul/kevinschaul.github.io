@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kevin Schaul: Blogmarks</title>
+    <link>https://www.kschaul.com/link/</link>
+    <description>Recent content in Blogmarks on Kevin Schaul</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 06 Mar 2023 16:28:31 -0600</lastBuildDate><atom:link href="https://www.kschaul.com/link/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>In These Times | Makaya McCraven | International Anthem</title>
+      <link>https://intlanthem.bandcamp.com/album/in-these-times</link>
+      <pubDate>Mon, 06 Mar 2023 16:28:31 -0600</pubDate>
+      
+      <guid>https://intlanthem.bandcamp.com/album/in-these-times</guid>
+      <description>By far my favorite album of 2022</description>
+      
+    </item>
+    
+    <item>
+      <title>BetterHelp shared customer data while promising it was private, says FTC - The Verge</title>
+      <link>https://www.theverge.com/2023/3/2/23622227/betterhelp-customer-data-advertising-privacy-facebook-snapchat</link>
+      <pubDate>Mon, 06 Mar 2023 03:01:33 -0600</pubDate>
+      
+      <guid>https://www.theverge.com/2023/3/2/23622227/betterhelp-customer-data-advertising-privacy-facebook-snapchat</guid>
+      <description>The HIPAA seal was meaningless</description>
+      
+    </item>
+    
+  </channel>
+</rss>
