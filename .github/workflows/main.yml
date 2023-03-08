@@ -42,5 +42,8 @@ jobs:
         run: blogdown::build_site(TRUE)
         shell: Rscript {0}
 
-      - name: Deploy GitHub Pages site
-        uses: actions/deploy-pages@v1.2.4
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4.3.0
+        with:
+          branch: gh-pages
+          folder: docs
