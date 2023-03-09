@@ -12,9 +12,9 @@
   {{ range (where ($.Scratch.Get "pages") "Section" "!=" "") }}
   <li>
     {{ if .Plain }}
-      {{ .Plain }} -->
+      {{ .Plain | safeHTML }} -->
     {{ end }}
-    <a href="{{ .Params.external_url }}">{{ .Title }}</a>
+    <b><a href="{{ .Params.external_url }}">{{ .Title }}</a></b>
   </li>
   {{ end }}
 </ul>
