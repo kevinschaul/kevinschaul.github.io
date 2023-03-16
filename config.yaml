@@ -19,15 +19,13 @@ menu:
     - name: "Contact"
       url: "/contact/"
       weight: 1
-    - name: "Blogmarks"
+    - name: "Worth your time"
       url: "/link/"
       weight: 2
-    - name: "Today I Learned"
+    - name: "Today I learned"
       url: "/til/"
       weight: 3
-    - name: "Archive"
-      url: "/post/"
-      weight: 4
+
 
 rssLimit: 10
 

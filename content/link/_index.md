@@ -1,5 +1,5 @@
 ---
-title: Blogmarks
+title: Worth your time
 ---
 
-Like bookmarks, but blogged. Also available as [RSS](index.xml).
+Links from around the web that I thought were worth the click. Also available as [RSS](index.xml).
