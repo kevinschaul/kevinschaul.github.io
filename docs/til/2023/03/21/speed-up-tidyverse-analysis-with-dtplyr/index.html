@@ -1,0 +1,119 @@
+
+
+  <!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Speed up tidyverse analysis with dtplyr - Kevin Schaul</title>
+    <meta property="og:title" content="Speed up tidyverse analysis with dtplyr - Kevin Schaul">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="I&amp;rsquo;ve got a ~15 million rows dataset that I need to do cleaning on. I&amp;rsquo;m a big tidyverse fan, but dplyr is slower than data.table.
+Well, TIL about dtplyr, which lets you write dplyr code but &amp;hellip;">
+      <meta property="og:description" content="I&amp;rsquo;ve got a ~15 million rows dataset that I need to do cleaning on. I&amp;rsquo;m a big tidyverse fan, but dplyr is slower than data.table.
+Well, TIL about dtplyr, which lets you write dplyr code but &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+
+    <style> @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;800&display=swap'); </style>
+    
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="til">
+    <header class="masthead">
+      <h1><a href="/">Kevin Schaul</a></h1>
+
+
+
+      <nav class="menu">
+  <ul>
+  
+  
+  <li><a href="/contact/">Contact</a></li>
+  
+  <li><a href="/link/">Worth your time</a></li>
+  
+  <li><a href="/til/">Today I learned</a></li>
+  
+  <li><a href="/index.xml">RSS</a></li>
+<li style="display: none;"><a rel="me" href="https://mastodon.garden/@kevinschaul">Mastodon</a></li>
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>Speed up tidyverse analysis with dtplyr</h1>
+<h3>March 21, 2023</h3>
+
+      </header>
+
+  
+  
+  
+  
+  <p>I&rsquo;ve got a ~15 million rows dataset that I need to do cleaning on. I&rsquo;m a big <a href="https://www.tidyverse.org/">tidyverse</a> fan, but <code>dplyr</code> is slower than <code>data.table</code>.</p>
+<p>Well, TIL about <a href="https://dtplyr.tidyverse.org/">dtplyr</a>, which lets you write <code>dplyr</code> code but gain the speed of <code>data.table</code>:</p>
+<pre tabindex="0"><code>library(data.table)
+library(dtplyr)
+library(dplyr, warn.conflicts=FALSE)
+
+data_lazy &lt;- data %&gt;%
+  lazy_dt(immutable=FALSE)
+
+data_lazy %&gt;%
+  mutate(...) %&gt;%
+  group_by(column) %&gt;%
+  summarize(...) %&gt;%
+  as_tibble()
+</code></pre><p>Take a look at the <code>immutable</code> argument in the docs. This runs soooo much faster.</p>
+<p>Pair that with <a href="https://www.kschaul.com/til/2022/08/18/caching-r-code-with-cache-rds/">a previous TIL about caching R code</a>. Boom.</p>
+
+  
+  
+    <footer>
+    
+    <p>
+      <i>
+      Tags:
+      
+        <a href="https://www.kschaul.com/tags/r/">R</a>&nbsp;
+      
+      </i>
+    </p>
+    
+
+    
+  
+  
+
+  </footer>
+  </article>
+  </body>
+</html>
+

@@ -3,7 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.kschaul.com/</loc>
-    <lastmod>2023-03-14T19:47:28-05:00</lastmod>
+    <lastmod>2023-03-21T00:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/tags/r/</loc>
+    <lastmod>2023-03-21T00:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/til/2023/03/21/speed-up-tidyverse-analysis-with-dtplyr/</loc>
+    <lastmod>2023-03-21T00:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/tags/</loc>
+    <lastmod>2023-03-21T00:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/til/</loc>
+    <lastmod>2023-03-21T00:00:00-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/link/www.theverge.com_2023_3_14_23639273_google-ai-features-docs-gmail-slides-sheets-workspace/</loc>
     <lastmod>2023-03-14T19:47:28-05:00</lastmod>
@@ -35,13 +47,7 @@
     <loc>https://www.kschaul.com/post/</loc>
     <lastmod>2023-02-16T00:00:00-06:00</lastmod>
   </url><url>
-    <loc>https://www.kschaul.com/tags/</loc>
-    <lastmod>2023-02-16T00:00:00-06:00</lastmod>
-  </url><url>
     <loc>https://www.kschaul.com/til/2022/12/29/extract-mbtiles-to-zxy-files-with-tippecanoe/</loc>
-    <lastmod>2022-12-29T00:00:00-06:00</lastmod>
-  </url><url>
-    <loc>https://www.kschaul.com/til/</loc>
     <lastmod>2022-12-29T00:00:00-06:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/tags/d3/</loc>
@@ -66,9 +72,6 @@
     <lastmod>2022-09-13T00:00:00-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/til/2022/08/18/caching-r-code-with-cache-rds/</loc>
-    <lastmod>2022-08-18T00:00:00-05:00</lastmod>
-  </url><url>
-    <loc>https://www.kschaul.com/tags/r/</loc>
     <lastmod>2022-08-18T00:00:00-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/til/2022/08/15/create-a-new-til/</loc>
