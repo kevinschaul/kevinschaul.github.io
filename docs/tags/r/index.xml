@@ -6,7 +6,18 @@
     <description>Recent content in R on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Mar 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 22 Mar 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Write nested JSON with keys in R/tidyverse</title>
+      <link>https://www.kschaul.com/til/2023/03/22/write-nested-json-with-keys-in-r-tidyverse/</link>
+      <pubDate>Wed, 22 Mar 2023 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2023/03/22/write-nested-json-with-keys-in-r-tidyverse/</guid>
+      <description>I always struggle to write JSON in R in exactly the format I need. I figured out a trick today to take a dataframe, nest it by a column and write it to a JSON with that column&amp;rsquo;s values as keys.
+To nest a table like this:
+## # A tibble: 2 × 3 ## col_to_nest another_col a_third_col ## &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; ## 1 col_value_a 1213691 14616745740 ## 2 col_value_b 1167231 13592103952 Try this:</description>
+    </item>
+    
     <item>
       <title>Speed up tidyverse analysis with dtplyr</title>
       <link>https://www.kschaul.com/til/2023/03/21/speed-up-tidyverse-analysis-with-dtplyr/</link>

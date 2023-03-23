@@ -6,7 +6,21 @@
     <description>Recent content on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Mar 2023 19:24:19 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 22 Mar 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Write nested JSON with keys in R/tidyverse</title>
+      <link>https://www.kschaul.com/til/2023/03/22/write-nested-json-with-keys-in-r-tidyverse/</link>
+      <pubDate>Wed, 22 Mar 2023 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2023/03/22/write-nested-json-with-keys-in-r-tidyverse/</guid>
+      <description>I always struggle to write JSON in R in exactly the format I need. I figured out a trick today to take a dataframe, nest it by a column and write it to a JSON with that column&amp;rsquo;s values as keys.
+To nest a table like this:
+## # A tibble: 2 × 3 ## col_to_nest another_col a_third_col ## &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; ## 1 col_value_a 1213691 14616745740 ## 2 col_value_b 1167231 13592103952 Try this:</description>
+      
+      <category>R</category>
+      
+    </item>
+    
     <item>
       <title>Speed up tidyverse analysis with dtplyr</title>
       <link>https://www.kschaul.com/til/2023/03/21/speed-up-tidyverse-analysis-with-dtplyr/</link>
@@ -127,16 +141,6 @@ cbsa_pop &amp;lt;- cache_rds({ get_decennial(geography=&amp;#39;cbsa&amp;#39;, v
 library(blogdown) blogdown::new_post(&amp;#39;your-new-til-slug-here&amp;#39;, kind=&amp;#39;til&amp;#39;, subdir=&amp;#39;til&amp;#39;) </description>
       
       <category>R</category>
-      
-    </item>
-    
-    <item>
-      <title>Investors bought a record share of homes in 2021. See where.</title>
-      <link>https://www.washingtonpost.com/business/interactive/2022/housing-market-investors/</link>
-      <pubDate>Wed, 16 Feb 2022 00:00:00 -0600</pubDate>
-      
-      <guid>https://www.washingtonpost.com/business/interactive/2022/housing-market-investors/</guid>
-      <description></description>
       
     </item>
     
