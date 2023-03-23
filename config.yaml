@@ -30,7 +30,7 @@ menu:
 rssLimit: 10
 
 params:
-  description: ""
+  description: "Visual journalist/hacker"
   footer: ""
   disable_highlight: true
   highlightjsCDN: "//cdn.bootcss.com"

@@ -35,7 +35,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   padding: 0;
-  margin: 60px 0 30px;
+  margin: 48px 0 16px;
   line-height: 1.25;
   text-align: center;
 }
@@ -171,7 +171,7 @@ body {
 
 .masthead h1 {
   margin-top: 0;
-  margin-bottom: 34px;
+  margin-bottom: 0;
   padding: 0;
   text-align: right;
   font-size: 46px;
@@ -184,8 +184,9 @@ body {
 }
 
 .masthead .tagline {
-  font-style: italic;
+  margin-top: 0;
   text-align: right;
+  color: #666;
 }
 
 .masthead .menu {
@@ -251,6 +252,12 @@ thead, tfoot, tr:nth-child(even) {
   background: #f8f8f8;
 }
 
+.home .tils,
+.home .links,
+.home .posts {
+  margin-bottom: 48px;
+}
+
 /**
  * Utility Styles
  */
@@ -292,7 +299,11 @@ thead, tfoot, tr:nth-child(even) {
     width: auto;
     max-width: 700px;
   }
-
+  
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 24px;
+  }
+  
   .masthead {
     width: auto;
     float: none;
@@ -312,11 +323,10 @@ thead, tfoot, tr:nth-child(even) {
   .masthead h1 {
     text-align: left;
     font-size: 2.4rem;
-    margin-bottom: 16px;
   }
 
   .masthead .tagline {
-    text-align: center;
+    text-align: left;
   }
 
   .masthead .menu {
@@ -330,7 +340,7 @@ thead, tfoot, tr:nth-child(even) {
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 8px 24px;
+    gap: 4px 20px;
     max-width: 440px;
     font-size: 14px;
   }

@@ -1,7 +1,33 @@
 {{ partial "header.html" . }}
 
-{{ .Content }}
+<h2>Worth your time</h2>
+<div class="links">
+  <ul>
+    {{ range first 3 (where (.Site.RegularPages) "Type" "==" "link") }}
+    <li>
+      {{ if .Plain }}
+        {{ .Plain | safeHTML }} -->
+      {{ end }}
+      <b><a href="{{ .Params.external_url }}">{{ .Title }}</a></b>
+    </li>
+    {{ end }}
+  </ul>
+  <a href="link/">More links worth your time</a>
+</div>
 
+
+<h2>Today I learned</h2>
+<div class="tils">
+  <ul>
+    {{ range first 3 (where (.Site.RegularPages) "Type" "==" "til") }}
+      <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+    {{ end }}
+  </ul>
+  <a href="til/">More TILs</a>
+</div>
+
+
+<h2>Projects and posts</h2>
 <div class="posts">
   {{ range (where (.Site.RegularPages) "Type" "==" "post") }}
       {{ if .Params.show_on_homepage }}
