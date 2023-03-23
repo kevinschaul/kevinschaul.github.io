@@ -36,7 +36,7 @@ jobs:
           python scripts/update_links.py
       
       - name: Install curl
-        run: sudo apt-get install libcurl4-openssl-dev
+        run: sudo apt-get update && sudo apt-get install libcurl4-openssl-dev
 
       - uses: r-lib/actions/setup-pandoc@v2
 
