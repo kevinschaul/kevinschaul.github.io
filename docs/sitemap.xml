@@ -3,7 +3,13 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.kschaul.com/</loc>
-    <lastmod>2023-03-22T00:00:00-05:00</lastmod>
+    <lastmod>2023-03-23T16:31:18-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/link/kottke.org_23_03_the-sun-in-all-its-glory/</loc>
+    <lastmod>2023-03-23T16:31:18-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/link/</loc>
+    <lastmod>2023-03-23T16:31:18-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/tags/r/</loc>
     <lastmod>2023-03-22T00:00:00-05:00</lastmod>
@@ -18,9 +24,6 @@
     <lastmod>2023-03-22T00:00:00-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/link/www.adobe.com_sensei_generative-ai_firefly.html/</loc>
-    <lastmod>2023-03-21T19:24:19-05:00</lastmod>
-  </url><url>
-    <loc>https://www.kschaul.com/link/</loc>
     <lastmod>2023-03-21T19:24:19-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/til/2023/03/21/speed-up-tidyverse-analysis-with-dtplyr/</loc>
