@@ -3,6 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.kschaul.com/</loc>
+<<<<<<< HEAD
     <lastmod>2023-04-16T00:00:00-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/tags/django/</loc>
@@ -22,17 +23,53 @@
   </url><url>
     <loc>https://www.kschaul.com/tags/r/</loc>
     <lastmod>2023-03-22T00:00:00-05:00</lastmod>
+=======
+    <lastmod>2023-04-13T12:33:21-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/link/www.washingtonpost.com_national-security_2023_04_12_discord-leaked-documents_/</loc>
+    <lastmod>2023-04-13T12:33:21-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/link/</loc>
+    <lastmod>2023-04-13T12:33:21-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/link/www.npr.org_2023_04_12_1169269161_npr-leaves-twitter-government-funded-media-label/</loc>
+    <lastmod>2023-04-12T17:38:27-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/link/www.propublica.org_article_clarence-thomas-scotus-undisclosed-luxury-travel-gifts-crow/</loc>
+    <lastmod>2023-04-06T15:02:18-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/link/www.nytimes.com_interactive_2023_04_06_world_europe_russia-offensive-maps.html/</loc>
+    <lastmod>2023-04-06T13:56:39-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/link/www.washingtonpost.com_sports_interactive_2023_mlb-2023-season-major-storylines_itidsf_sports_mlb_p008_f002/</loc>
+    <lastmod>2023-03-30T15:06:40-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/til/2023/03/30/control-html-table-widths-with-table-layout-fixed/</loc>
+    <lastmod>2023-03-30T00:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/tags/frontend/</loc>
+    <lastmod>2023-03-30T00:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/tags/</loc>
+    <lastmod>2023-03-30T00:00:00-05:00</lastmod>
+>>>>>>> c89587876c7536db345c9dc977ba2b4defe11baa
   </url><url>
     <loc>https://www.kschaul.com/til/</loc>
+    <lastmod>2023-03-30T00:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/link/www.washingtonpost.com_nation_interactive_2023_ar-15-damage-to-human-body_itidhp-top-table-main_p001_f001/</loc>
+    <lastmod>2023-03-28T20:59:22-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/link/kottke.org_23_03_the-sun-in-all-its-glory/</loc>
+    <lastmod>2023-03-23T16:31:18-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/tags/r/</loc>
     <lastmod>2023-03-22T00:00:00-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/til/2023/03/22/write-nested-json-with-keys-in-r-tidyverse/</loc>
     <lastmod>2023-03-22T00:00:00-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/link/www.adobe.com_sensei_generative-ai_firefly.html/</loc>
-    <lastmod>2023-03-21T19:24:19-05:00</lastmod>
-  </url><url>
-    <loc>https://www.kschaul.com/link/</loc>
     <lastmod>2023-03-21T19:24:19-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/til/2023/03/21/speed-up-tidyverse-analysis-with-dtplyr/</loc>
@@ -66,9 +103,6 @@
     <lastmod>2022-12-29T00:00:00-06:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/tags/d3/</loc>
-    <lastmod>2022-12-19T00:00:00-06:00</lastmod>
-  </url><url>
-    <loc>https://www.kschaul.com/tags/frontend/</loc>
     <lastmod>2022-12-19T00:00:00-06:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/tags/react/</loc>

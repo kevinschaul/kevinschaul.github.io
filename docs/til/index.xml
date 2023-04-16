@@ -6,7 +6,17 @@
     <description>Recent content in Today I Learned on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Mar 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/til/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 30 Mar 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/til/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Control HTML table widths with table-layout: fixed;</title>
+      <link>https://www.kschaul.com/til/2023/03/30/control-html-table-widths-with-table-layout-fixed/</link>
+      <pubDate>Thu, 30 Mar 2023 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2023/03/30/control-html-table-widths-with-table-layout-fixed/</guid>
+      <description>Just learned about the CSS property table-layout: fixed; that makes HTML table column widths follow sane rules. They will actually respect the width values you give them.
+There are a lot of great usage examples on this css tricks post from &amp;hellip; 2014. How did I not know about this?</description>
+    </item>
+    
     <item>
       <title>Write nested JSON with keys in R/tidyverse</title>
       <link>https://www.kschaul.com/til/2023/03/22/write-nested-json-with-keys-in-r-tidyverse/</link>
