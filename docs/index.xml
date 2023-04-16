@@ -6,7 +6,6 @@
     <description>Recent content on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-<<<<<<< HEAD
     <lastBuildDate>Sun, 16 Apr 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Feedmaker: Quickly generate an RSS feed from any website</title>
@@ -20,8 +19,9 @@ Today I&amp;rsquo;m sharing a side project called Feedmaker (Source on GitHub). 
       <category>rss</category>
       
       <category>django</category>
-=======
-    <lastBuildDate>Thu, 13 Apr 2023 12:33:21 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+      
+    </item>
+    
     <item>
       <title>Control HTML table widths with table-layout: fixed;</title>
       <link>https://www.kschaul.com/til/2023/03/30/control-html-table-widths-with-table-layout-fixed/</link>
@@ -32,7 +32,6 @@ Today I&amp;rsquo;m sharing a side project called Feedmaker (Source on GitHub). 
 There are a lot of great usage examples on this css tricks post from &amp;hellip; 2014. How did I not know about this?</description>
       
       <category>frontend</category>
->>>>>>> c89587876c7536db345c9dc977ba2b4defe11baa
       
     </item>
     
@@ -142,21 +141,6 @@ But on iOS safari (and likely Android and other devices), these are rendered in 
 Fortunately there is an easy (but cryptic) fix: Simply append &amp;amp;#xFE0E; immediately following your unicode character, like ■&amp;amp;#xFE0E;.</description>
       
       <category>frontend</category>
-      
-    </item>
-    
-    <item>
-      <title>Caching R code with cache_rds()</title>
-      <link>https://www.kschaul.com/til/2022/08/18/caching-r-code-with-cache-rds/</link>
-      <pubDate>Thu, 18 Aug 2022 00:00:00 -0500</pubDate>
-      
-      <guid>https://www.kschaul.com/til/2022/08/18/caching-r-code-with-cache-rds/</guid>
-      <description>If you&amp;rsquo;ve got R code that takes a while to run (a query? complex analysis?), check out the fantastic cache_rds() function from Yihui Xie’s xfun package.
-Let&amp;rsquo;s say you want to get census data from tidycensus, but you don’t want to keep hitting the API. Instead of writing:
-cbsa_pop &amp;lt;- get_decennial(geography=&amp;#39;cbsa&amp;#39;, variables=&amp;#39;P1_001N&amp;#39;, year=2020) You write:
-cbsa_pop &amp;lt;- cache_rds({ get_decennial(geography=&amp;#39;cbsa&amp;#39;, variables=&amp;#39;P1_001N&amp;#39;, year=2020) }) The first time you run it, it will hit the census API like usual.</description>
-      
-      <category>R</category>
       
     </item>
     

@@ -3,7 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.kschaul.com/</loc>
-<<<<<<< HEAD
     <lastmod>2023-04-16T00:00:00-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/tags/django/</loc>
@@ -20,11 +19,6 @@
   </url><url>
     <loc>https://www.kschaul.com/tags/</loc>
     <lastmod>2023-04-16T00:00:00-05:00</lastmod>
-  </url><url>
-    <loc>https://www.kschaul.com/tags/r/</loc>
-    <lastmod>2023-03-22T00:00:00-05:00</lastmod>
-=======
-    <lastmod>2023-04-13T12:33:21-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/link/www.washingtonpost.com_national-security_2023_04_12_discord-leaked-documents_/</loc>
     <lastmod>2023-04-13T12:33:21-05:00</lastmod>
@@ -49,10 +43,6 @@
   </url><url>
     <loc>https://www.kschaul.com/tags/frontend/</loc>
     <lastmod>2023-03-30T00:00:00-05:00</lastmod>
-  </url><url>
-    <loc>https://www.kschaul.com/tags/</loc>
-    <lastmod>2023-03-30T00:00:00-05:00</lastmod>
->>>>>>> c89587876c7536db345c9dc977ba2b4defe11baa
   </url><url>
     <loc>https://www.kschaul.com/til/</loc>
     <lastmod>2023-03-30T00:00:00-05:00</lastmod>
