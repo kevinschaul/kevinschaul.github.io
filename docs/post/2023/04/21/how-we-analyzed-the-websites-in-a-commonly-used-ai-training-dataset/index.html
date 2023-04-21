@@ -1,0 +1,109 @@
+
+
+  <!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>How we analyzed the websites in a commonly used AI training dataset - Kevin Schaul</title>
+    <meta property="og:title" content="How we analyzed the websites in a commonly used AI training dataset - Kevin Schaul">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="My colleagues and I recently published this analysis of 15 million websites in a commonly used AI training dataset. Here&amp;rsquo;s a little bit about how we did it.
+Allen Institute researchers kindly &amp;hellip;">
+      <meta property="og:description" content="My colleagues and I recently published this analysis of 15 million websites in a commonly used AI training dataset. Here&amp;rsquo;s a little bit about how we did it.
+Allen Institute researchers kindly &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+
+    <style> @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;800&display=swap'); </style>
+    
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="post">
+    <header class="masthead">
+      <h1><a href="/">Kevin Schaul</a></h1>
+
+<p class="tagline">Visual journalist/hacker</p>
+
+      <nav class="menu">
+  <ul>
+  
+  
+  <li><a href="/contact/">Contact</a></li>
+  
+  <li><a href="/link/">Worth your time</a></li>
+  
+  <li><a href="/til/">Today I learned</a></li>
+  
+  <li><a href="/index.xml">RSS</a></li>
+<li style="display: none;"><a rel="me" href="https://mastodon.garden/@kevinschaul">Mastodon</a></li>
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>How we analyzed the websites in a commonly used AI training dataset</h1>
+<h3>April 21, 2023</h3>
+
+      </header>
+
+  
+  
+  
+  
+  <p>My colleagues and I recently published <a href="https://www.washingtonpost.com/technology/interactive/2023/ai-chatbot-learning/">this analysis</a> of 15 million websites in a commonly used AI training dataset. Here&rsquo;s a little bit about how we did it.</p>
+<p>Allen Institute researchers kindly provided us with the top 1,000 domains in Google’s C4 dataset. But that was just 8% of tokens, hardly representative. So they then pulled all 15.7M domains. We planned to categorize the top 1,000 websites by hand, but all 15.7M wouldn’t work. After talking to some researchers, we used categorization data from analytics firm <a href="https://www.similarweb.com/">Similarweb</a>.</p>
+<p>We used <a href="https://rmarkdown.rstudio.com/">R Markdown</a> for cleaning and analysis, creating updateable web pages we could share with everyone involved. Similarweb&rsquo;s categories were useful, but too niche for us. So we spent a lot of time recategorizing and redefining the groupings. We used the token count for each website — how many words or phrases — to measure it’s importance in the overall training data.</p>
+<p>To visualize the data, we immediately jumped to a treemap. The data is parts-of-a-whole (C4 being the whole), and it is hierarchical (categories contain subcategories which contain individual domains).</p>
+<p><img src="treemap-highlighted.png" alt="Treemap visualization showing the Business &amp; Industrial category contains subcategories like Business Services, Industry and Finance"></p>
+<p>Annotations were crucial. The treemap works (we hope!) because you see can how individual websites make up the bigger category. We spent a lot of time getting annotations right— tricky for a dynamic chart that rearranges itself at all screen sizes. We hope to open-source some arrow and label-collision-detection code soon.</p>
+<p><img src="treemap-annotations.png" alt="Treemap visualization highlighting wikipedia.org, scribd.com and patents.google.com"></p>
+<p>When we realized our personal websites were in the data, we figured we had to let people search for theirs. There are 15 million domains in the cleaned data. Can we build a search for that data without building an API?</p>
+<p><img src="search.png" alt="Screenshot showing the website search tool"></p>
+<p>It was easy with this shortcut. Group each domain by the first three letters. Generate a csv for each three-letter combination. When the user types three characters, load that csv and filter it. 10 million domains are distributed across 46,000 files, named predictably like <code>ksc.csv</code>.</p>
+<p><img src="csvs.png" alt="Screenshot of a terminal, showing csv filenames like 3rv.csv, 3rw.com, 3rx.csv, etc."></p>
+<p>Parsing the websites in the “clean” training dataset, we found troubling material. We spent days combing through offensive domain names, including racial slurs, obscenities and porn, to confirm their existence and mask specific words from readers in our searchable database.</p>
+<p>For a deeper dive into the content of the website themselves. Allen Institute gave us access to their full-text search API, which we used to find the instances of specific terms like “swastika” (72k hits) and “©” (200M hits).</p>
+<p>Like all stories, this piece relies on regular reporting. Get curious about a website. Look into it. Ask the experts. Search the data. Eventually you will start to build up an understanding of the data.</p>
+<p><a href="https://www.washingtonpost.com/technology/interactive/2023/ai-chatbot-learning/">Check out the full story here</a></p>
+
+  
+  
+    <footer>
+    
+
+    
+  
+  
+
+  </footer>
+  </article>
+  </body>
+</html>
+

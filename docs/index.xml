@@ -6,7 +6,28 @@
     <description>Recent content on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Apr 2023 15:21:07 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 21 Apr 2023 08:15:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How we analyzed the websites in a commonly used AI training dataset</title>
+      <link>https://www.kschaul.com/post/2023/04/21/how-we-analyzed-the-websites-in-a-commonly-used-ai-training-dataset/</link>
+      <pubDate>Fri, 21 Apr 2023 08:15:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/post/2023/04/21/how-we-analyzed-the-websites-in-a-commonly-used-ai-training-dataset/</guid>
+      <description>My colleagues and I recently published this analysis of 15 million websites in a commonly used AI training dataset. Here&amp;rsquo;s a little bit about how we did it.
+Allen Institute researchers kindly provided us with the top 1,000 domains in Google’s C4 dataset. But that was just 8% of tokens, hardly representative. So they then pulled all 15.7M domains. We planned to categorize the top 1,000 websites by hand, but all 15.</description>
+      
+    </item>
+    
+    <item>
+      <title>See the websites that make AI like ChatGPT sound so smart</title>
+      <link>https://www.washingtonpost.com/technology/interactive/2023/ai-chatbot-learning/</link>
+      <pubDate>Fri, 21 Apr 2023 08:10:00 -0500</pubDate>
+      
+      <guid>https://www.washingtonpost.com/technology/interactive/2023/ai-chatbot-learning/</guid>
+      <description></description>
+      
+    </item>
+    
     <item>
       <title>Feedmaker: Quickly generate an RSS feed from any website</title>
       <link>https://www.kschaul.com/post/2023/04/16/feedmaker-quickly-generate-an-rss-feed-from-any-website/</link>
@@ -117,30 +138,6 @@ Fortunately there’s a fairly simple pattern we can build into our tooling to b
       
       <guid>https://www.washingtonpost.com/technology/interactive/2022/ai-image-generator/</guid>
       <description></description>
-      
-    </item>
-    
-    <item>
-      <title>The housing market is cooling. What’s it like in your area?</title>
-      <link>https://www.washingtonpost.com/business/interactive/2022/cooling-housing-market/</link>
-      <pubDate>Tue, 20 Sep 2022 00:00:00 -0500</pubDate>
-      
-      <guid>https://www.washingtonpost.com/business/interactive/2022/cooling-housing-market/</guid>
-      <description></description>
-      
-    </item>
-    
-    <item>
-      <title>Coloring emoji/unicode characters on iOS Safari</title>
-      <link>https://www.kschaul.com/til/2022/09/13/coloring-emoji-unicode-characters-on-ios-safari/</link>
-      <pubDate>Tue, 13 Sep 2022 00:00:00 -0500</pubDate>
-      
-      <guid>https://www.kschaul.com/til/2022/09/13/coloring-emoji-unicode-characters-on-ios-safari/</guid>
-      <description>Unicode characters such as ■ (black square U+25A0) can be super useful to use for icons without needing to load an icon font. And they can typically be styled using CSS, like: color: steelblue;.
-But on iOS safari (and likely Android and other devices), these are rendered in the cartooney, emoji style — which means trying to color them with CSS doesn’t work.
-Fortunately there is an easy (but cryptic) fix: Simply append &amp;amp;#xFE0E; immediately following your unicode character, like ■&amp;amp;#xFE0E;.</description>
-      
-      <category>frontend</category>
       
     </item>
     

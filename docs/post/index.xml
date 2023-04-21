@@ -6,7 +6,26 @@
     <description>Recent content in Posts on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Apr 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 21 Apr 2023 08:15:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How we analyzed the websites in a commonly used AI training dataset</title>
+      <link>https://www.kschaul.com/post/2023/04/21/how-we-analyzed-the-websites-in-a-commonly-used-ai-training-dataset/</link>
+      <pubDate>Fri, 21 Apr 2023 08:15:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/post/2023/04/21/how-we-analyzed-the-websites-in-a-commonly-used-ai-training-dataset/</guid>
+      <description>My colleagues and I recently published this analysis of 15 million websites in a commonly used AI training dataset. Here&amp;rsquo;s a little bit about how we did it.
+Allen Institute researchers kindly provided us with the top 1,000 domains in Google’s C4 dataset. But that was just 8% of tokens, hardly representative. So they then pulled all 15.7M domains. We planned to categorize the top 1,000 websites by hand, but all 15.</description>
+    </item>
+    
+    <item>
+      <title>See the websites that make AI like ChatGPT sound so smart</title>
+      <link>https://www.kschaul.com/post/2023/04/21/see-the-websites-that-make-ai-like-chatgpt-sound-so-smart/</link>
+      <pubDate>Fri, 21 Apr 2023 08:10:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/post/2023/04/21/see-the-websites-that-make-ai-like-chatgpt-sound-so-smart/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Feedmaker: Quickly generate an RSS feed from any website</title>
       <link>https://www.kschaul.com/post/2023/04/16/feedmaker-quickly-generate-an-rss-feed-from-any-website/</link>
@@ -78,24 +97,6 @@ For about five years, my instinct when working on these stories is to reach for 
       <pubDate>Thu, 24 Jun 2021 10:00:00 -0500</pubDate>
       
       <guid>https://www.kschaul.com/post/2021/06/24/2021-06-24-usps-slowdown/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>How Big Tech got so big: Hundreds of acquisitions</title>
-      <link>https://www.kschaul.com/post/2021/04/21/2021-04-21-tech-acquisitions/</link>
-      <pubDate>Wed, 21 Apr 2021 10:00:00 -0500</pubDate>
-      
-      <guid>https://www.kschaul.com/post/2021/04/21/2021-04-21-tech-acquisitions/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Drug companies seek billion-dollar tax deductions from opioid settlement</title>
-      <link>https://www.kschaul.com/post/2021/02/12/2021-02-12-opioid-tax-breaks/</link>
-      <pubDate>Fri, 12 Feb 2021 10:00:00 -0600</pubDate>
-      
-      <guid>https://www.kschaul.com/post/2021/02/12/2021-02-12-opioid-tax-breaks/</guid>
       <description></description>
     </item>
     
