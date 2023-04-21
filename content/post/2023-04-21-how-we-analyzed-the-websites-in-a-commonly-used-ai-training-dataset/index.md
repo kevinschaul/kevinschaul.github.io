@@ -3,6 +3,8 @@ title: How we analyzed the websites in a commonly used AI training dataset
 author: ''
 date: '2023-04-21 8:15:00'
 slug: how-we-analyzed-the-websites-in-a-commonly-used-ai-training-dataset
+show_on_homepage: true
+blurb: 'Some notes on the analysis and visualization techniques'
 categories: []
 tags: []
 ---
