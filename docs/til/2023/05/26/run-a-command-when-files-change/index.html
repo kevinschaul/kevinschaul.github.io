@@ -1,0 +1,108 @@
+
+
+  <!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Run a command when files change - Kevin Schaul</title>
+    <meta property="og:title" content="Run a command when files change - Kevin Schaul">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="TIL about entr, a command that lets you run arbitrary commands whenever files change.
+I was working on a project where I had to run a build command whenever I saved a file. Once I installed entr (brew &amp;hellip;">
+      <meta property="og:description" content="TIL about entr, a command that lets you run arbitrary commands whenever files change.
+I was working on a project where I had to run a build command whenever I saved a file. Once I installed entr (brew &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+
+    <style> @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;800&display=swap'); </style>
+    
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="til">
+    <header class="masthead">
+      <h1><a href="/">Kevin Schaul</a></h1>
+
+<p class="tagline">Visual journalist/hacker</p>
+
+      <nav class="menu">
+  <ul>
+  
+  
+  <li><a href="/contact/">Contact</a></li>
+  
+  <li><a href="/link/">Worth your time</a></li>
+  
+  <li><a href="/til/">Today I learned</a></li>
+  
+  <li><a href="/index.xml">RSS</a></li>
+<li style="display: none;"><a rel="me" href="https://mastodon.garden/@kevinschaul">Mastodon</a></li>
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>Run a command when files change</h1>
+<h3>May 26, 2023</h3>
+
+      </header>
+
+  
+  
+  
+  
+  <p>TIL about <a href="https://github.com/eradman/entr">entr</a>, a command that lets you run arbitrary commands whenever files change.</p>
+<p>I was working on a project where I had to run a build command whenever I saved a file. Once I installed <code>entr</code> (<code>brew install entr</code>), it took me about 5 seconds to figure out how to use it for this purpose.</p>
+<pre tabindex="0"><code>find apple-news/ | entr -s &#39;npm run bespoke&#39;
+</code></pre><p>Any time a tile inside the directory <code>apple-news</code> changes, <code>npm run bespoke</code> gets run.</p>
+<p><a href="http://eradman.com/entrproject/">Looks like</a> there are lots of other options for <code>entr</code> but I&rsquo;ll probably just stick to this pattern.</p>
+
+  
+  
+    <footer>
+    
+    <p>
+      <i>
+      Tags:
+      
+        <a href="https://www.kschaul.com/tags/command-line/">command line</a>&nbsp;
+      
+      </i>
+    </p>
+    
+
+    
+  
+  
+
+  </footer>
+  </article>
+  </body>
+</html>
+

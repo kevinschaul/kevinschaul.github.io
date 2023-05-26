@@ -6,7 +6,21 @@
     <description>Recent content on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 May 2023 23:48:57 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 26 May 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Run a command when files change</title>
+      <link>https://www.kschaul.com/til/2023/05/26/run-a-command-when-files-change/</link>
+      <pubDate>Fri, 26 May 2023 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2023/05/26/run-a-command-when-files-change/</guid>
+      <description>TIL about entr, a command that lets you run arbitrary commands whenever files change.
+I was working on a project where I had to run a build command whenever I saved a file. Once I installed entr (brew install entr), it took me about 5 seconds to figure out how to use it for this purpose.
+find apple-news/ | entr -s &amp;#39;npm run bespoke&amp;#39; Any time a tile inside the directory apple-news changes, npm run bespoke gets run.</description>
+      
+      <category>command line</category>
+      
+    </item>
+    
     <item>
       <title>How we analyzed the websites in a commonly used AI training dataset</title>
       <link>https://www.kschaul.com/post/2023/04/21/how-we-analyzed-the-websites-in-a-commonly-used-ai-training-dataset/</link>
@@ -128,16 +142,6 @@ Fortunately there’s a fairly simple pattern we can build into our tooling to b
       <category>React</category>
       
       <category>frontend</category>
-      
-    </item>
-    
-    <item>
-      <title>AI can now create images out of thin air. See how it works.</title>
-      <link>https://www.washingtonpost.com/technology/interactive/2022/ai-image-generator/</link>
-      <pubDate>Fri, 16 Dec 2022 00:00:00 -0600</pubDate>
-      
-      <guid>https://www.washingtonpost.com/technology/interactive/2022/ai-image-generator/</guid>
-      <description></description>
       
     </item>
     

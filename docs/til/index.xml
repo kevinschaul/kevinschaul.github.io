@@ -6,7 +6,18 @@
     <description>Recent content in Today I Learned on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Mar 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/til/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 26 May 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/til/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Run a command when files change</title>
+      <link>https://www.kschaul.com/til/2023/05/26/run-a-command-when-files-change/</link>
+      <pubDate>Fri, 26 May 2023 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2023/05/26/run-a-command-when-files-change/</guid>
+      <description>TIL about entr, a command that lets you run arbitrary commands whenever files change.
+I was working on a project where I had to run a build command whenever I saved a file. Once I installed entr (brew install entr), it took me about 5 seconds to figure out how to use it for this purpose.
+find apple-news/ | entr -s &amp;#39;npm run bespoke&amp;#39; Any time a tile inside the directory apple-news changes, npm run bespoke gets run.</description>
+    </item>
+    
     <item>
       <title>Control HTML table widths with table-layout: fixed;</title>
       <link>https://www.kschaul.com/til/2023/03/30/control-html-table-widths-with-table-layout-fixed/</link>
