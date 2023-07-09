@@ -6,7 +6,31 @@
     <description>Recent content on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Apr 2023 08:15:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 28 Jun 2023 18:01:03 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>See how AI got so good, so fast</title>
+      <link>https://www.washingtonpost.com/business/interactive/2023/artificial-intelligence-tech-rapid-advances/</link>
+      <pubDate>Fri, 26 May 2023 08:10:00 -0500</pubDate>
+      
+      <guid>https://www.washingtonpost.com/business/interactive/2023/artificial-intelligence-tech-rapid-advances/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Run a command when files change</title>
+      <link>https://www.kschaul.com/til/2023/05/26/run-a-command-when-files-change/</link>
+      <pubDate>Fri, 26 May 2023 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2023/05/26/run-a-command-when-files-change/</guid>
+      <description>TIL about entr, a command that lets you run arbitrary commands whenever files change.
+I was working on a project where I had to run a build command whenever I saved a file. Once I installed entr (brew install entr), it took me about 5 seconds to figure out how to use it for this purpose.
+find apple-news/ | entr -s &amp;#39;npm run bespoke&amp;#39; Any time a tile inside the directory apple-news changes, npm run bespoke gets run.</description>
+      
+      <category>command line</category>
+      
+    </item>
+    
     <item>
       <title>How we analyzed the websites in a commonly used AI training dataset</title>
       <link>https://www.kschaul.com/post/2023/04/21/how-we-analyzed-the-websites-in-a-commonly-used-ai-training-dataset/</link>
@@ -110,34 +134,6 @@ It turns out you can the embedded command tile-join for this task:
 $ tile-join --force --no-tile-compression --no-tile-size-limit --output-to-directory tiles 2017-07-03_north-america.mbtiles --minimum-zoom 6 --maximum-zoom 10 h/t yuiseki</description>
       
       <category>gis</category>
-      
-    </item>
-    
-    <item>
-      <title>Writing D3 in React with an escape hatch</title>
-      <link>https://www.kschaul.com/til/2022/12/19/writing-d3-in-react-with-an-escape-hatch/</link>
-      <pubDate>Mon, 19 Dec 2022 00:00:00 -0600</pubDate>
-      
-      <guid>https://www.kschaul.com/til/2022/12/19/writing-d3-in-react-with-an-escape-hatch/</guid>
-      <description>Most of The Washington Post has moved to React for site rendering. This is hugely beneficial overall but for many graphics reporters it’s yet another thing to learn to get stories published.
-It’s already overwhelming to learn HTML/CSS/JS, data analysis, some way to build charts, some mapping tool. I’m interested in lowering the barriers to entry for this field.
-Fortunately there’s a fairly simple pattern we can build into our tooling to bring back some simplicity of the pre-React frontend development.</description>
-      
-      <category>D3</category>
-      
-      <category>React</category>
-      
-      <category>frontend</category>
-      
-    </item>
-    
-    <item>
-      <title>AI can now create images out of thin air. See how it works.</title>
-      <link>https://www.washingtonpost.com/technology/interactive/2022/ai-image-generator/</link>
-      <pubDate>Fri, 16 Dec 2022 00:00:00 -0600</pubDate>
-      
-      <guid>https://www.washingtonpost.com/technology/interactive/2022/ai-image-generator/</guid>
-      <description></description>
       
     </item>
     

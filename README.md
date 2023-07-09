@@ -12,3 +12,9 @@ Requires Hugo and the R package `blogdown`
 
     blogdown::build_site()
 
+### Create a new TIL
+
+```
+library(blogdown)
+blogdown::new_post('your-new-til-slug-here', kind='til', subdir='til')
+```
