@@ -31,4 +31,8 @@ In the following example, the labels were passed to `avoid-overlap` with a list 
 | -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | ![Chart with labels overlapping](example-choices-0.png) | ![Same chart with the overlapping labels rendered using one of the provided choices so they no longer collide](example-choices-1.png) |
 
+### Visual testing
+
+This was my first time using visual testing in a project. I set it up using Storybook and Chromatic, and honestly it worked quite nicely. So far the tests are [fairly simple](https://www.chromatic.com/build?appId=64a5bef463fbc133b9a4b6b6&number=25), but I'm hoping this pays off in the future as I refine the overlap avoidance techniques.
+
 [See avoid-overlap on GitHub](https://github.com/kevinschaul/avoid-overlap).
