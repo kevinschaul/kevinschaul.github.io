@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>D3 on Kevin Schaul</title>
+    <title>d3 on Kevin Schaul</title>
     <link>https://www.kschaul.com/tags/d3/</link>
-    <description>Recent content in D3 on Kevin Schaul</description>
+    <description>Recent content in d3 on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Dec 2022 00:00:00 -0600</lastBuildDate><atom:link href="https://www.kschaul.com/tags/d3/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 10 Jul 2023 09:15:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/tags/d3/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>avoid-overlap: Utilities for chart-makers to avoid text overlaps in their graphics</title>
+      <link>https://www.kschaul.com/post/2023/07/10/avoid-overlap-utilities-for-chart-makers-to-avoid-text-overlaps-in-their-graphics/</link>
+      <pubDate>Mon, 10 Jul 2023 09:15:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/post/2023/07/10/avoid-overlap-utilities-for-chart-makers-to-avoid-text-overlaps-in-their-graphics/</guid>
+      <description>I&amp;rsquo;ve been working on a library to help chart-makers avoid text overlaps in their graphics, and it&amp;rsquo;s finally in a place worth sharing. Check it out on GitHub or in action at two of my recent graphics.
+Labeling charts, maps and other graphics is more art than science, but there are some general rules we can follow to achieve good results programmatically. This library provides two label-avoidance techniques: nudge and choices.</description>
+    </item>
+    
     <item>
       <title>Writing D3 in React with an escape hatch</title>
       <link>https://www.kschaul.com/til/2022/12/19/writing-d3-in-react-with-an-escape-hatch/</link>

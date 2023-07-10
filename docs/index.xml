@@ -6,7 +6,32 @@
     <description>Recent content on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jun 2023 18:01:03 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 10 Jul 2023 09:15:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>avoid-overlap: Utilities for chart-makers to avoid text overlaps in their graphics</title>
+      <link>https://www.kschaul.com/post/2023/07/10/avoid-overlap-utilities-for-chart-makers-to-avoid-text-overlaps-in-their-graphics/</link>
+      <pubDate>Mon, 10 Jul 2023 09:15:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/post/2023/07/10/avoid-overlap-utilities-for-chart-makers-to-avoid-text-overlaps-in-their-graphics/</guid>
+      <description>I&amp;rsquo;ve been working on a library to help chart-makers avoid text overlaps in their graphics, and it&amp;rsquo;s finally in a place worth sharing. Check it out on GitHub or in action at two of my recent graphics.
+Labeling charts, maps and other graphics is more art than science, but there are some general rules we can follow to achieve good results programmatically. This library provides two label-avoidance techniques: nudge and choices.</description>
+      
+      <category>d3</category>
+      
+      <category>frontend</category>
+      
+    </item>
+    
+    <item>
+      <title>Are you middle class?</title>
+      <link>https://www.washingtonpost.com/business/interactive/2023/middle-class-income/</link>
+      <pubDate>Thu, 01 Jun 2023 06:00:00 -0500</pubDate>
+      
+      <guid>https://www.washingtonpost.com/business/interactive/2023/middle-class-income/</guid>
+      <description></description>
+      
+    </item>
+    
     <item>
       <title>See how AI got so good, so fast</title>
       <link>https://www.washingtonpost.com/business/interactive/2023/artificial-intelligence-tech-rapid-advances/</link>
@@ -105,35 +130,6 @@ Well, TIL about dtplyr, which lets you write dplyr code but gain the speed of da
 library(data.table) library(dtplyr) library(dplyr, warn.conflicts=FALSE) data_lazy &amp;lt;- data %&amp;gt;% lazy_dt(immutable=FALSE) data_lazy %&amp;gt;% mutate(...) %&amp;gt;% group_by(column) %&amp;gt;% summarize(...) %&amp;gt;% as_tibble() Take a look at the immutable argument in the docs. This runs soooo much faster.</description>
       
       <category>R</category>
-      
-    </item>
-    
-    <item>
-      <title>How The Post is replacing Mapbox with open source solutions</title>
-      <link>https://www.kschaul.com/post/2023/02/16/how-the-post-is-replacing-mapbox-with-open-source-solutions/</link>
-      <pubDate>Thu, 16 Feb 2023 00:00:00 -0600</pubDate>
-      
-      <guid>https://www.kschaul.com/post/2023/02/16/how-the-post-is-replacing-mapbox-with-open-source-solutions/</guid>
-      <description>Last week I published a story for The Washington Post that required an interactive slippy map. Lookup maps like this are a common pattern to show a geographic trend and let readers explore the data for their areas.
-For about five years, my instinct when working on these stories is to reach for Mapbox, which has continually pushed the field ahead with innovations like vector tiles, a style specification and tools like tippecanoe.</description>
-      
-      <category>gis</category>
-      
-      <category>oss</category>
-      
-    </item>
-    
-    <item>
-      <title>Extract mbtiles into zxy files with tippecanoe</title>
-      <link>https://www.kschaul.com/til/2022/12/29/extract-mbtiles-to-zxy-files-with-tippecanoe/</link>
-      <pubDate>Thu, 29 Dec 2022 00:00:00 -0600</pubDate>
-      
-      <guid>https://www.kschaul.com/til/2022/12/29/extract-mbtiles-to-zxy-files-with-tippecanoe/</guid>
-      <description>The next time you need to extract an .mbtiles file into tile files, reach for tippecanoe. I’ve used it often for creating .mbtiles files but not for extracting tiles out of them.
-It turns out you can the embedded command tile-join for this task:
-$ tile-join --force --no-tile-compression --no-tile-size-limit --output-to-directory tiles 2017-07-03_north-america.mbtiles --minimum-zoom 6 --maximum-zoom 10 h/t yuiseki</description>
-      
-      <category>gis</category>
       
     </item>
     
