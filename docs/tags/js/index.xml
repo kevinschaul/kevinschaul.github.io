@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>js on Kevin Schaul</title>
+    <link>https://www.kschaul.com/tags/js/</link>
+    <description>Recent content in js on Kevin Schaul</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 18 Aug 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/tags/js/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Formatting numbers in javascript with Intl.NumberFormat()</title>
+      <link>https://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</link>
+      <pubDate>Fri, 18 Aug 2023 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</guid>
+      <description>When formatting numbers for readability, say in a table, I&amp;rsquo;ve typically used d3-format. But I could never get it to do exactly what I wanted.
+Well I just learned there&amp;rsquo;s a built-in for this now: Intl.NumberFormat(). The constructor takes two arguments: A locale (like &amp;rsquo;en-us&amp;rsquo;)`, and an extensive set of options. You can almost certainly get this to format numbers exactly how you want them.
+In my case, I wanted 62,829,251,930 to become 62.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,7 +6,18 @@
     <description>Recent content in Today I Learned on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 May 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/til/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Aug 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/til/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Formatting numbers in javascript with Intl.NumberFormat()</title>
+      <link>https://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</link>
+      <pubDate>Fri, 18 Aug 2023 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</guid>
+      <description>When formatting numbers for readability, say in a table, I&amp;rsquo;ve typically used d3-format. But I could never get it to do exactly what I wanted.
+Well I just learned there&amp;rsquo;s a built-in for this now: Intl.NumberFormat(). The constructor takes two arguments: A locale (like &amp;rsquo;en-us&amp;rsquo;)`, and an extensive set of options. You can almost certainly get this to format numbers exactly how you want them.
+In my case, I wanted 62,829,251,930 to become 62.</description>
+    </item>
+    
     <item>
       <title>Run a command when files change</title>
       <link>https://www.kschaul.com/til/2023/05/26/run-a-command-when-files-change/</link>

@@ -6,22 +6,31 @@
     <description>Recent content in Tags on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 10 Jul 2023 09:15:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Aug 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>frontend</title>
+      <link>https://www.kschaul.com/tags/frontend/</link>
+      <pubDate>Fri, 18 Aug 2023 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/tags/frontend/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>js</title>
+      <link>https://www.kschaul.com/tags/js/</link>
+      <pubDate>Fri, 18 Aug 2023 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/tags/js/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>d3</title>
       <link>https://www.kschaul.com/tags/d3/</link>
       <pubDate>Mon, 10 Jul 2023 09:15:00 -0500</pubDate>
       
       <guid>https://www.kschaul.com/tags/d3/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>frontend</title>
-      <link>https://www.kschaul.com/tags/frontend/</link>
-      <pubDate>Mon, 10 Jul 2023 09:15:00 -0500</pubDate>
-      
-      <guid>https://www.kschaul.com/tags/frontend/</guid>
       <description></description>
     </item>
     

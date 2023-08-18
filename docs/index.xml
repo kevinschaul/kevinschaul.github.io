@@ -6,7 +6,23 @@
     <description>Recent content on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 07 Aug 2023 20:37:10 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Aug 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Formatting numbers in javascript with Intl.NumberFormat()</title>
+      <link>https://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</link>
+      <pubDate>Fri, 18 Aug 2023 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</guid>
+      <description>When formatting numbers for readability, say in a table, I&amp;rsquo;ve typically used d3-format. But I could never get it to do exactly what I wanted.
+Well I just learned there&amp;rsquo;s a built-in for this now: Intl.NumberFormat(). The constructor takes two arguments: A locale (like &amp;rsquo;en-us&amp;rsquo;)`, and an extensive set of options. You can almost certainly get this to format numbers exactly how you want them.
+In my case, I wanted 62,829,251,930 to become 62.</description>
+      
+      <category>js</category>
+      
+      <category>frontend</category>
+      
+    </item>
+    
     <item>
       <title>avoid-overlap: Utilities for chart-makers to avoid text overlaps in their graphics</title>
       <link>https://www.kschaul.com/post/2023/07/10/avoid-overlap-utilities-for-chart-makers-to-avoid-text-overlaps-in-their-graphics/</link>
@@ -114,20 +130,6 @@ There are a lot of great usage examples on this css tricks post from &amp;hellip
       <description>I always struggle to write JSON in R in exactly the format I need. I figured out a trick today to take a dataframe, nest it by a column and write it to a JSON with that column&amp;rsquo;s values as keys.
 To nest a table like this:
 ## # A tibble: 2 × 3 ## col_to_nest another_col a_third_col ## &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; ## 1 col_value_a 1213691 14616745740 ## 2 col_value_b 1167231 13592103952 Try this:</description>
-      
-      <category>R</category>
-      
-    </item>
-    
-    <item>
-      <title>Speed up tidyverse analysis with dtplyr</title>
-      <link>https://www.kschaul.com/til/2023/03/21/speed-up-tidyverse-analysis-with-dtplyr/</link>
-      <pubDate>Tue, 21 Mar 2023 00:00:00 -0500</pubDate>
-      
-      <guid>https://www.kschaul.com/til/2023/03/21/speed-up-tidyverse-analysis-with-dtplyr/</guid>
-      <description>I&amp;rsquo;ve got a ~15 million rows dataset that I need to do cleaning on. I&amp;rsquo;m a big tidyverse fan, but dplyr is slower than data.table.
-Well, TIL about dtplyr, which lets you write dplyr code but gain the speed of data.table:
-library(data.table) library(dtplyr) library(dplyr, warn.conflicts=FALSE) data_lazy &amp;lt;- data %&amp;gt;% lazy_dt(immutable=FALSE) data_lazy %&amp;gt;% mutate(...) %&amp;gt;% group_by(column) %&amp;gt;% summarize(...) %&amp;gt;% as_tibble() Take a look at the immutable argument in the docs. This runs soooo much faster.</description>
       
       <category>R</category>
       
