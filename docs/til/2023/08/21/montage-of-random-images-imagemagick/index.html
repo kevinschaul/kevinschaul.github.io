@@ -1,0 +1,112 @@
+
+
+  <!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Create a montage of images in random order with imagemagick - Kevin Schaul</title>
+    <meta property="og:title" content="Create a montage of images in random order with imagemagick - Kevin Schaul">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="It ain&amp;rsquo;t pretty but this will let you use ImageMagick&amp;rsquo;s montage command with a random order of images.
+First, generate a text file with the image filenames in it, in random order. The sed &amp;hellip;">
+      <meta property="og:description" content="It ain&amp;rsquo;t pretty but this will let you use ImageMagick&amp;rsquo;s montage command with a random order of images.
+First, generate a text file with the image filenames in it, in random order. The sed &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+
+    <style> @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;800&display=swap'); </style>
+    
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="til">
+    <header class="masthead">
+      <h1><a href="/">Kevin Schaul</a></h1>
+
+<p class="tagline">Visual journalist/hacker</p>
+
+      <nav class="menu">
+  <ul>
+  
+  
+  <li><a href="/contact/">Contact</a></li>
+  
+  <li><a href="/link/">Worth your time</a></li>
+  
+  <li><a href="/til/">Today I learned</a></li>
+  
+  <li><a href="/index.xml">RSS</a></li>
+<li style="display: none;"><a rel="me" href="https://mastodon.garden/@kevinschaul">Mastodon</a></li>
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>Create a montage of images in random order with imagemagick</h1>
+<h3>August 21, 2023</h3>
+
+      </header>
+
+  
+  
+  
+  
+  <p>It ain&rsquo;t pretty but this will let you use <a href="https://imagemagick.org/script/index.php">ImageMagick&rsquo;s</a> montage command with a random order of images.</p>
+<p>First, generate a text file with the image filenames in it, in random order. The <code>sed</code> commands put a <code>&quot;</code> character at the beginning and end of the filename, otherwise ImageMagick freaks out.</p>
+<pre tabindex="0"><code>ls my-images | \
+  shuf | \
+  sed &#39;s/^/&#34;/&#39; | \
+  sed &#39;s/$/&#34;/&#39; &gt; \
+  randomly_ordered_images.txt
+</code></pre><p>Then use that file of filenames as input, using the <code>@</code> operator.</p>
+<pre tabindex="0"><code>magick montage @randomly_ordered_images.txt mosaic.jpg
+</code></pre>
+  
+  
+    <footer>
+    
+    <p>
+      <i>
+      Tags:
+      
+        <a href="https://www.kschaul.com/tags/command-line/">command line</a>&nbsp;
+      
+      </i>
+    </p>
+    
+
+    
+  
+  
+
+  </footer>
+  </article>
+  </body>
+</html>
+
