@@ -3,6 +3,7 @@
 import re
 import os
 import requests
+from urllib import parse
 
 USER_ID = 651620
 USER_NAME = 'kasnewsblur'
@@ -25,7 +26,9 @@ def slugify(name):
 
 def save_link(story):
     permalink = story['story_permalink']
-    url = slugify(permalink)
+    parsed_url = parse.urlparse(permalink)
+    # Remove querystring
+    url = slugify(parsed_url.netloc + parsed_url.path)
     filename = os.path.join('./content', 'link', url)
 
     # Save the link if it does not already exist
