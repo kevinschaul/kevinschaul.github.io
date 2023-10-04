@@ -1,6 +1,6 @@
 ---
 title: Writing a bad chess engine
-date: '2023-10-04'
+date: '2023-10-04 16:45:00'
 slug: writing-a-bad-chess-engine-for-uci-lichess
 tags: [AI]
 show_on_homepage: yes
