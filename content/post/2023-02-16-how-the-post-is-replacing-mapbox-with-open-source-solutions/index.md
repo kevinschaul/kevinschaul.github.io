@@ -15,7 +15,7 @@ For about five years, my instinct when working on these stories is to reach for 
 
 Here's what we used instead:
 
-* [OpenMapTiles for building tiles](#openamptiles)
+* [OpenMapTiles for building tiles](#openmaptiles)
 * [Maputnik for style editing](#maputnik)
 * [PMTiles for tile hosting](#pmtiles)
 * [Maplibre-gl-js for client-side rendering](#maplibre)
