@@ -61,7 +61,7 @@ def post_to_mastodon(story):
             "Idempotency-Key": story["story_permalink"],
         }
 
-        status = story['story_permalink'] + ' #worthyourtime'
+        status = story['story_permalink']
 
         if story["user_id"] == USER_ID and story["comments"]:
             status = story["comments"] + ' --> ' + status
