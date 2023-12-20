@@ -3,7 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.kschaul.com/</loc>
-    <lastmod>2023-12-14T16:39:38-06:00</lastmod>
+    <lastmod>2023-12-20T00:00:00-06:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/post/</loc>
+    <lastmod>2023-12-20T00:00:00-06:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/tags/recently/</loc>
+    <lastmod>2023-12-20T00:00:00-06:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/post/2023/12/20/recently/</loc>
+    <lastmod>2023-12-20T00:00:00-06:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/tags/</loc>
+    <lastmod>2023-12-20T00:00:00-06:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/link/reb00ted.org_tech_20231208-meta-threads-data-dialogue_/</loc>
     <lastmod>2023-12-14T16:39:38-06:00</lastmod>
@@ -33,12 +45,6 @@
     <lastmod>2023-10-13T14:25:16-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/tags/ai/</loc>
-    <lastmod>2023-10-04T16:45:00-05:00</lastmod>
-  </url><url>
-    <loc>https://www.kschaul.com/post/</loc>
-    <lastmod>2023-10-04T16:45:00-05:00</lastmod>
-  </url><url>
-    <loc>https://www.kschaul.com/tags/</loc>
     <lastmod>2023-10-04T16:45:00-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/post/2023/10/04/writing-a-bad-chess-engine-for-uci-lichess/</loc>

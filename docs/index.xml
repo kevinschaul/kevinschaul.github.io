@@ -6,7 +6,21 @@
     <description>Recent content on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 Dec 2023 16:39:38 -0600</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Dec 2023 00:00:00 -0600</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Recently</title>
+      <link>https://www.kschaul.com/post/2023/12/20/recently/</link>
+      <pubDate>Wed, 20 Dec 2023 00:00:00 -0600</pubDate>
+      
+      <guid>https://www.kschaul.com/post/2023/12/20/recently/</guid>
+      <description>Getting on the &amp;ldquo;Recently&amp;rdquo; blog post train. Time will tell how long this lasts &amp;hellip;
+Listening Been seeing a lot of love for Yussef Dayes&amp;rsquo;s debut solo record: Black Classical Music. It&amp;rsquo;s fantastic. But for even more electric drumming, for me it&amp;rsquo;s hard to beat his live set at Joshua Tree:
+The Yussef Dayes Experience Live at Joshua Tree (Presented by Soulection) by Yussef Dayes Coding My chess bot is officially better than I am.</description>
+      
+      <category>recently</category>
+      
+    </item>
+    
     <item>
       <title>Writing a bad chess engine</title>
       <link>https://www.kschaul.com/post/2023/10/04/writing-a-bad-chess-engine-for-uci-lichess/</link>
@@ -118,21 +132,6 @@ Allen Institute researchers kindly provided us with the top 1,000 domains in Goo
       
       <guid>https://www.washingtonpost.com/technology/interactive/2023/ai-chatbot-learning/</guid>
       <description></description>
-      
-    </item>
-    
-    <item>
-      <title>Feedmaker: Quickly generate an RSS feed from any website</title>
-      <link>https://www.kschaul.com/post/2023/04/16/feedmaker-quickly-generate-an-rss-feed-from-any-website/</link>
-      <pubDate>Sun, 16 Apr 2023 00:00:00 -0500</pubDate>
-      
-      <guid>https://www.kschaul.com/post/2023/04/16/feedmaker-quickly-generate-an-rss-feed-from-any-website/</guid>
-      <description>I&amp;rsquo;ve been diverting much of my web browsing away from social media and towards RSS feeds, but there are so many sites that don&amp;rsquo;t offer the feeds for the content I care about.
-Today I&amp;rsquo;m sharing a side project called Feedmaker (Source on GitHub). It&amp;rsquo;s a service that lets you generate RSS feeds from websites in next to no time. Just figure out a couple CSS selectors and pass them as URL parameters.</description>
-      
-      <category>rss</category>
-      
-      <category>django</category>
       
     </item>
     
