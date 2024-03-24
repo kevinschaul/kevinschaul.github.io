@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 Dec 2023 00:00:00 -0600</lastBuildDate><atom:link href="https://www.kschaul.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 13 Mar 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Follow a mile-by-mile map of the total solar eclipse</title>
+      <link>https://www.kschaul.com/post/2024/03/13/solar-eclipse-map/</link>
+      <pubDate>Wed, 13 Mar 2024 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/post/2024/03/13/solar-eclipse-map/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Recently</title>
       <link>https://www.kschaul.com/post/2023/12/20/recently/</link>
@@ -16,6 +25,15 @@
       <description>Getting on the &amp;ldquo;Recently&amp;rdquo; blog post train. Time will tell how long this lasts &amp;hellip;
 Listening Been seeing a lot of love for Yussef Dayes&amp;rsquo;s debut solo record: Black Classical Music. It&amp;rsquo;s fantastic. But for even more electric drumming, for me it&amp;rsquo;s hard to beat his live set at Joshua Tree:
 The Yussef Dayes Experience Live at Joshua Tree (Presented by Soulection) by Yussef Dayes Coding My chess bot is officially better than I am.</description>
+    </item>
+    
+    <item>
+      <title>These fake images reveeal how AI amplifies our worst sterotypes</title>
+      <link>https://www.kschaul.com/post/2023/11/01/ai-image-generator-bias/</link>
+      <pubDate>Wed, 01 Nov 2023 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/post/2023/11/01/ai-image-generator-bias/</guid>
+      <description></description>
     </item>
     
     <item>
@@ -84,25 +102,6 @@ Allen Institute researchers kindly provided us with the top 1,000 domains in Goo
       <guid>https://www.kschaul.com/post/2023/04/16/feedmaker-quickly-generate-an-rss-feed-from-any-website/</guid>
       <description>I&amp;rsquo;ve been diverting much of my web browsing away from social media and towards RSS feeds, but there are so many sites that don&amp;rsquo;t offer the feeds for the content I care about.
 Today I&amp;rsquo;m sharing a side project called Feedmaker (Source on GitHub). It&amp;rsquo;s a service that lets you generate RSS feeds from websites in next to no time. Just figure out a couple CSS selectors and pass them as URL parameters.</description>
-    </item>
-    
-    <item>
-      <title>How The Post is replacing Mapbox with open source solutions</title>
-      <link>https://www.kschaul.com/post/2023/02/16/how-the-post-is-replacing-mapbox-with-open-source-solutions/</link>
-      <pubDate>Thu, 16 Feb 2023 00:00:00 -0600</pubDate>
-      
-      <guid>https://www.kschaul.com/post/2023/02/16/how-the-post-is-replacing-mapbox-with-open-source-solutions/</guid>
-      <description>Last week I published a story for The Washington Post that required an interactive slippy map. Lookup maps like this are a common pattern to show a geographic trend and let readers explore the data for their areas.
-For about five years, my instinct when working on these stories is to reach for Mapbox, which has continually pushed the field ahead with innovations like vector tiles, a style specification and tools like tippecanoe.</description>
-    </item>
-    
-    <item>
-      <title>AI can now create images out of thin air. See how it works.</title>
-      <link>https://www.kschaul.com/post/2022/12/16/ai-can-now-create-images-out-of-thin-air-see-how-it-works/</link>
-      <pubDate>Fri, 16 Dec 2022 00:00:00 -0600</pubDate>
-      
-      <guid>https://www.kschaul.com/post/2022/12/16/ai-can-now-create-images-out-of-thin-air-see-how-it-works/</guid>
-      <description></description>
     </item>
     
   </channel>
