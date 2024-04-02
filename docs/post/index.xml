@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 Mar 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 02 Apr 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Is this AI? See if you can spot the technology in your everyday life.</title>
+      <link>https://www.kschaul.com/post/2024/04/02/what-is-ai/</link>
+      <pubDate>Tue, 02 Apr 2024 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/post/2024/04/02/what-is-ai/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Follow a mile-by-mile map of the total solar eclipse</title>
       <link>https://www.kschaul.com/post/2024/03/13/solar-eclipse-map/</link>
@@ -92,16 +101,6 @@ Allen Institute researchers kindly provided us with the top 1,000 domains in Goo
       
       <guid>https://www.kschaul.com/post/2023/04/21/see-the-websites-that-make-ai-like-chatgpt-sound-so-smart/</guid>
       <description></description>
-    </item>
-    
-    <item>
-      <title>Feedmaker: Quickly generate an RSS feed from any website</title>
-      <link>https://www.kschaul.com/post/2023/04/16/feedmaker-quickly-generate-an-rss-feed-from-any-website/</link>
-      <pubDate>Sun, 16 Apr 2023 00:00:00 -0500</pubDate>
-      
-      <guid>https://www.kschaul.com/post/2023/04/16/feedmaker-quickly-generate-an-rss-feed-from-any-website/</guid>
-      <description>I&amp;rsquo;ve been diverting much of my web browsing away from social media and towards RSS feeds, but there are so many sites that don&amp;rsquo;t offer the feeds for the content I care about.
-Today I&amp;rsquo;m sharing a side project called Feedmaker (Source on GitHub). It&amp;rsquo;s a service that lets you generate RSS feeds from websites in next to no time. Just figure out a couple CSS selectors and pass them as URL parameters.</description>
     </item>
     
   </channel>

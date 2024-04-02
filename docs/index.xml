@@ -6,7 +6,17 @@
     <description>Recent content on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 Mar 2024 14:31:01 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 02 Apr 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Is this AI? See if you can spot the technology in your everyday life.</title>
+      <link>https://www.washingtonpost.com/technology/interactive/2024/what-is-ai/</link>
+      <pubDate>Tue, 02 Apr 2024 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.washingtonpost.com/technology/interactive/2024/what-is-ai/</guid>
+      <description></description>
+      
+    </item>
+    
     <item>
       <title>Follow a mile-by-mile map of the total solar eclipse</title>
       <link>https://www.washingtonpost.com/science/interactive/2024/map-totality-solar-eclipse-locations/</link>
@@ -117,20 +127,6 @@ Labeling charts, maps and other graphics is more art than science, but there are
       
       <guid>https://www.washingtonpost.com/business/interactive/2023/artificial-intelligence-tech-rapid-advances/</guid>
       <description></description>
-      
-    </item>
-    
-    <item>
-      <title>Run a command when files change</title>
-      <link>https://www.kschaul.com/til/2023/05/26/run-a-command-when-files-change/</link>
-      <pubDate>Fri, 26 May 2023 00:00:00 -0500</pubDate>
-      
-      <guid>https://www.kschaul.com/til/2023/05/26/run-a-command-when-files-change/</guid>
-      <description>TIL about entr, a command that lets you run arbitrary commands whenever files change.
-I was working on a project where I had to run a build command whenever I saved a file. Once I installed entr (brew install entr), it took me about 5 seconds to figure out how to use it for this purpose.
-find apple-news/ | entr -s &amp;#39;npm run bespoke&amp;#39; Any time a tile inside the directory apple-news changes, npm run bespoke gets run.</description>
-      
-      <category>command line</category>
       
     </item>
     
