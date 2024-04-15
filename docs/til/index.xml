@@ -6,7 +6,17 @@
     <description>Recent content in Today I Learned on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 21 Aug 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/til/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Apr 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/til/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>find-which-npm-dependency-has-dependency</title>
+      <link>https://www.kschaul.com/til/2024/04/15/find-which-npm-dependency-has-dependency/</link>
+      <pubDate>Mon, 15 Apr 2024 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2024/04/15/find-which-npm-dependency-has-dependency/</guid>
+      <description>Wow, a lifesaver command right here:
+npm ls TROUBLESOME_PACKAGE This will output a tree showing all of the node packages in your local project that depend on TROUBLESOME_PACKAGE. Dear lord have I needed this so many times.</description>
+    </item>
+    
     <item>
       <title>Create a montage of images in random order with imagemagick</title>
       <link>https://www.kschaul.com/til/2023/08/21/montage-of-random-images-imagemagick/</link>
@@ -103,18 +113,6 @@ Fortunately there’s a fairly simple pattern we can build into our tooling to b
       <description>Unicode characters such as ■ (black square U+25A0) can be super useful to use for icons without needing to load an icon font. And they can typically be styled using CSS, like: color: steelblue;.
 But on iOS safari (and likely Android and other devices), these are rendered in the cartooney, emoji style — which means trying to color them with CSS doesn’t work.
 Fortunately there is an easy (but cryptic) fix: Simply append &amp;amp;#xFE0E; immediately following your unicode character, like ■&amp;amp;#xFE0E;.</description>
-    </item>
-    
-    <item>
-      <title>Caching R code with cache_rds()</title>
-      <link>https://www.kschaul.com/til/2022/08/18/caching-r-code-with-cache-rds/</link>
-      <pubDate>Thu, 18 Aug 2022 00:00:00 -0500</pubDate>
-      
-      <guid>https://www.kschaul.com/til/2022/08/18/caching-r-code-with-cache-rds/</guid>
-      <description>If you&amp;rsquo;ve got R code that takes a while to run (a query? complex analysis?), check out the fantastic cache_rds() function from Yihui Xie’s xfun package.
-Let&amp;rsquo;s say you want to get census data from tidycensus, but you don’t want to keep hitting the API. Instead of writing:
-cbsa_pop &amp;lt;- get_decennial(geography=&amp;#39;cbsa&amp;#39;, variables=&amp;#39;P1_001N&amp;#39;, year=2020) You write:
-cbsa_pop &amp;lt;- cache_rds({ get_decennial(geography=&amp;#39;cbsa&amp;#39;, variables=&amp;#39;P1_001N&amp;#39;, year=2020) }) The first time you run it, it will hit the census API like usual.</description>
     </item>
     
   </channel>

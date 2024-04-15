@@ -6,7 +6,24 @@
     <description>Recent content on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Apr 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Apr 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>find-which-npm-dependency-has-dependency</title>
+      <link>https://www.kschaul.com/til/2024/04/15/find-which-npm-dependency-has-dependency/</link>
+      <pubDate>Mon, 15 Apr 2024 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2024/04/15/find-which-npm-dependency-has-dependency/</guid>
+      <description>Wow, a lifesaver command right here:
+npm ls TROUBLESOME_PACKAGE This will output a tree showing all of the node packages in your local project that depend on TROUBLESOME_PACKAGE. Dear lord have I needed this so many times.</description>
+      
+      <category>command line</category>
+      
+      <category>js</category>
+      
+      <category>nodejs</category>
+      
+    </item>
+    
     <item>
       <title>Is this AI? See if you can spot the technology in your everyday life.</title>
       <link>https://www.washingtonpost.com/technology/interactive/2024/what-is-ai/</link>
@@ -116,16 +133,6 @@ Labeling charts, maps and other graphics is more art than science, but there are
       <pubDate>Thu, 01 Jun 2023 06:00:00 -0500</pubDate>
       
       <guid>https://www.washingtonpost.com/business/interactive/2023/middle-class-income/</guid>
-      <description></description>
-      
-    </item>
-    
-    <item>
-      <title>See how AI got so good, so fast</title>
-      <link>https://www.washingtonpost.com/business/interactive/2023/artificial-intelligence-tech-rapid-advances/</link>
-      <pubDate>Fri, 26 May 2023 08:10:00 -0500</pubDate>
-      
-      <guid>https://www.washingtonpost.com/business/interactive/2023/artificial-intelligence-tech-rapid-advances/</guid>
       <description></description>
       
     </item>

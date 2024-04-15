@@ -3,7 +3,25 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.kschaul.com/</loc>
-    <lastmod>2024-04-02T00:00:00-05:00</lastmod>
+    <lastmod>2024-04-15T00:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/tags/command-line/</loc>
+    <lastmod>2024-04-15T00:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/til/2024/04/15/find-which-npm-dependency-has-dependency/</loc>
+    <lastmod>2024-04-15T00:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/tags/js/</loc>
+    <lastmod>2024-04-15T00:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/tags/nodejs/</loc>
+    <lastmod>2024-04-15T00:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/tags/</loc>
+    <lastmod>2024-04-15T00:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.kschaul.com/til/</loc>
+    <lastmod>2024-04-15T00:00:00-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/post/2024/04/02/what-is-ai/</loc>
     <lastmod>2024-04-02T00:00:00-05:00</lastmod>
@@ -56,9 +74,6 @@
     <loc>https://www.kschaul.com/post/2023/12/20/recently/</loc>
     <lastmod>2023-12-20T00:00:00-06:00</lastmod>
   </url><url>
-    <loc>https://www.kschaul.com/tags/</loc>
-    <lastmod>2023-12-20T00:00:00-06:00</lastmod>
-  </url><url>
     <loc>https://www.kschaul.com/link/reb00ted.org_tech_20231208-meta-threads-data-dialogue_/</loc>
     <lastmod>2023-12-14T16:39:38-06:00</lastmod>
   </url><url>
@@ -101,22 +116,13 @@
     <loc>https://www.kschaul.com/link/www.nytimes.com_interactive_2023_08_21_business_airline-safety-close-calls.html/</loc>
     <lastmod>2023-08-21T17:03:39-05:00</lastmod>
   </url><url>
-    <loc>https://www.kschaul.com/tags/command-line/</loc>
-    <lastmod>2023-08-21T00:00:00-05:00</lastmod>
-  </url><url>
     <loc>https://www.kschaul.com/til/2023/08/21/montage-of-random-images-imagemagick/</loc>
-    <lastmod>2023-08-21T00:00:00-05:00</lastmod>
-  </url><url>
-    <loc>https://www.kschaul.com/til/</loc>
     <lastmod>2023-08-21T00:00:00-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</loc>
     <lastmod>2023-08-18T00:00:00-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/tags/frontend/</loc>
-    <lastmod>2023-08-18T00:00:00-05:00</lastmod>
-  </url><url>
-    <loc>https://www.kschaul.com/tags/js/</loc>
     <lastmod>2023-08-18T00:00:00-05:00</lastmod>
   </url><url>
     <loc>https://www.kschaul.com/link/crowdview.ai_/</loc>
