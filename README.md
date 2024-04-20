@@ -12,7 +12,23 @@ Requires Hugo and the R package `blogdown`
 
     blogdown::build_site()
 
-### Create a new TIL
+### `til` utility
+
+Install with:
+
+```
+cp til ~/.local/bin/til
+```
+
+Then, create a new TIL with:
+
+```
+til 'Title for the post'
+```
+
+The post will be created and opened in your $EDITOR.
+
+### Create a new post through blogdown
 
 ```
 library(blogdown)
