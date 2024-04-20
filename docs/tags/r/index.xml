@@ -6,7 +6,18 @@
     <description>Recent content in R on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Mar 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 20 Apr 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fix FIPS codes in R with str_pad()</title>
+      <link>https://www.kschaul.com/til/2024/04/20/fix-fips-codes-in-r-with-str-pad/</link>
+      <pubDate>Sat, 20 Apr 2024 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2024/04/20/fix-fips-codes-in-r-with-str-pad/</guid>
+      <description>FIPS codes for U.S. counties need leading zeros, but often your data doesn&amp;rsquo;t have them. Someone down the line may have read them in as numbers, which removed the leading zeroes.
+stringr makes fixing that a breeze:
+data %&amp;gt;% mutate( fips = str_pad(fips, 5, pad=&amp;#34;0&amp;#34;) ) h/t Luis Melgar</description>
+    </item>
+    
     <item>
       <title>Write nested JSON with keys in R/tidyverse</title>
       <link>https://www.kschaul.com/til/2023/03/22/write-nested-json-with-keys-in-r-tidyverse/</link>

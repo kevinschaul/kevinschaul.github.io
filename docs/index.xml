@@ -6,7 +6,21 @@
     <description>Recent content on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Apr 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 20 Apr 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fix FIPS codes in R with str_pad()</title>
+      <link>https://www.kschaul.com/til/2024/04/20/fix-fips-codes-in-r-with-str-pad/</link>
+      <pubDate>Sat, 20 Apr 2024 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2024/04/20/fix-fips-codes-in-r-with-str-pad/</guid>
+      <description>FIPS codes for U.S. counties need leading zeros, but often your data doesn&amp;rsquo;t have them. Someone down the line may have read them in as numbers, which removed the leading zeroes.
+stringr makes fixing that a breeze:
+data %&amp;gt;% mutate( fips = str_pad(fips, 5, pad=&amp;#34;0&amp;#34;) ) h/t Luis Melgar</description>
+      
+      <category>R</category>
+      
+    </item>
+    
     <item>
       <title>find-which-npm-dependency-has-dependency</title>
       <link>https://www.kschaul.com/til/2024/04/15/find-which-npm-dependency-has-dependency/</link>
@@ -124,16 +138,6 @@ Labeling charts, maps and other graphics is more art than science, but there are
       <category>d3</category>
       
       <category>frontend</category>
-      
-    </item>
-    
-    <item>
-      <title>Are you middle class?</title>
-      <link>https://www.washingtonpost.com/business/interactive/2023/middle-class-income/</link>
-      <pubDate>Thu, 01 Jun 2023 06:00:00 -0500</pubDate>
-      
-      <guid>https://www.washingtonpost.com/business/interactive/2023/middle-class-income/</guid>
-      <description></description>
       
     </item>
     
