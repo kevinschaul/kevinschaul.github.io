@@ -6,7 +6,25 @@
     <description>Recent content in Tags on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Apr 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Apr 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>js</title>
+      <link>https://www.kschaul.com/tags/js/</link>
+      <pubDate>Thu, 25 Apr 2024 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/tags/js/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>stitches</title>
+      <link>https://www.kschaul.com/tags/stitches/</link>
+      <pubDate>Thu, 25 Apr 2024 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/tags/stitches/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>R</title>
       <link>https://www.kschaul.com/tags/r/</link>
@@ -22,15 +40,6 @@
       <pubDate>Mon, 15 Apr 2024 00:00:00 -0500</pubDate>
       
       <guid>https://www.kschaul.com/tags/command-line/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>js</title>
-      <link>https://www.kschaul.com/tags/js/</link>
-      <pubDate>Mon, 15 Apr 2024 00:00:00 -0500</pubDate>
-      
-      <guid>https://www.kschaul.com/tags/js/</guid>
       <description></description>
     </item>
     
@@ -85,15 +94,6 @@
       <pubDate>Sun, 16 Apr 2023 00:00:00 -0500</pubDate>
       
       <guid>https://www.kschaul.com/tags/django/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>rss</title>
-      <link>https://www.kschaul.com/tags/rss/</link>
-      <pubDate>Sun, 16 Apr 2023 00:00:00 -0500</pubDate>
-      
-      <guid>https://www.kschaul.com/tags/rss/</guid>
       <description></description>
     </item>
     

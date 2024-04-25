@@ -1,0 +1,119 @@
+
+
+  <!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Stitches inline media queries - Kevin Schaul</title>
+    <meta property="og:title" content="Stitches inline media queries - Kevin Schaul">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="Finally figured out how to write inline media queries in Stitches:
+const Button = styled(&#39;button&#39;, { background: &#39;blue&#39;, &#39;@media (max-width: 462px)&#39;: { background: &#39;orange&#39;, }, }) You can just write &amp;hellip;">
+      <meta property="og:description" content="Finally figured out how to write inline media queries in Stitches:
+const Button = styled(&#39;button&#39;, { background: &#39;blue&#39;, &#39;@media (max-width: 462px)&#39;: { background: &#39;orange&#39;, }, }) You can just write &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+
+    <style> @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;800&display=swap'); </style>
+    
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="til">
+    <header class="masthead">
+      <h1><a href="/">Kevin Schaul</a></h1>
+
+<p class="tagline">Visual journalist/hacker</p>
+
+      <nav class="menu">
+  <ul>
+  
+  
+  <li><a href="/contact/">Contact</a></li>
+  
+  <li><a href="/link/">Worth your time</a></li>
+  
+  <li><a href="/til/">Today I learned</a></li>
+  
+  <li><a href="/index.xml">RSS</a></li>
+<li style="display: none;"><a rel="me" href="https://tilde.zone/@kevinschaul">Mastodon</a></li>
+
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>Stitches inline media queries</h1>
+<h3>April 25, 2024</h3>
+
+      </header>
+
+  
+  
+  
+  
+  <p>Finally figured out how to write inline media queries in
+<a href="https://stitches.dev/docs/responsive-styles">Stitches</a>:</p>
+<pre><code>const Button = styled('button', {
+  background: 'blue',
+  '@media (max-width: 462px)': {
+    background: 'orange',
+  },
+})
+</code></pre>
+<p>You can just write the media query directly in here. No needing to fuss with
+creating global breakpoints when you just need something small to happen at a
+specific width. Wow.</p>
+<p>h/t claude.ai, which I&rsquo;ve been using a ton of lately.</p>
+
+  
+  
+    <footer>
+    
+    <p>
+      <i>
+      Tags:
+      
+        <a href="https://www.kschaul.com/tags/js/">js</a>&nbsp;
+      
+        <a href="https://www.kschaul.com/tags/stitches/">stitches</a>&nbsp;
+      
+      </i>
+    </p>
+    
+
+    
+  
+  
+
+  </footer>
+  </article>
+  </body>
+</html>
+
