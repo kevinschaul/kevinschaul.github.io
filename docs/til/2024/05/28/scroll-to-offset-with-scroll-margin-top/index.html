@@ -1,0 +1,118 @@
+
+
+  <!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Scroll to offset with scroll-margin-top - Kevin Schaul</title>
+    <meta property="og:title" content="Scroll to offset with scroll-margin-top - Kevin Schaul">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="TIL there are some CSS properties that you can set to adjust where a browser scrolls to when scrolling to a div without ruining the perfect spacing of your page!
+Just add:
+.my-element { &amp;hellip;">
+      <meta property="og:description" content="TIL there are some CSS properties that you can set to adjust where a browser scrolls to when scrolling to a div without ruining the perfect spacing of your page!
+Just add:
+.my-element { &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+
+    <style> @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;800&display=swap'); </style>
+    
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="til">
+    <header class="masthead">
+      <h1><a href="/">Kevin Schaul</a></h1>
+
+<p class="tagline">Visual journalist/hacker</p>
+
+      <nav class="menu">
+  <ul>
+  
+  
+  <li><a href="/contact/">Contact</a></li>
+  
+  <li><a href="/link/">Worth your time</a></li>
+  
+  <li><a href="/til/">Today I learned</a></li>
+  
+  <li><a href="/index.xml">RSS</a></li>
+<li style="display: none;"><a rel="me" href="https://tilde.zone/@kevinschaul">Mastodon</a></li>
+
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>Scroll to offset with scroll-margin-top</h1>
+<h3>May 28, 2024</h3>
+
+      </header>
+
+  
+  
+  
+  
+  <p>TIL there are some CSS properties that you can
+set to adjust where a browser scrolls to when
+scrolling to a div <strong>without</strong> ruining the
+perfect spacing of your page!</p>
+<p>Just add:</p>
+<pre tabindex="0"><code>.my-element {
+  scroll-margin-top: 60px;
+}
+</code></pre><p>And then this will scroll to 60px above the
+element:</p>
+<pre tabindex="0"><code>document.querySelector(&#34;.my-element&#34;)
+  .scrollIntoView({ block: &#34;start&#34; })
+</code></pre>
+  
+  
+    <footer>
+    
+    <p>
+      <i>
+      Tags:
+      
+        <a href="https://www.kschaul.com/tags/css/">css</a>&nbsp;
+      
+      </i>
+    </p>
+    
+
+    
+  
+  
+
+  </footer>
+  </article>
+  </body>
+</html>
+
