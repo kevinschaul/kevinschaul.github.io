@@ -8,6 +8,19 @@
     <language>en-us</language>
     <lastBuildDate>Wed, 26 Jun 2024 14:35:15 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Mock fs with vitest and memfs</title>
+      <link>https://www.kschaul.com/til/2024/06/26/mock-fs-with-vitest-and-memfs/</link>
+      <pubDate>Wed, 26 Jun 2024 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2024/06/26/mock-fs-with-vitest-and-memfs/</guid>
+      <description>I’ve been using vitest for testing node code lately, and I often want to set up a fake file system. I’d been using mockFS for this, which is no longer maintained. Fortunately memfs is a drop-in alternative — if you know this secret: You’ve got to add a mock fs call.
+import { vol, fs } from &amp;#34;memfs&amp;#34;; import { vi, describe, test, expect, beforeEach, afterEach } from &amp;#34;vitest&amp;#34;; // Mock fs everywhere else with the memfs version.</description>
+      
+      <category>nodejs</category>
+      
+    </item>
+    
+    <item>
       <title>Scroll to offset with scroll-margin-top</title>
       <link>https://www.kschaul.com/til/2024/05/28/scroll-to-offset-with-scroll-margin-top/</link>
       <pubDate>Tue, 28 May 2024 00:00:00 -0500</pubDate>
@@ -124,20 +137,6 @@ I am truly awful at chess. I know how the pieces are allowed to move, but that&a
 But writing a program to play chess better than I can sounds &amp;hellip; pretty doable?</description>
       
       <category>AI</category>
-      
-    </item>
-    
-    <item>
-      <title>Create a montage of images in random order with imagemagick</title>
-      <link>https://www.kschaul.com/til/2023/08/21/montage-of-random-images-imagemagick/</link>
-      <pubDate>Mon, 21 Aug 2023 00:00:00 -0500</pubDate>
-      
-      <guid>https://www.kschaul.com/til/2023/08/21/montage-of-random-images-imagemagick/</guid>
-      <description>It ain&amp;rsquo;t pretty but this will let you use ImageMagick&amp;rsquo;s montage command with a random order of images.
-First, generate a text file with the image filenames in it, in random order. The sed commands put a &amp;quot; character at the beginning and end of the filename, otherwise ImageMagick freaks out.
-ls my-images | \ shuf | \ sed &amp;#39;s/^/&amp;#34;/&amp;#39; | \ sed &amp;#39;s/$/&amp;#34;/&amp;#39; &amp;gt; \ randomly_ordered_images.txt Then use that file of filenames as input, using the @ operator.</description>
-      
-      <category>command line</category>
       
     </item>
     

@@ -6,7 +6,17 @@
     <description>Recent content in Today I Learned on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 May 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/til/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 26 Jun 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/til/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mock fs with vitest and memfs</title>
+      <link>https://www.kschaul.com/til/2024/06/26/mock-fs-with-vitest-and-memfs/</link>
+      <pubDate>Wed, 26 Jun 2024 00:00:00 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/til/2024/06/26/mock-fs-with-vitest-and-memfs/</guid>
+      <description>I’ve been using vitest for testing node code lately, and I often want to set up a fake file system. I’d been using mockFS for this, which is no longer maintained. Fortunately memfs is a drop-in alternative — if you know this secret: You’ve got to add a mock fs call.
+import { vol, fs } from &amp;#34;memfs&amp;#34;; import { vi, describe, test, expect, beforeEach, afterEach } from &amp;#34;vitest&amp;#34;; // Mock fs everywhere else with the memfs version.</description>
+    </item>
+    
     <item>
       <title>Scroll to offset with scroll-margin-top</title>
       <link>https://www.kschaul.com/til/2024/05/28/scroll-to-offset-with-scroll-margin-top/</link>
@@ -103,17 +113,6 @@ There are a lot of great usage examples on this css tricks post from &amp;hellip
       <description>I always struggle to write JSON in R in exactly the format I need. I figured out a trick today to take a dataframe, nest it by a column and write it to a JSON with that column&amp;rsquo;s values as keys.
 To nest a table like this:
 ## # A tibble: 2 × 3 ## col_to_nest another_col a_third_col ## &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; ## 1 col_value_a 1213691 14616745740 ## 2 col_value_b 1167231 13592103952 Try this:</description>
-    </item>
-    
-    <item>
-      <title>Speed up tidyverse analysis with dtplyr</title>
-      <link>https://www.kschaul.com/til/2023/03/21/speed-up-tidyverse-analysis-with-dtplyr/</link>
-      <pubDate>Tue, 21 Mar 2023 00:00:00 -0500</pubDate>
-      
-      <guid>https://www.kschaul.com/til/2023/03/21/speed-up-tidyverse-analysis-with-dtplyr/</guid>
-      <description>I&amp;rsquo;ve got a ~15 million rows dataset that I need to do cleaning on. I&amp;rsquo;m a big tidyverse fan, but dplyr is slower than data.table.
-Well, TIL about dtplyr, which lets you write dplyr code but gain the speed of data.table:
-library(data.table) library(dtplyr) library(dplyr, warn.conflicts=FALSE) data_lazy &amp;lt;- data %&amp;gt;% lazy_dt(immutable=FALSE) data_lazy %&amp;gt;% mutate(...) %&amp;gt;% group_by(column) %&amp;gt;% summarize(...) %&amp;gt;% as_tibble() Take a look at the immutable argument in the docs. This runs soooo much faster.</description>
     </item>
     
   </channel>

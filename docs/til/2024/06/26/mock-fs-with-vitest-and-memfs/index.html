@@ -1,0 +1,144 @@
+
+
+  <!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Mock fs with vitest and memfs - Kevin Schaul</title>
+    <meta property="og:title" content="Mock fs with vitest and memfs - Kevin Schaul">
+    
+    <meta name="twitter:card" content="summary">
+
+    
+      
+    
+
+    
+      
+      <meta property="description" content="I’ve been using vitest for testing node code lately, and I often want to set up a fake file system. I’d been using mockFS for this, which is no longer maintained. Fortunately memfs is a drop-in &amp;hellip;">
+      <meta property="og:description" content="I’ve been using vitest for testing node code lately, and I often want to set up a fake file system. I’d been using mockFS for this, which is no longer maintained. Fortunately memfs is a drop-in &amp;hellip;">
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+
+    <style> @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;800&display=swap'); </style>
+    
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+
+  </head>
+
+  
+  <body class="til">
+    <header class="masthead">
+      <h1><a href="/">Kevin Schaul</a></h1>
+
+<p class="tagline">Visual journalist/hacker</p>
+
+      <nav class="menu">
+  <ul>
+  
+  
+  <li><a href="/contact/">Contact</a></li>
+  
+  <li><a href="/link/">Worth your time</a></li>
+  
+  <li><a href="/til/">Today I learned</a></li>
+  
+  <li><a href="/index.xml">RSS</a></li>
+<li style="display: none;"><a rel="me" href="https://tilde.zone/@kevinschaul">Mastodon</a></li>
+
+  </ul>
+</nav>
+
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>Mock fs with vitest and memfs</h1>
+<h3>June 26, 2024</h3>
+
+      </header>
+
+  
+  
+  
+  
+  <p>I’ve been using <a href="vitest">vitest</a> for testing node code lately, and I often want
+to set up a fake file system. I’d been using
+<a href="https://github.com/tschaub/mock-fs">mockFS</a> for this, which is no longer
+maintained. Fortunately <a href="https://github.com/streamich/memfs">memfs</a> is a
+drop-in alternative — if you know this secret: You’ve got to add a mock fs
+call.</p>
+<pre tabindex="0"><code>import { vol, fs } from &#34;memfs&#34;;
+import { vi, describe, test, expect, beforeEach, afterEach } from &#34;vitest&#34;;
+
+// Mock fs everywhere else with the memfs version.
+vi.mock(&#34;fs&#34;, async () =&gt; {
+  const memfs = await vi.importActual(&#34;memfs&#34;);
+
+  // Support both `import fs from &#34;fs&#34;` and &#34;import { readFileSync } from &#34;fs&#34;`
+  return { default: memfs.fs, ...memfs.fs };
+});
+</code></pre><p>Then, you can set up a fake filesystem for your test:</p>
+<pre tabindex="0"><code>describe(&#39;my-suite&#39;, () =&gt; {
+  afterEach(() =&gt; {
+    vol.reset();
+  });
+
+  ...
+
+  test(&#39;same dir&#39;, async () =&gt; {
+    vol.fromNestedJSON({
+      &#39;/Users/username/my-package&#39;: {
+        &#39;package.json&#39;: &#39;{}&#39;,
+        styles: {
+          subdir: {
+            &#39;package.json&#39;: &#39;{}&#39;,
+          },
+        },
+      },
+    });
+
+    ...
+  });
+})
+</code></pre><p>Thank you so much <a href="https://github.com/tschaub/mock-fs/issues/384#issuecomment-2173802850">for this
+comment</a>,
+bcass.</p>
+
+  
+  
+    <footer>
+    
+    <p>
+      <i>
+      Tags:
+      
+        <a href="https://www.kschaul.com/tags/nodejs/">nodejs</a>&nbsp;
+      
+      </i>
+    </p>
+    
+
+    
+  
+  
+
+  </footer>
+  </article>
+  </body>
+</html>
+
