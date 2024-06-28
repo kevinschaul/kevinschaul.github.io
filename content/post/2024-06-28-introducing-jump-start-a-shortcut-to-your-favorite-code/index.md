@@ -1,6 +1,6 @@
 ---
 title: 'Introducing jump-start: A shortcut to your favorite code'
-date: '2024-06-28T16:50:54-05:00'
+date: '2024-06-28T17:50:34-05:00'
 slug: introducing-jump-start-a-shortcut-to-your-favorite-code
 categories: []
 tags: []
