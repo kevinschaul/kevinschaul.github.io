@@ -13,15 +13,15 @@ if (file.exists("~/.Rprofile")) {
 # https://bookdown.org/yihui/blogdown/global-options.html
 options(
   # to automatically serve the site on RStudio startup, set this option to TRUE
-  #blogdown.serve_site.startup = FALSE,
+  blogdown.serve_site.startup = FALSE,
   # to disable knitting Rmd files on save, set this option to FALSE
-  #blogdown.knit.on_save = TRUE,
+  blogdown.knit.on_save = TRUE,
   # build .Rmd to .html (via Pandoc); to build to Markdown, set this option to 'markdown'
-  #blogdown.method = 'html',
+  blogdown.method = 'html',
   # Adjust hugo args to not navigate to changed files
-  #blogdown.hugo.server = c('-D', '-F'),
+  blogdown.hugo.server = c('-D', '-F'),
   # Include time in new posts
-  #options(blogdown.time = TRUE)
+  blogdown.time = TRUE
 )
 
 # fix Hugo version
