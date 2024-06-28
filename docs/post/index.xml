@@ -6,7 +6,17 @@
     <description>Recent content in Posts on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Apr 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 28 Jun 2024 17:50:34 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Introducing jump-start: A shortcut to your favorite code</title>
+      <link>https://www.kschaul.com/post/2024/06/28/introducing-jump-start-a-shortcut-to-your-favorite-code/</link>
+      <pubDate>Fri, 28 Jun 2024 17:50:34 -0500</pubDate>
+      
+      <guid>https://www.kschaul.com/post/2024/06/28/introducing-jump-start-a-shortcut-to-your-favorite-code/</guid>
+      <description>I write a lot of code, for work and for fun. But I often feel myself writing the same code, or setting up a project in the same way, again and again.
+This code isn&amp;rsquo;t perfect. It&amp;rsquo;s not worth packaging up and releasing. It&amp;rsquo;s often not even worth putting in some GitHub repository that I&amp;rsquo;ll inevitably forget about. It&amp;rsquo;s just some code that I like having easily accessible. And I think I&amp;rsquo;ve finally figured out a way to do that.</description>
+    </item>
+    
     <item>
       <title>Is this AI? See if you can spot the technology in your everyday life.</title>
       <link>https://www.kschaul.com/post/2024/04/02/what-is-ai/</link>
@@ -92,15 +102,6 @@ Labeling charts, maps and other graphics is more art than science, but there are
       <guid>https://www.kschaul.com/post/2023/04/21/how-we-analyzed-the-websites-in-a-commonly-used-ai-training-dataset/</guid>
       <description>My colleagues and I recently published this analysis of 15 million websites in a commonly used AI training dataset. Here&amp;rsquo;s a little bit about how we did it.
 Allen Institute researchers kindly provided us with the top 1,000 domains in Google’s C4 dataset. But that was just 8% of tokens, hardly representative. So they then pulled all 15.7M domains. We planned to categorize the top 1,000 websites by hand, but all 15.</description>
-    </item>
-    
-    <item>
-      <title>See the websites that make AI like ChatGPT sound so smart</title>
-      <link>https://www.kschaul.com/post/2023/04/21/see-the-websites-that-make-ai-like-chatgpt-sound-so-smart/</link>
-      <pubDate>Fri, 21 Apr 2023 08:10:00 -0500</pubDate>
-      
-      <guid>https://www.kschaul.com/post/2023/04/21/see-the-websites-that-make-ai-like-chatgpt-sound-so-smart/</guid>
-      <description></description>
     </item>
     
   </channel>
