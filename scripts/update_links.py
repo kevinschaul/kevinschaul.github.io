@@ -43,6 +43,7 @@ def save_link(story):
             f.write(f'title: "{story_title}"\n')
             f.write(f"date: {shared_date}\n")
             f.write(f'external_url: "{permalink}"\n')
+            f.write(f'tags: [link]\n')
             f.write("---\n\n")
 
             if story["user_id"] == USER_ID:
