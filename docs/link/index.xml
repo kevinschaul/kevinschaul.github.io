@@ -6,7 +6,19 @@
     <description>Recent content in Worth your time on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Jun 2024 14:35:15 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/link/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Jul 2024 16:46:48 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/link/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>We Counted 22,252 Cars to See How Much Congestion Pricing Might Have Made in One Morning</title>
+      <link>https://www.nytimes.com/interactive/2024/07/01/upshot/congestion-pricing.html?smid=nytcore-android-share</link>
+      <pubDate>Mon, 15 Jul 2024 16:46:48 -0500</pubDate>
+      
+      <guid>https://www.nytimes.com/interactive/2024/07/01/upshot/congestion-pricing.html?smid=nytcore-android-share</guid>
+      <description>Nice</description>
+      
+      <category>link</category>
+      
+    </item>
+    
     <item>
       <title>Where millions of immigrants in the U.S. came from and now live</title>
       <link>https://www.washingtonpost.com/immigration/interactive/2024/us-immigration-where-migrants-live/</link>
@@ -94,16 +106,6 @@
       
       <guid>http://shapecatcher.com/</guid>
       <description>Draw a shape to find the closest unicode character</description>
-      
-    </item>
-    
-    <item>
-      <title>telnet mapscii.me</title>
-      <link>https://github.com/rastapasta/mapscii</link>
-      <pubDate>Thu, 11 Apr 2024 14:21:00 -0500</pubDate>
-      
-      <guid>https://github.com/rastapasta/mapscii</guid>
-      <description>&amp;ldquo;MapSCII is a Braille &amp;amp; ASCII world map renderer for your console&amp;rdquo;</description>
       
     </item>
     

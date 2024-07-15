@@ -6,7 +6,19 @@
     <description>Recent content on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 28 Jun 2024 17:50:34 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Jul 2024 16:46:48 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>We Counted 22,252 Cars to See How Much Congestion Pricing Might Have Made in One Morning</title>
+      <link>https://www.nytimes.com/interactive/2024/07/01/upshot/congestion-pricing.html?smid=nytcore-android-share</link>
+      <pubDate>Mon, 15 Jul 2024 16:46:48 -0500</pubDate>
+      
+      <guid>https://www.nytimes.com/interactive/2024/07/01/upshot/congestion-pricing.html?smid=nytcore-android-share</guid>
+      <description>Nice</description>
+      
+      <category>link</category>
+      
+    </item>
+    
     <item>
       <title>Introducing jump-start: A shortcut to your favorite code</title>
       <link>https://www.kschaul.com/post/2024/06/28/introducing-jump-start-a-shortcut-to-your-favorite-code/</link>
@@ -103,16 +115,6 @@ document.querySelector(&amp;#34;.my-element&amp;#34;) .scrollIntoView({ block: &
       
       <guid>https://www.wired.com/story/generative-ai-totally-shameless/</guid>
       <description></description>
-      
-    </item>
-    
-    <item>
-      <title>Are home prices dropping? Search by zip code to see values in your area</title>
-      <link>https://www.washingtonpost.com/business/interactive/2024/housing-market-price-trends-zip-code-map/</link>
-      <pubDate>Tue, 14 May 2024 13:50:53 -0500</pubDate>
-      
-      <guid>https://www.washingtonpost.com/business/interactive/2024/housing-market-price-trends-zip-code-map/</guid>
-      <description>Getting fancy with Maplibre again</description>
       
     </item>
     
