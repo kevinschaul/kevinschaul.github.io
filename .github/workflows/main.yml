@@ -1,14 +1,11 @@
-# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
-# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
-
-name: blogdown
+name: deploy hugo site to pages
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: '14 */3 * * *' # Run every three hours on minute 14
+    - cron: "14 */3 * * *" # Run every three hours on minute 14
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -16,47 +13,46 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
-    steps: 
+    steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Python
         uses: actions/setup-python@v5
-        
+
       - name: Install Python dependencies
         run: |
           python -m pip install -r requirements.txt
-          
+
       - name: Update links
         run: |
           python scripts/update_links.py
-      
-      - name: Install curl
-        run: sudo apt-get update && sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev
 
-      - uses: r-lib/actions/setup-pandoc@v2
+      - name: Install Hugo CLI
+        run: |
+          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
+          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
 
-      - uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: 'renv'
-
-      - uses: r-lib/actions/setup-renv@v2
+      - name: Build with Hugo
         env:
-          RENV_CONFIG_SANDBOX_ENABLED: FALSE
+          HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
+          HUGO_ENVIRONMENT: production
+          TZ: America/Chicago
+        run: |
+          hugo \
+            --gc \
+            --minify \
+            --baseURL "${{ steps.pages.outputs.base_url }}/"
 
-      - name: Install hugo
-        run: blogdown::install_hugo("0.101.0")
-        shell: Rscript {0}
-
-      - name: Build site
-        run: blogdown::build_site(TRUE)
-        shell: Rscript {0}
-        
       - name: Commit and push if it changed
         run: |-
           git config user.name "Automated"
@@ -65,19 +61,19 @@ jobs:
           timestamp=$(date -u)
           git commit -m "Latest data: ${timestamp}" || exit 0
           git push
-        
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           path: ./docs
-        
+
   deploy:
     environment:
       name: github-pages
-      #url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
