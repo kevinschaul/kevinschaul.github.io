@@ -4,7 +4,7 @@ title: Kevin Schaul
 theme: "hugo-ivy"
 ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\\.md$", "(^|/)renv$", "renv\\.lock$"]
 footnotereturnlinkcontents: ↩
-publishDir: docs
+publishDir: public
 timeZone: America/Chicago
 
 permalinks:
