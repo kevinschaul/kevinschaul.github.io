@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>frontend on Kevin Schaul</title>
-    <link>http://www.kschaul.com/tags/frontend/</link>
+    <link>https://www.kschaul.com/tags/frontend/</link>
     <description>Recent content in frontend on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 18 Aug 2023 00:00:00 -0500</lastBuildDate><atom:link href="http://www.kschaul.com/tags/frontend/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Aug 2023 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/tags/frontend/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Formatting numbers in javascript with Intl.NumberFormat()</title>
-      <link>http://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</link>
+      <link>https://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</link>
       <pubDate>Fri, 18 Aug 2023 00:00:00 -0500</pubDate>
       
-      <guid>http://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</guid>
+      <guid>https://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</guid>
       <description>When formatting numbers for readability, say in a table, I&amp;rsquo;ve typically used d3-format. But I could never get it to do exactly what I wanted.
 Well I just learned there&amp;rsquo;s a built-in for this now: Intl.NumberFormat(). The constructor takes two arguments: A locale (like &amp;rsquo;en-us&amp;rsquo;)`, and an extensive set of options. You can almost certainly get this to format numbers exactly how you want them.
 In my case, I wanted 62,829,251,930 to become 62.</description>
@@ -20,30 +20,30 @@ In my case, I wanted 62,829,251,930 to become 62.</description>
     
     <item>
       <title>avoid-overlap: Utilities for chart-makers to avoid text overlaps in their graphics</title>
-      <link>http://www.kschaul.com/post/2023/07/10/avoid-overlap-utilities-for-chart-makers-to-avoid-text-overlaps-in-their-graphics/</link>
+      <link>https://www.kschaul.com/post/2023/07/10/avoid-overlap-utilities-for-chart-makers-to-avoid-text-overlaps-in-their-graphics/</link>
       <pubDate>Mon, 10 Jul 2023 09:15:00 -0500</pubDate>
       
-      <guid>http://www.kschaul.com/post/2023/07/10/avoid-overlap-utilities-for-chart-makers-to-avoid-text-overlaps-in-their-graphics/</guid>
+      <guid>https://www.kschaul.com/post/2023/07/10/avoid-overlap-utilities-for-chart-makers-to-avoid-text-overlaps-in-their-graphics/</guid>
       <description>I&amp;rsquo;ve been working on a library to help chart-makers avoid text overlaps in their graphics, and it&amp;rsquo;s finally in a place worth sharing. Check it out on GitHub or in action at two of my recent graphics.
 Labeling charts, maps and other graphics is more art than science, but there are some general rules we can follow to achieve good results programmatically. This library provides two label-avoidance techniques: nudge and choices.</description>
     </item>
     
     <item>
       <title>Control HTML table widths with table-layout: fixed;</title>
-      <link>http://www.kschaul.com/til/2023/03/30/control-html-table-widths-with-table-layout-fixed/</link>
+      <link>https://www.kschaul.com/til/2023/03/30/control-html-table-widths-with-table-layout-fixed/</link>
       <pubDate>Thu, 30 Mar 2023 00:00:00 -0500</pubDate>
       
-      <guid>http://www.kschaul.com/til/2023/03/30/control-html-table-widths-with-table-layout-fixed/</guid>
+      <guid>https://www.kschaul.com/til/2023/03/30/control-html-table-widths-with-table-layout-fixed/</guid>
       <description>Just learned about the CSS property table-layout: fixed; that makes HTML table column widths follow sane rules. They will actually respect the width values you give them.
 There are a lot of great usage examples on this css tricks post from &amp;hellip; 2014. How did I not know about this?</description>
     </item>
     
     <item>
       <title>Writing D3 in React with an escape hatch</title>
-      <link>http://www.kschaul.com/til/2022/12/19/writing-d3-in-react-with-an-escape-hatch/</link>
+      <link>https://www.kschaul.com/til/2022/12/19/writing-d3-in-react-with-an-escape-hatch/</link>
       <pubDate>Mon, 19 Dec 2022 00:00:00 -0600</pubDate>
       
-      <guid>http://www.kschaul.com/til/2022/12/19/writing-d3-in-react-with-an-escape-hatch/</guid>
+      <guid>https://www.kschaul.com/til/2022/12/19/writing-d3-in-react-with-an-escape-hatch/</guid>
       <description>Most of The Washington Post has moved to React for site rendering. This is hugely beneficial overall but for many graphics reporters it’s yet another thing to learn to get stories published.
 It’s already overwhelming to learn HTML/CSS/JS, data analysis, some way to build charts, some mapping tool. I’m interested in lowering the barriers to entry for this field.
 Fortunately there’s a fairly simple pattern we can build into our tooling to bring back some simplicity of the pre-React frontend development.</description>
@@ -51,10 +51,10 @@ Fortunately there’s a fairly simple pattern we can build into our tooling to b
     
     <item>
       <title>Coloring emoji/unicode characters on iOS Safari</title>
-      <link>http://www.kschaul.com/til/2022/09/13/coloring-emoji-unicode-characters-on-ios-safari/</link>
+      <link>https://www.kschaul.com/til/2022/09/13/coloring-emoji-unicode-characters-on-ios-safari/</link>
       <pubDate>Tue, 13 Sep 2022 00:00:00 -0500</pubDate>
       
-      <guid>http://www.kschaul.com/til/2022/09/13/coloring-emoji-unicode-characters-on-ios-safari/</guid>
+      <guid>https://www.kschaul.com/til/2022/09/13/coloring-emoji-unicode-characters-on-ios-safari/</guid>
       <description>Unicode characters such as ■ (black square U+25A0) can be super useful to use for icons without needing to load an icon font. And they can typically be styled using CSS, like: color: steelblue;.
 But on iOS safari (and likely Android and other devices), these are rendered in the cartooney, emoji style — which means trying to color them with CSS doesn’t work.
 Fortunately there is an easy (but cryptic) fix: Simply append &amp;amp;#xFE0E; immediately following your unicode character, like ■&amp;amp;#xFE0E;.</description>
