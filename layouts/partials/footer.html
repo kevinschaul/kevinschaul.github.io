@@ -10,10 +10,13 @@
     </p>
     {{ end }}
     
-    {{ if eq .Section "post" }}
-    <hr />
-    
-    Like this post? Follow my <a href="http://localhost:4321/index.xml">RSS feed</a>, my <a href="https://tilde.zone/@kevinschaul">Mastodon</a>, or email me at firstname.lastname@gmail.com.
+    {{ if eq .Section "post" | eq .Section "til" }}
+
+      {{ partial "comments.html" . }}
+
+      <hr />
+      
+      Like this post? Follow my <a href="http://localhost:4321/index.xml">RSS feed</a>, my <a href="https://tilde.zone/@kevinschaul">Mastodon</a>, or email me at firstname.lastname@gmail.com.
     {{ end }}
     
   {{ partial "foot_custom.html" . }}
