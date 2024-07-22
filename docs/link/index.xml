@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Kevin Schaul: Blogmarks</title>
-    <link>https://www.kschaul.com/link/</link>
+    <link>http://www.kschaul.com/link/</link>
     <description>Recent content in Worth your time on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jul 2024 16:46:48 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/link/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Jul 2024 16:46:48 -0500</lastBuildDate><atom:link href="http://www.kschaul.com/link/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>We Counted 22,252 Cars to See How Much Congestion Pricing Might Have Made in One Morning</title>
       <link>https://www.nytimes.com/interactive/2024/07/01/upshot/congestion-pricing.html?smid=nytcore-android-share</link>

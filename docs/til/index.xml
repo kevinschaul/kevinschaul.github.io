@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Today I Learned on Kevin Schaul</title>
-    <link>https://www.kschaul.com/til/</link>
+    <link>http://www.kschaul.com/til/</link>
     <description>Recent content in Today I Learned on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Jun 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/til/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 26 Jun 2024 00:00:00 -0500</lastBuildDate><atom:link href="http://www.kschaul.com/til/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Mock fs with vitest and memfs</title>
-      <link>https://www.kschaul.com/til/2024/06/26/mock-fs-with-vitest-and-memfs/</link>
+      <link>http://www.kschaul.com/til/2024/06/26/mock-fs-with-vitest-and-memfs/</link>
       <pubDate>Wed, 26 Jun 2024 00:00:00 -0500</pubDate>
       
-      <guid>https://www.kschaul.com/til/2024/06/26/mock-fs-with-vitest-and-memfs/</guid>
+      <guid>http://www.kschaul.com/til/2024/06/26/mock-fs-with-vitest-and-memfs/</guid>
       <description>I’ve been using vitest for testing node code lately, and I often want to set up a fake file system. I’d been using mockFS for this, which is no longer maintained. Fortunately memfs is a drop-in alternative — if you know this secret: You’ve got to add a mock fs call.
 import { vol, fs } from &amp;#34;memfs&amp;#34;; import { vi, describe, test, expect, beforeEach, afterEach } from &amp;#34;vitest&amp;#34;; // Mock fs everywhere else with the memfs version.</description>
     </item>
     
     <item>
       <title>Scroll to offset with scroll-margin-top</title>
-      <link>https://www.kschaul.com/til/2024/05/28/scroll-to-offset-with-scroll-margin-top/</link>
+      <link>http://www.kschaul.com/til/2024/05/28/scroll-to-offset-with-scroll-margin-top/</link>
       <pubDate>Tue, 28 May 2024 00:00:00 -0500</pubDate>
       
-      <guid>https://www.kschaul.com/til/2024/05/28/scroll-to-offset-with-scroll-margin-top/</guid>
+      <guid>http://www.kschaul.com/til/2024/05/28/scroll-to-offset-with-scroll-margin-top/</guid>
       <description>TIL there are some CSS properties that you can set to adjust where a browser scrolls to when scrolling to a div without ruining the perfect spacing of your page!
 Just add:
 .my-element { scroll-margin-top: 60px; } And then this will scroll to 60px above the element:
@@ -31,10 +31,10 @@ document.querySelector(&amp;#34;.my-element&amp;#34;) .scrollIntoView({ block: &
     
     <item>
       <title>Stitches inline media queries</title>
-      <link>https://www.kschaul.com/til/2024/04/25/stitches-inline-media-queries/</link>
+      <link>http://www.kschaul.com/til/2024/04/25/stitches-inline-media-queries/</link>
       <pubDate>Thu, 25 Apr 2024 00:00:00 -0500</pubDate>
       
-      <guid>https://www.kschaul.com/til/2024/04/25/stitches-inline-media-queries/</guid>
+      <guid>http://www.kschaul.com/til/2024/04/25/stitches-inline-media-queries/</guid>
       <description>Finally figured out how to write inline media queries in Stitches:
 const Button = styled(&#39;button&#39;, { background: &#39;blue&#39;, &#39;@media (max-width: 462px)&#39;: { background: &#39;orange&#39;, }, }) You can just write the media query directly in here. No needing to fuss with creating global breakpoints when you just need something small to happen at a specific width. Wow.
 h/t claude.ai, which I&amp;rsquo;ve been using a ton of lately.</description>
@@ -42,10 +42,10 @@ h/t claude.ai, which I&amp;rsquo;ve been using a ton of lately.</description>
     
     <item>
       <title>Fix FIPS codes in R with str_pad()</title>
-      <link>https://www.kschaul.com/til/2024/04/20/fix-fips-codes-in-r-with-str-pad/</link>
+      <link>http://www.kschaul.com/til/2024/04/20/fix-fips-codes-in-r-with-str-pad/</link>
       <pubDate>Sat, 20 Apr 2024 00:00:00 -0500</pubDate>
       
-      <guid>https://www.kschaul.com/til/2024/04/20/fix-fips-codes-in-r-with-str-pad/</guid>
+      <guid>http://www.kschaul.com/til/2024/04/20/fix-fips-codes-in-r-with-str-pad/</guid>
       <description>FIPS codes for U.S. counties need leading zeros, but often your data doesn&amp;rsquo;t have them. Someone down the line may have read them in as numbers, which removed the leading zeroes.
 stringr makes fixing that a breeze:
 data %&amp;gt;% mutate( fips = str_pad(fips, 5, pad=&amp;#34;0&amp;#34;) ) h/t Luis Melgar</description>
@@ -53,20 +53,20 @@ data %&amp;gt;% mutate( fips = str_pad(fips, 5, pad=&amp;#34;0&amp;#34;) ) h/t L
     
     <item>
       <title>find-which-npm-dependency-has-dependency</title>
-      <link>https://www.kschaul.com/til/2024/04/15/find-which-npm-dependency-has-dependency/</link>
+      <link>http://www.kschaul.com/til/2024/04/15/find-which-npm-dependency-has-dependency/</link>
       <pubDate>Mon, 15 Apr 2024 00:00:00 -0500</pubDate>
       
-      <guid>https://www.kschaul.com/til/2024/04/15/find-which-npm-dependency-has-dependency/</guid>
+      <guid>http://www.kschaul.com/til/2024/04/15/find-which-npm-dependency-has-dependency/</guid>
       <description>Wow, a lifesaver command right here:
 npm ls TROUBLESOME_PACKAGE This will output a tree showing all of the node packages in your local project that depend on TROUBLESOME_PACKAGE. Dear lord have I needed this so many times.</description>
     </item>
     
     <item>
       <title>Create a montage of images in random order with imagemagick</title>
-      <link>https://www.kschaul.com/til/2023/08/21/montage-of-random-images-imagemagick/</link>
+      <link>http://www.kschaul.com/til/2023/08/21/montage-of-random-images-imagemagick/</link>
       <pubDate>Mon, 21 Aug 2023 00:00:00 -0500</pubDate>
       
-      <guid>https://www.kschaul.com/til/2023/08/21/montage-of-random-images-imagemagick/</guid>
+      <guid>http://www.kschaul.com/til/2023/08/21/montage-of-random-images-imagemagick/</guid>
       <description>It ain&amp;rsquo;t pretty but this will let you use ImageMagick&amp;rsquo;s montage command with a random order of images.
 First, generate a text file with the image filenames in it, in random order. The sed commands put a &amp;quot; character at the beginning and end of the filename, otherwise ImageMagick freaks out.
 ls my-images | \ shuf | \ sed &amp;#39;s/^/&amp;#34;/&amp;#39; | \ sed &amp;#39;s/$/&amp;#34;/&amp;#39; &amp;gt; \ randomly_ordered_images.txt Then use that file of filenames as input, using the @ operator.</description>
@@ -74,10 +74,10 @@ ls my-images | \ shuf | \ sed &amp;#39;s/^/&amp;#34;/&amp;#39; | \ sed &amp;#39;
     
     <item>
       <title>Formatting numbers in javascript with Intl.NumberFormat()</title>
-      <link>https://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</link>
+      <link>http://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</link>
       <pubDate>Fri, 18 Aug 2023 00:00:00 -0500</pubDate>
       
-      <guid>https://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</guid>
+      <guid>http://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</guid>
       <description>When formatting numbers for readability, say in a table, I&amp;rsquo;ve typically used d3-format. But I could never get it to do exactly what I wanted.
 Well I just learned there&amp;rsquo;s a built-in for this now: Intl.NumberFormat(). The constructor takes two arguments: A locale (like &amp;rsquo;en-us&amp;rsquo;)`, and an extensive set of options. You can almost certainly get this to format numbers exactly how you want them.
 In my case, I wanted 62,829,251,930 to become 62.</description>
@@ -85,10 +85,10 @@ In my case, I wanted 62,829,251,930 to become 62.</description>
     
     <item>
       <title>Run a command when files change</title>
-      <link>https://www.kschaul.com/til/2023/05/26/run-a-command-when-files-change/</link>
+      <link>http://www.kschaul.com/til/2023/05/26/run-a-command-when-files-change/</link>
       <pubDate>Fri, 26 May 2023 00:00:00 -0500</pubDate>
       
-      <guid>https://www.kschaul.com/til/2023/05/26/run-a-command-when-files-change/</guid>
+      <guid>http://www.kschaul.com/til/2023/05/26/run-a-command-when-files-change/</guid>
       <description>TIL about entr, a command that lets you run arbitrary commands whenever files change.
 I was working on a project where I had to run a build command whenever I saved a file. Once I installed entr (brew install entr), it took me about 5 seconds to figure out how to use it for this purpose.
 find apple-news/ | entr -s &amp;#39;npm run bespoke&amp;#39; Any time a tile inside the directory apple-news changes, npm run bespoke gets run.</description>
@@ -96,20 +96,20 @@ find apple-news/ | entr -s &amp;#39;npm run bespoke&amp;#39; Any time a tile ins
     
     <item>
       <title>Control HTML table widths with table-layout: fixed;</title>
-      <link>https://www.kschaul.com/til/2023/03/30/control-html-table-widths-with-table-layout-fixed/</link>
+      <link>http://www.kschaul.com/til/2023/03/30/control-html-table-widths-with-table-layout-fixed/</link>
       <pubDate>Thu, 30 Mar 2023 00:00:00 -0500</pubDate>
       
-      <guid>https://www.kschaul.com/til/2023/03/30/control-html-table-widths-with-table-layout-fixed/</guid>
+      <guid>http://www.kschaul.com/til/2023/03/30/control-html-table-widths-with-table-layout-fixed/</guid>
       <description>Just learned about the CSS property table-layout: fixed; that makes HTML table column widths follow sane rules. They will actually respect the width values you give them.
 There are a lot of great usage examples on this css tricks post from &amp;hellip; 2014. How did I not know about this?</description>
     </item>
     
     <item>
       <title>Write nested JSON with keys in R/tidyverse</title>
-      <link>https://www.kschaul.com/til/2023/03/22/write-nested-json-with-keys-in-r-tidyverse/</link>
+      <link>http://www.kschaul.com/til/2023/03/22/write-nested-json-with-keys-in-r-tidyverse/</link>
       <pubDate>Wed, 22 Mar 2023 00:00:00 -0500</pubDate>
       
-      <guid>https://www.kschaul.com/til/2023/03/22/write-nested-json-with-keys-in-r-tidyverse/</guid>
+      <guid>http://www.kschaul.com/til/2023/03/22/write-nested-json-with-keys-in-r-tidyverse/</guid>
       <description>I always struggle to write JSON in R in exactly the format I need. I figured out a trick today to take a dataframe, nest it by a column and write it to a JSON with that column&amp;rsquo;s values as keys.
 To nest a table like this:
 ## # A tibble: 2 × 3 ## col_to_nest another_col a_third_col ## &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; ## 1 col_value_a 1213691 14616745740 ## 2 col_value_b 1167231 13592103952 Try this:</description>

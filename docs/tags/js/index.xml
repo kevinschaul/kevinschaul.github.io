@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>js on Kevin Schaul</title>
-    <link>https://www.kschaul.com/tags/js/</link>
+    <link>http://www.kschaul.com/tags/js/</link>
     <description>Recent content in js on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Apr 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/tags/js/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Apr 2024 00:00:00 -0500</lastBuildDate><atom:link href="http://www.kschaul.com/tags/js/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Stitches inline media queries</title>
-      <link>https://www.kschaul.com/til/2024/04/25/stitches-inline-media-queries/</link>
+      <link>http://www.kschaul.com/til/2024/04/25/stitches-inline-media-queries/</link>
       <pubDate>Thu, 25 Apr 2024 00:00:00 -0500</pubDate>
       
-      <guid>https://www.kschaul.com/til/2024/04/25/stitches-inline-media-queries/</guid>
+      <guid>http://www.kschaul.com/til/2024/04/25/stitches-inline-media-queries/</guid>
       <description>Finally figured out how to write inline media queries in Stitches:
 const Button = styled(&#39;button&#39;, { background: &#39;blue&#39;, &#39;@media (max-width: 462px)&#39;: { background: &#39;orange&#39;, }, }) You can just write the media query directly in here. No needing to fuss with creating global breakpoints when you just need something small to happen at a specific width. Wow.
 h/t claude.ai, which I&amp;rsquo;ve been using a ton of lately.</description>
@@ -20,20 +20,20 @@ h/t claude.ai, which I&amp;rsquo;ve been using a ton of lately.</description>
     
     <item>
       <title>find-which-npm-dependency-has-dependency</title>
-      <link>https://www.kschaul.com/til/2024/04/15/find-which-npm-dependency-has-dependency/</link>
+      <link>http://www.kschaul.com/til/2024/04/15/find-which-npm-dependency-has-dependency/</link>
       <pubDate>Mon, 15 Apr 2024 00:00:00 -0500</pubDate>
       
-      <guid>https://www.kschaul.com/til/2024/04/15/find-which-npm-dependency-has-dependency/</guid>
+      <guid>http://www.kschaul.com/til/2024/04/15/find-which-npm-dependency-has-dependency/</guid>
       <description>Wow, a lifesaver command right here:
 npm ls TROUBLESOME_PACKAGE This will output a tree showing all of the node packages in your local project that depend on TROUBLESOME_PACKAGE. Dear lord have I needed this so many times.</description>
     </item>
     
     <item>
       <title>Formatting numbers in javascript with Intl.NumberFormat()</title>
-      <link>https://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</link>
+      <link>http://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</link>
       <pubDate>Fri, 18 Aug 2023 00:00:00 -0500</pubDate>
       
-      <guid>https://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</guid>
+      <guid>http://www.kschaul.com/til/2023/08/18/formatting-numbers-in-javascript/</guid>
       <description>When formatting numbers for readability, say in a table, I&amp;rsquo;ve typically used d3-format. But I could never get it to do exactly what I wanted.
 Well I just learned there&amp;rsquo;s a built-in for this now: Intl.NumberFormat(). The constructor takes two arguments: A locale (like &amp;rsquo;en-us&amp;rsquo;)`, and an extensive set of options. You can almost certainly get this to format numbers exactly how you want them.
 In my case, I wanted 62,829,251,930 to become 62.</description>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>css on Kevin Schaul</title>
-    <link>https://www.kschaul.com/tags/css/</link>
+    <link>http://www.kschaul.com/tags/css/</link>
     <description>Recent content in css on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 May 2024 00:00:00 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/tags/css/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 28 May 2024 00:00:00 -0500</lastBuildDate><atom:link href="http://www.kschaul.com/tags/css/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Scroll to offset with scroll-margin-top</title>
-      <link>https://www.kschaul.com/til/2024/05/28/scroll-to-offset-with-scroll-margin-top/</link>
+      <link>http://www.kschaul.com/til/2024/05/28/scroll-to-offset-with-scroll-margin-top/</link>
       <pubDate>Tue, 28 May 2024 00:00:00 -0500</pubDate>
       
-      <guid>https://www.kschaul.com/til/2024/05/28/scroll-to-offset-with-scroll-margin-top/</guid>
+      <guid>http://www.kschaul.com/til/2024/05/28/scroll-to-offset-with-scroll-margin-top/</guid>
       <description>TIL there are some CSS properties that you can set to adjust where a browser scrolls to when scrolling to a div without ruining the perfect spacing of your page!
 Just add:
 .my-element { scroll-margin-top: 60px; } And then this will scroll to 60px above the element:

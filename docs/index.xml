@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Kevin Schaul</title>
-    <link>https://www.kschaul.com/</link>
+    <link>http://www.kschaul.com/</link>
     <description>Recent content on Kevin Schaul</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jul 2024 16:46:48 -0500</lastBuildDate><atom:link href="https://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Jul 2024 16:46:48 -0500</lastBuildDate><atom:link href="http://www.kschaul.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>We Counted 22,252 Cars to See How Much Congestion Pricing Might Have Made in One Morning</title>
       <link>https://www.nytimes.com/interactive/2024/07/01/upshot/congestion-pricing.html?smid=nytcore-android-share</link>
@@ -21,10 +21,10 @@
     
     <item>
       <title>Introducing jump-start: A shortcut to your favorite code</title>
-      <link>https://www.kschaul.com/post/2024/06/28/introducing-jump-start-a-shortcut-to-your-favorite-code/</link>
+      <link>http://www.kschaul.com/post/2024/06/28/introducing-jump-start-a-shortcut-to-your-favorite-code/</link>
       <pubDate>Fri, 28 Jun 2024 17:50:34 -0500</pubDate>
       
-      <guid>https://www.kschaul.com/post/2024/06/28/introducing-jump-start-a-shortcut-to-your-favorite-code/</guid>
+      <guid>http://www.kschaul.com/post/2024/06/28/introducing-jump-start-a-shortcut-to-your-favorite-code/</guid>
       <description>I write a lot of code, for work and for fun. But I often feel myself writing the same code, or setting up a project in the same way, again and again.
 This code isn&amp;rsquo;t perfect. It&amp;rsquo;s not worth packaging up and releasing. It&amp;rsquo;s often not even worth putting in some GitHub repository that I&amp;rsquo;ll inevitably forget about. It&amp;rsquo;s just some code that I like having easily accessible. And I think I&amp;rsquo;ve finally figured out a way to do that.</description>
       
@@ -42,10 +42,10 @@ This code isn&amp;rsquo;t perfect. It&amp;rsquo;s not worth packaging up and rel
     
     <item>
       <title>Mock fs with vitest and memfs</title>
-      <link>https://www.kschaul.com/til/2024/06/26/mock-fs-with-vitest-and-memfs/</link>
+      <link>http://www.kschaul.com/til/2024/06/26/mock-fs-with-vitest-and-memfs/</link>
       <pubDate>Wed, 26 Jun 2024 00:00:00 -0500</pubDate>
       
-      <guid>https://www.kschaul.com/til/2024/06/26/mock-fs-with-vitest-and-memfs/</guid>
+      <guid>http://www.kschaul.com/til/2024/06/26/mock-fs-with-vitest-and-memfs/</guid>
       <description>I’ve been using vitest for testing node code lately, and I often want to set up a fake file system. I’d been using mockFS for this, which is no longer maintained. Fortunately memfs is a drop-in alternative — if you know this secret: You’ve got to add a mock fs call.
 import { vol, fs } from &amp;#34;memfs&amp;#34;; import { vi, describe, test, expect, beforeEach, afterEach } from &amp;#34;vitest&amp;#34;; // Mock fs everywhere else with the memfs version.</description>
       
@@ -95,10 +95,10 @@ import { vol, fs } from &amp;#34;memfs&amp;#34;; import { vi, describe, test, ex
     
     <item>
       <title>Scroll to offset with scroll-margin-top</title>
-      <link>https://www.kschaul.com/til/2024/05/28/scroll-to-offset-with-scroll-margin-top/</link>
+      <link>http://www.kschaul.com/til/2024/05/28/scroll-to-offset-with-scroll-margin-top/</link>
       <pubDate>Tue, 28 May 2024 00:00:00 -0500</pubDate>
       
-      <guid>https://www.kschaul.com/til/2024/05/28/scroll-to-offset-with-scroll-margin-top/</guid>
+      <guid>http://www.kschaul.com/til/2024/05/28/scroll-to-offset-with-scroll-margin-top/</guid>
       <description>TIL there are some CSS properties that you can set to adjust where a browser scrolls to when scrolling to a div without ruining the perfect spacing of your page!
 Just add:
 .my-element { scroll-margin-top: 60px; } And then this will scroll to 60px above the element:
