@@ -3,4 +3,5 @@
 .Rhistory
 Thumbs.db
 .hugo_build.lock
-public
+public/*
+!public/CNAME
