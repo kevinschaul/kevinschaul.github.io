@@ -10,7 +10,7 @@
     </p>
     {{ end }}
     
-    {{ if eq .Section "post" | eq .Section "til" }}
+    {{ if or (eq .Section "post") (eq .Section "til") }}
 
       <hr />
       
