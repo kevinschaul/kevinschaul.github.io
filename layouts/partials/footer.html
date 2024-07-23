@@ -12,11 +12,9 @@
     
     {{ if eq .Section "post" | eq .Section "til" }}
 
-      {{ partial "comments.html" . }}
-
       <hr />
       
-      Like this post? Follow my <a href="http://localhost:4321/index.xml">RSS feed</a>, my <a href="https://tilde.zone/@kevinschaul">Mastodon</a>, or email me at firstname.lastname@gmail.com.
+      Tell me what you think: <a href="https://tilde.zone/@kevinschaul">@kevinschaul@tilde.zone</a>
     {{ end }}
     
   {{ partial "foot_custom.html" . }}
