@@ -2,15 +2,15 @@
 
 ## Installation
 
-Requires Hugo and the R package `blogdown`
+Requires Hugo
 
 ## Development
 
-    blogdown::serve_site()
+    hugo serve
 
 ## Deploy
 
-    blogdown::build_site()
+Happens automatically with GitHub Pages
 
 ### `til` utility
 
@@ -28,9 +28,8 @@ til 'Title for the post'
 
 The post will be created and opened in your $EDITOR.
 
-### Create a new post through blogdown
+### Create a new post
 
 ```
-library(blogdown)
-blogdown::new_post('your-new-til-slug-here', kind='til', subdir='til')
+hugo new 'post/2024-08-14-recently/index.md'
 ```
