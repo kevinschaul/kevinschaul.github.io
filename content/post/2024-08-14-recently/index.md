@@ -4,7 +4,7 @@ date: "2024-08-14T21:27:10-05:00"
 slug: "recently"
 tags: [recently]
 show_on_homepage: yes
-blurb: ""
+blurb: "Playing, listening, coding, watching, reading"
 tease: false
 ---
 
