@@ -34,7 +34,7 @@ Maputnik is an OSS editor for vector tiles, similar to Mapbox Studio. This tool 
 
 There's a [CLI](https://github.com/maputnik/desktop) you can install that boots up a local version of the editor. It can even synchronize style edits with a local `style.json` file.
 
-```{bash}
+```bash
 # Install via Homebrew
 $ brew install kevinschaul/homebrew-core/maputnik
 

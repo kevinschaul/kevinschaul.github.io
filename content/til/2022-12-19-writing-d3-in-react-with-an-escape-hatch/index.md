@@ -20,7 +20,7 @@ Fortunately there's a fairly simple pattern we can build into our tooling to bri
 
 Here are the React bits:
 
-```{js}
+```js
 // EscapedChart.js
 
 import React, { useEffect, useRef } from 'react'
@@ -52,7 +52,7 @@ export default EscapedChart
 
 And here's the part our graphics reporters can write d3 (or whatever) in:
 
-```{js}
+```js
 // chart.js
 
 export default function chart(el) {
@@ -64,7 +64,7 @@ The code within the `chart` function should run just once -- React should not ne
 
 A more full example shows how to write d3 within React, without needing to know React:
 
-```{js}
+```js
 // chart.js
 
 import { select } from 'd3-selection'
