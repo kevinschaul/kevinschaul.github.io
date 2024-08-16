@@ -53,7 +53,7 @@ def save_link(story):
 
 
 def post_to_mastodon(story):
-    url = "https://tilde.zone/api/v1/statuses/"
+    url = "https://mastodon.social/api/v1/statuses/"
 
     try:
         token = os.environ["MASTODON_ACCESS_TOKEN"]

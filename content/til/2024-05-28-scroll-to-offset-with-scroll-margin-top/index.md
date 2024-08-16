@@ -3,10 +3,6 @@ title: Scroll to offset with scroll-margin-top
 date: 2024-05-28
 slug: scroll-to-offset-with-scroll-margin-top
 tags: [css]
-comments:
-  host: tilde.zone
-  username: kevinschaul
-  id: 112832028508681875
 ---
 
 TIL there are some CSS properties that you can
