@@ -35,6 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       HUGO_VERSION: 0.111.0
+      MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
     steps:
       - name: Install Hugo CLI
         run: |
