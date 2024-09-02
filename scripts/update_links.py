@@ -32,10 +32,30 @@ def slugify(name):
     return s
 
 
+def fix_encoding(text):
+    """
+    Attempt to fix encoding issues by assuming the text was originally UTF-8
+    but was decoded incorrectly as Windows-1252 or ISO-8859-1.
+    """
+    # First, encode the string back to bytes assuming it was wrongly decoded as Windows-1252
+    try:
+        byte_string = text.encode("windows-1252")
+        # Then decode those bytes as UTF-8
+        return byte_string.decode("utf-8")
+    except UnicodeEncodeError:
+        # If that fails, try assuming it was wrongly decoded as ISO-8859-1
+        try:
+            byte_string = text.encode("iso-8859-1")
+            return byte_string.decode("utf-8")
+        except UnicodeEncodeError:
+            # If both attempts fail, return the original string
+            return text
+
+
 def clean_title(title):
     title = title.strip()
     # Replace problematic characters
-    title = title.replace("â", "\u2019")
+    title = fix_encoding(title)
     return title
 
 
