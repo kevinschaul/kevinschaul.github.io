@@ -3,12 +3,18 @@
 import re
 import os
 import requests
+from datetime import datetime, timedelta
 from urllib import parse
 
-USER_ID = 651620
-USER_NAME = "kasnewsblur"
+NEWSBLUR_USER_ID = 651620
+NEWSBLUR_USER_NAME = "kasnewsblur"
 
-url = f"https://www.newsblur.com/social/stories/{USER_ID}/{USER_NAME}/"
+# https://mastodon.social/api/v1/accounts/lookup?acct=kevinschaul
+MASTODON_USER_ID = "112973733509746771"
+
+url = (
+    f"https://www.newsblur.com/social/stories/{NEWSBLUR_USER_ID}/{NEWSBLUR_USER_NAME}/"
+)
 
 
 def slugify(name):
@@ -26,6 +32,13 @@ def slugify(name):
     return s
 
 
+def clean_title(title):
+    title = title.strip()
+    # Replace problematic characters
+    title = title.replace("â", "\u2019")
+    return title
+
+
 def save_link(story):
     permalink = story["story_permalink"]
     parsed_url = parse.urlparse(permalink)
@@ -36,20 +49,43 @@ def save_link(story):
     # Save the link if it does not already exist
     if not os.path.isdir(filename):
         os.mkdir(filename)
-        with open(os.path.join(filename, "index.md"), "w") as f:
-            story_title = story["story_title"].strip().replace('"', "")
+        with open(os.path.join(filename, "index.md"), "w", encoding="utf-8") as f:
+            story_title = clean_title(story["story_title"])
             shared_date = story["shared_date"]
             f.write("---\n")
             f.write(f'title: "{story_title}"\n')
             f.write(f"date: {shared_date}\n")
             f.write(f'external_url: "{permalink}"\n')
-            f.write(f'tags: [link]\n')
+            f.write(f"tags: [link]\n")
             f.write("---\n\n")
 
-            if story["user_id"] == USER_ID:
+            if story["user_id"] == NEWSBLUR_USER_ID:
                 f.write(story["comments"])
 
         post_to_mastodon(story)
+
+
+def search_similar_posts(story, token):
+    search_url = "https://mastodon.social/api/v2/search"
+    headers = {
+        "Authorization": f"Bearer {token}",
+    }
+    # Search for posts in the last 7 days
+    since_date = (datetime.utcnow() - timedelta(days=7)).isoformat()
+    params = {
+        "q": story["story_permalink"],
+        "type": "statuses",
+        "account_id": MASTODON_USER_ID,
+        "since_id": since_date,
+    }
+    try:
+        response = requests.get(search_url, headers=headers, params=params, timeout=10)
+        response.raise_for_status()  # Raises an HTTPError for bad responses
+        results = response.json()
+        return len(results.get("statuses", [])) > 0
+    except requests.exceptions.RequestException as e:
+        print(f"Error searching for similar posts: {str(e)}")
+        return True
 
 
 def post_to_mastodon(story):
@@ -62,17 +98,28 @@ def post_to_mastodon(story):
             "Idempotency-Key": story["story_permalink"],
         }
 
-        status = story['story_permalink']
+        # Check for similar posts
+        if search_similar_posts(story, token):
+            print(
+                f"Similar post already exists for {story['story_permalink']}. Skipping."
+            )
+            return
 
-        if story["user_id"] == USER_ID and story["comments"]:
-            status = story["comments"] + ' --> ' + status
+        status = story["story_permalink"]
 
-        data = {
-            'status': status
-        }
-        requests.post(url, headers=headers, data=data)
+        if story["user_id"] == NEWSBLUR_USER_ID and story["comments"]:
+            status = story["comments"] + " --> " + status
+
+        data = {"status": status}
+        response = requests.post(url, headers=headers, data=data)
+        if response.status_code == 200:
+            print(f"Successfully posted to Mastodon: {story['story_permalink']}")
+        else:
+            print(f"Failed to post to Mastodon. Status code: {response.status_code}")
     except KeyError:
-        print('Warning: Missing MASTODON_ACCESS_TOKEN, so not posting to mastodon')
+        print("Warning: Missing MASTODON_ACCESS_TOKEN, so not posting to Mastodon")
+    except Exception as e:
+        print(f"An error occurred while posting to Mastodon: {str(e)}")
 
 
 def main():
