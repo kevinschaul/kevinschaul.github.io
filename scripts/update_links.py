@@ -111,11 +111,14 @@ def save_link(story):
     url = slugify(parsed_url.netloc + parsed_url.path)
     filename = os.path.join("./content", "link", url)
 
+    metadata = get_url_metadata(url)
+
     # Save the link if it does not already exist
     if not os.path.isdir(filename):
         os.mkdir(filename)
         with open(os.path.join(filename, "index.md"), "w", encoding="utf-8") as f:
-            title = story["title"].strip().replace('"', "")
+            title = metadata.get("title", story["title"])
+            title = title.strip().replace('"', "")
             shared_date = story["date"]
             f.write("---\n")
             f.write(f'title: "{title}"\n')
