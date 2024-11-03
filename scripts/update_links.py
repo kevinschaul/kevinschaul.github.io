@@ -108,8 +108,8 @@ def save_link(story):
     url = story["url"]
     parsed_url = parse.urlparse(url)
     # Remove querystring
-    url = slugify(parsed_url.netloc + parsed_url.path)
-    filename = os.path.join("./content", "link", url)
+    slugged_url = slugify(parsed_url.netloc + parsed_url.path)
+    filename = os.path.join("./content", "link", slugged_url)
 
     metadata = get_url_metadata(url)
 
