@@ -5,16 +5,88 @@ import os
 import requests
 from datetime import datetime, timedelta
 from urllib import parse
-
-NEWSBLUR_USER_ID = 651620
-NEWSBLUR_USER_NAME = "kasnewsblur"
+from bs4 import BeautifulSoup
+from github import Github
 
 # https://mastodon.social/api/v1/accounts/lookup?acct=kevinschaul
 MASTODON_USER_ID = "112973733509746771"
 
-url = (
-    f"https://www.newsblur.com/social/stories/{NEWSBLUR_USER_ID}/{NEWSBLUR_USER_NAME}/"
-)
+
+def get_url_metadata(url):
+    """Fetch metadata from a URL"""
+    try:
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        }
+        response = requests.get(url, headers=headers, timeout=10)
+        response.raise_for_status()
+
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        # Try to get title in order of preference
+        title = None
+
+        # First try Open Graph title
+        og_title = soup.find("meta", property="og:title")
+        if og_title:
+            title = og_title.get("content")
+
+        # Then try Twitter card title
+        if not title:
+            twitter_title = soup.find("meta", attrs={"name": "twitter:title"})
+            if twitter_title:
+                title = twitter_title.get("content")
+
+        # Finally fall back to HTML title tag
+        if not title:
+            title_tag = soup.find("title")
+            if title_tag:
+                title = title_tag.text.strip()
+
+        return {"title": title}
+    except Exception as e:
+        print(f"Error fetching metadata for {url}: {e}")
+        return {}
+
+
+def get_links_from_github():
+    """Fetch links from GitHub issues"""
+    links = []
+
+    # Initialize GitHub client
+    g = Github(os.environ["GITHUB_TOKEN"])
+    repo = g.get_repo(os.environ["GITHUB_REPOSITORY"])
+
+    # Get repository owner (your GitHub username)
+    repo_owner = repo.owner.login
+
+    # Get all open issues with 'link' label, filtered by author
+    issues = repo.get_issues(state="open", labels=["link"], creator=repo_owner)
+
+    for issue in issues:
+        # Extract the first URL from the issue body
+        url = None
+        for line in issue.body.split("\n"):
+            if line.startswith("http://") or line.startswith("https://"):
+                url = line.strip()
+                break
+
+        if not url:
+            continue
+
+        link = {
+            "title": issue.title,
+            "date": issue.created_at.isoformat(),
+            "url": url,
+            "description": issue.body.replace(url, "").strip(),
+            "hash": f"github-issue-{issue.number}",
+        }
+        links.append(link)
+
+        # Close the issue since it's been processed
+        issue.edit(state="closed")
+
+    return links
 
 
 def slugify(name):
@@ -33,8 +105,8 @@ def slugify(name):
 
 
 def save_link(story):
-    permalink = story["story_permalink"]
-    parsed_url = parse.urlparse(permalink)
+    url = story["url"]
+    parsed_url = parse.urlparse(url)
     # Remove querystring
     url = slugify(parsed_url.netloc + parsed_url.path)
     filename = os.path.join("./content", "link", url)
@@ -44,16 +116,16 @@ def save_link(story):
         os.mkdir(filename)
         with open(os.path.join(filename, "index.md"), "w", encoding="utf-8") as f:
             story_title = story["story_title"].strip().replace('"', "")
-            shared_date = story["shared_date"]
+            shared_date = story["date"]
             f.write("---\n")
             f.write(f'title: "{story_title}"\n')
             f.write(f"date: {shared_date}\n")
-            f.write(f'external_url: "{permalink}"\n')
+            f.write(f'external_url: "{url}"\n')
             f.write(f"tags: [link]\n")
             f.write("---\n\n")
 
-            if story["user_id"] == NEWSBLUR_USER_ID:
-                f.write(story["comments"])
+            if story["description"]:
+                f.write(story["description"])
 
         post_to_mastodon(story)
 
@@ -88,25 +160,23 @@ def post_to_mastodon(story):
         token = os.environ["MASTODON_ACCESS_TOKEN"]
         headers = {
             "Authorization": f"Bearer {token}",
-            "Idempotency-Key": story["story_permalink"],
+            "Idempotency-Key": story["url"],
         }
 
         # Check for similar posts
         if search_similar_posts(story, token):
-            print(
-                f"Similar post already exists for {story['story_permalink']}. Skipping."
-            )
+            print(f"Similar post already exists for {story['url']}. Skipping.")
             return
 
-        status = story["story_permalink"]
+        status = story["url"]
 
-        if story["user_id"] == NEWSBLUR_USER_ID and story["comments"]:
-            status = story["comments"] + " --> " + status
+        if story["description"]:
+            status = story["description"] + " --> " + status
 
         data = {"status": status}
         response = requests.post(url, headers=headers, data=data)
         if response.status_code == 200:
-            print(f"Successfully posted to Mastodon: {story['story_permalink']}")
+            print(f"Successfully posted to Mastodon: {story['url']}")
         else:
             print(f"Failed to post to Mastodon. Status code: {response.status_code}")
     except KeyError:
@@ -116,11 +186,9 @@ def post_to_mastodon(story):
 
 
 def main():
-    r = requests.get(url)
-    data = r.json()
-
-    for story in data["stories"]:
-        save_link(story)
+    links = get_links_from_github()
+    for link in links:
+        save_link(link)
 
 
 if __name__ == "__main__":
