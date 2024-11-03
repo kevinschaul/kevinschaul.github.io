@@ -182,8 +182,9 @@ def post_to_mastodon(story):
             print(f"Successfully posted to Mastodon: {story['url']}")
         else:
             print(f"Failed to post to Mastodon. Status code: {response.status_code}")
-    except KeyError:
+    except KeyError as e:
         print("Warning: Missing MASTODON_ACCESS_TOKEN, so not posting to Mastodon")
+        print(e)
     except Exception as e:
         print(f"An error occurred while posting to Mastodon: {str(e)}")
 
