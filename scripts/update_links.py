@@ -115,10 +115,10 @@ def save_link(story):
     if not os.path.isdir(filename):
         os.mkdir(filename)
         with open(os.path.join(filename, "index.md"), "w", encoding="utf-8") as f:
-            story_title = story["story_title"].strip().replace('"', "")
+            title = story["title"].strip().replace('"', "")
             shared_date = story["date"]
             f.write("---\n")
-            f.write(f'title: "{story_title}"\n')
+            f.write(f'title: "{title}"\n')
             f.write(f"date: {shared_date}\n")
             f.write(f'external_url: "{url}"\n')
             f.write(f"tags: [link]\n")
