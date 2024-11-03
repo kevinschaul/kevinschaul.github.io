@@ -7,10 +7,12 @@ on:
     branches:
       - main
 
+  # Runs when issues are opened or edited
+  issues:
+    types: [opened, edited]
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  schedule:
-    - cron: '14 */3 * * *' # Run every three hours on minute 14
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
