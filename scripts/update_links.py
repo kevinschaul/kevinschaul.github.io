@@ -5,9 +5,17 @@ import os
 import requests
 from datetime import datetime, timedelta
 from urllib import parse
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, TypedDict
 from bs4 import BeautifulSoup
 from github import Github
+
+class Story(TypedDict):
+    """Represents a link story with metadata"""
+    title: str
+    date: str  # ISO format date string
+    url: str
+    description: str
+    hash: str  # Format: github-issue-{number}
 
 # https://mastodon.social/api/v1/accounts/lookup?acct=kevinschaul
 MASTODON_USER_ID = "112973733509746771"
@@ -50,7 +58,7 @@ def get_url_metadata(url: str) -> Dict[str, Optional[str]]:
         return {}
 
 
-def get_links_from_github() -> List[Dict[str, str]]:
+def get_links_from_github() -> List[Story]:
     """Fetch links from GitHub issues"""
     links = []
 
@@ -105,7 +113,7 @@ def slugify(name: str) -> str:
     return s
 
 
-def save_link(story: Dict[str, str]) -> None:
+def save_link(story: Story) -> None:
     url = story["url"]
     parsed_url = parse.urlparse(url)
     # Remove querystring
@@ -134,7 +142,7 @@ def save_link(story: Dict[str, str]) -> None:
         post_to_mastodon(story)
 
 
-def search_similar_posts(story: Dict[str, str], token: str) -> bool:
+def search_similar_posts(story: Story, token: str) -> bool:
     search_url = "https://mastodon.social/api/v2/search"
     headers = {
         "Authorization": f"Bearer {token}",
@@ -157,7 +165,7 @@ def search_similar_posts(story: Dict[str, str], token: str) -> bool:
         return True
 
 
-def post_to_mastodon(story: Dict[str, str]) -> None:
+def post_to_mastodon(story: Story) -> None:
     url = "https://mastodon.social/api/v1/statuses/"
 
     try:
