@@ -5,3 +5,7 @@ Thumbs.db
 .hugo_build.lock
 public/*
 !public/CNAME
+__pycache__
+.python-version
+.aider*
+.env

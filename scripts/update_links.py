@@ -9,13 +9,16 @@ from typing import Dict, List, Optional, TypedDict
 from bs4 import BeautifulSoup
 from github import Github
 
+
 class Story(TypedDict):
     """Represents a link story with metadata"""
+
     title: str
     date: str  # ISO format date string
     url: str
     description: str
     hash: str  # Format: github-issue-{number}
+
 
 # https://mastodon.social/api/v1/accounts/lookup?acct=kevinschaul
 MASTODON_USER_ID = "112973733509746771"
@@ -150,7 +153,7 @@ def search_similar_posts(story: Story, token: str) -> bool:
     # Search for posts in the last 7 days
     since_date = (datetime.utcnow() - timedelta(days=7)).isoformat()
     params = {
-        "q": story["story_permalink"],
+        "q": story["url"],
         "type": "statuses",
         "account_id": MASTODON_USER_ID,
         "since_id": since_date,
