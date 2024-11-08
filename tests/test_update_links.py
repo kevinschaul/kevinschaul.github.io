@@ -68,13 +68,20 @@ def test_search_similar_posts():
 def test_get_links_from_github():
     """Test GitHub links extraction"""
     with patch('github.Github') as mock_github:
+        # Setup mock repo and owner
         mock_repo = MagicMock()
+        mock_owner = MagicMock()
+        mock_owner.login = "test_user"
+        mock_repo.owner = mock_owner
+        
+        # Setup mock issue
         mock_issue = MagicMock()
         mock_issue.title = "Test Issue"
         mock_issue.body = "https://example.com\nDescription"
         mock_issue.created_at.isoformat.return_value = "2024-01-01T00:00:00"
         mock_issue.number = 1
         
+        # Setup the chain of mock returns
         mock_repo.get_issues.return_value = [mock_issue]
         mock_github.return_value.get_repo.return_value = mock_repo
         
@@ -83,6 +90,13 @@ def test_get_links_from_github():
             'GITHUB_REPOSITORY': 'user/repo'
         }):
             links = get_links_from_github()
+            
+            # Verify the results
             assert len(links) == 1
             assert links[0]["url"] == "https://example.com"
             assert links[0]["title"] == "Test Issue"
+            
+            # Verify the mock was called correctly
+            mock_github.assert_called_once_with('fake_token')
+            mock_github.return_value.get_repo.assert_called_once_with('user/repo')
+            mock_repo.get_issues.assert_called_once()
