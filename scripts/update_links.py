@@ -141,7 +141,7 @@ def search_similar_posts(story, token):
     # Search for posts in the last 7 days
     since_date = (datetime.utcnow() - timedelta(days=7)).isoformat()
     params = {
-        "q": story["url"],
+        "q": story["story_permalink"],
         "type": "statuses",
         "account_id": MASTODON_USER_ID,
         "since_id": since_date,
