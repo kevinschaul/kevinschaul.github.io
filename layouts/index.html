@@ -1,6 +1,6 @@
 {{ partial "header.html" . }}
 
-<h2>Worth your time</h2>
+<h2>Micro posts</h2>
 <div class="links">
   <ul>
     {{ range first 3 (where (.Site.RegularPages) "Type" "==" "link") }}
@@ -8,32 +8,46 @@
       {{ if .Plain }}
         {{ .Plain | safeHTML }} -->
       {{ end }}
-      <b><a href="{{ .Params.external_url }}">{{ .Title }}</a></b>
+      {{ if .Params.external_url }}
+        <b><a href="{{ .Params.external_url }}">{{ .Title }}</a></b>
+      {{ end }}
     </li>
     {{ end }}
   </ul>
-  <a href="link/">More links worth your time</a>
+  <a href="link/">More micro posts</a>
 </div>
 
 
-<h2>Today I learned</h2>
-<div class="tils">
+<!-- <h2>Today I learned</h2> -->
+<!-- <div class="tils"> -->
+<!--   <ul> -->
+<!--     {{ range first 3 (where (.Site.RegularPages) "Type" "==" "til") }} -->
+<!--       <li><a href="{{ .Permalink }}">{{ .Title }}</a></li> -->
+<!--     {{ end }} -->
+<!--   </ul> -->
+<!--   <a href="til/">More TILs</a> -->
+<!-- </div> -->
+
+
+<h2>Full posts</h2>
+<div class="posts">
   <ul>
-    {{ range first 3 (where (.Site.RegularPages) "Type" "==" "til") }}
+    {{ range first 3 (where (.Site.RegularPages) "Type" "==" "post") }}
       <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
     {{ end }}
   </ul>
-  <a href="til/">More TILs</a>
+  <a href="post/">More posts</a>
 </div>
 
 
-<h2>Projects and posts</h2>
-<div class="posts">
-  {{ range (where (.Site.RegularPages) "Type" "==" "post") }}
+<h2>Projects</h2>
+<div class="projects">
+  {{ range (where (.Site.RegularPages) "Type" "==" "project") }}
       {{ if .Params.show_on_homepage }}
         {{ .Render "summary"}}
       {{ end }}
   {{ end }}
 </div>
+<a href="project/">More projects</a>
 
 {{ partial "footer.html" . }}

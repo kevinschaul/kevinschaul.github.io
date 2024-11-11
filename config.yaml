@@ -19,12 +19,15 @@ menu:
     - name: "Contact"
       url: "/contact/"
       weight: 1
-    - name: "Worth your time"
+    - name: "Micro"
       url: "/link/"
       weight: 2
+    - name: "Blog"
+      url: "/post/"
+      weight: 3
     - name: "Today I learned"
       url: "/til/"
-      weight: 3
+      weight: 4
 
 
 rssLimit: 10

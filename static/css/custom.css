@@ -1,53 +1,53 @@
 /* Home */
-.posts {
+.projects {
   text-align: center;
 }
-.posts .post {
+.projects .project {
   display: inline-block;
   width: 50%;
   margin: 1em -2px 2em;
   vertical-align: top;
   text-align: left;
 }
-.posts .post img {
+.projects .project img {
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
   border: 1px solid #ccc;
 }
-.posts .post:nth-child(2n - 1) {
+.projects .project:nth-child(2n - 1) {
   padding-right: 1em;
 }
-.posts .post:nth-child(2n) {
+.projects .project:nth-child(2n) {
   padding-left: 1em;
 }
-.posts .post a {
+.projects .project a {
   border-bottom: 0;
 }
-.posts .post .title {
+.projects .project .title {
   line-height: 1.2;
 }
-.posts .post .title a {
+.projects .project .title a {
   margin-right: 0.2em;
 }
-.posts .post .title .date {
+.projects .project .title .date {
   font-family: Arial, sans-serif;
   font-size: 0.7em;
   color: #999;
   white-space: nowrap;
 }
-.posts .post .blurb {
+.projects .project .blurb {
   font-family: Arial, sans-serif;
   font-size: 0.8em;
   line-height: 1.4em;
   margin-top: 0.5em;
 }
 @media(max-width: 685px) {
-  .posts .post {
+  .projects .project {
     width: 100%;
   }
-  .posts .post:nth-child(2n - 1),
-  .posts .post:nth-child(2n) {
+  .projects .project:nth-child(2n - 1),
+  .projects .project:nth-child(2n) {
     padding: 0;
   }
 }
