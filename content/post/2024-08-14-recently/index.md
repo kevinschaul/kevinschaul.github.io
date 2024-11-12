@@ -1,5 +1,5 @@
 ---
-title: "Recently"
+title: "Recently: Balatro, Kokoroko, Jump Start"
 date: "2024-08-14T21:27:10-05:00"
 slug: "recently"
 tags: [recently]
