@@ -1,7 +1,7 @@
 ---
 title: "dua-cli: find what's using all your disk space"
 date: 2024-11-14
-slug: dua-cli:-find-what's-using-all-your-disk-space
+slug: dua-cli-find-whats-using-all-your-disk-space
 tags: [command line]
 ---
 
