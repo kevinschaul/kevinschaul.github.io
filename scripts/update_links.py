@@ -182,7 +182,7 @@ def search_similar_posts_bluesky(story: Story, client: Client) -> bool:
     }
     try:
         results = client.app.bsky.feed.search_posts(params=params)
-        return len(results.get("posts", [])) > 0
+        return len(results.posts) > 0
     except requests.exceptions.RequestException as e:
         print(f"Error searching Bluesky for similar posts: {str(e)}")
         return True
