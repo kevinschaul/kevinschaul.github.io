@@ -173,7 +173,7 @@ def search_similar_posts_mastodon(story: Story, token: str) -> bool:
 
 def search_similar_posts_bluesky(story: Story, client: Client) -> bool:
     # Search for posts in the last 7 days
-    since_date = (datetime.utcnow() - timedelta(days=7)).strftime('%Y-%m-%d')
+    since_date = (datetime.utcnow() - timedelta(days=7))
     params = {
         "q": story["url"],
         "author": BLUESKY_HANDLE,
