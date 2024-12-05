@@ -8,7 +8,7 @@ from urllib import parse
 from typing import Dict, List, Optional, TypedDict
 from bs4 import BeautifulSoup
 from github import Github
-from atproto import Client
+from atproto import Client, client_utils
 
 
 class Story(TypedDict):
@@ -231,12 +231,13 @@ def post_to_bluesky(story: Story) -> None:
             print(f"Similar Bluesky post already exists for {story['url']}. Skipping.")
             return
 
-        status = story["url"]
-
+        tb = client_utils.TextBuilder()
         if story["description"]:
-            status = story["description"] + " --> " + status
+            tb.text(story["description"] + " --> ")
 
-        client.send_post(status)
+        tb.link(story["url"], story["url"])
+
+        client.send_post(tb)
         print(f"Successfully posted to Bluesky: {story['url']}")
     except KeyError as e:
         print("Warning: Missing BLUESKY_APP_PASSWORD, so not posting to Bluesky")
