@@ -8,6 +8,7 @@ from urllib import parse
 from typing import Dict, List, Optional, TypedDict
 from bs4 import BeautifulSoup
 from github import Github
+from atproto import Client
 
 
 class Story(TypedDict):
@@ -22,6 +23,7 @@ class Story(TypedDict):
 
 # https://mastodon.social/api/v1/accounts/lookup?acct=kevinschaul
 MASTODON_USER_ID = "112973733509746771"
+BLUESKY_HANDLE = "kevinschaul.bsky.social"
 
 
 def get_url_metadata(url: str) -> Dict[str, Optional[str]]:
@@ -143,9 +145,10 @@ def save_link(story: Story) -> None:
                 f.write(story["description"])
 
         post_to_mastodon(story)
+        post_to_bluesky(story)
 
 
-def search_similar_posts(story: Story, token: str) -> bool:
+def search_similar_posts_mastodon(story: Story, token: str) -> bool:
     search_url = "https://mastodon.social/api/v2/search"
     headers = {
         "Authorization": f"Bearer {token}",
@@ -164,7 +167,24 @@ def search_similar_posts(story: Story, token: str) -> bool:
         results = response.json()
         return len(results.get("statuses", [])) > 0
     except requests.exceptions.RequestException as e:
-        print(f"Error searching for similar posts: {str(e)}")
+        print(f"Error searching Mastodon for similar posts: {str(e)}")
+        return True
+
+
+def search_similar_posts_bluesky(story: Story, client: Client) -> bool:
+    # Search for posts in the last 7 days
+    since_date = (datetime.utcnow() - timedelta(days=7)).isoformat()
+    params = {
+        "q": story["url"],
+        "author": BLUESKY_HANDLE,
+        "type": "statuses",
+        "since": since_date,
+    }
+    try:
+        results = client.app.bsky.feed.search_posts(params=params)
+        return len(results.get("posts", [])) > 0
+    except requests.exceptions.RequestException as e:
+        print(f"Error searching Bluesky for similar posts: {str(e)}")
         return True
 
 
@@ -179,8 +199,8 @@ def post_to_mastodon(story: Story) -> None:
         }
 
         # Check for similar posts
-        if search_similar_posts(story, token):
-            print(f"Similar post already exists for {story['url']}. Skipping.")
+        if search_similar_posts_mastodon(story, token):
+            print(f"Similar Mastodon post already exists for {story['url']}. Skipping.")
             return
 
         status = story["url"]
@@ -199,6 +219,30 @@ def post_to_mastodon(story: Story) -> None:
         print(e)
     except Exception as e:
         print(f"An error occurred while posting to Mastodon: {str(e)}")
+
+
+def post_to_bluesky(story: Story) -> None:
+    try:
+        client = Client()
+        client.login(BLUESKY_HANDLE, os.environ["BLUESKY_APP_PASSWORD"])
+
+        # Check for similar posts
+        if search_similar_posts_bluesky(story, client):
+            print(f"Similar Bluesky post already exists for {story['url']}. Skipping.")
+            return
+
+        status = story["url"]
+
+        if story["description"]:
+            status = story["description"] + " --> " + status
+
+        client.send_post(status)
+        print(f"Successfully posted to Bluesky: {story['url']}")
+    except KeyError as e:
+        print("Warning: Missing BLUESKY_APP_PASSWORD, so not posting to Bluesky")
+        print(e)
+    except Exception as e:
+        print(f"An error occurred while posting to Bluesky: {str(e)}")
 
 
 def main() -> None:
