@@ -34,7 +34,9 @@ Here are my [llm evals](https://github.com/kevinschaul/llm-evals). Many more com
 
 With these in place, I can run `promptfoo eval` to run the evals, and then `promptfoo view` to open the results in a browser. They look like this:
 
+![Screenshot of promptfoo output, showing gemini-2.0-flash versus llama-3.2-3b-4bit](promptfoo-output.png)
 
+I don't know what two of these three charts means, but if you ignore those, the tables are great. Here I can see that gemini-2.0-flash outperformed llama-3.2-3b-4bit on these 10 test cases. I can scroll through and see what cases missed. It's pretty great output, once you know where to look.
 
 It took me a while to figure out how to get `promptfoo` to work, but overall it does nearly everything I'm looking for. I wish it did less -- I find the documentation pretty confusing because it has so many features -- but maybe that's unfair criticism.
 
