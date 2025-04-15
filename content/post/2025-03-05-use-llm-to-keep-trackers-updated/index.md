@@ -10,7 +10,7 @@ tease: false
 
 **tldr; I am piping articles through an LLM to populate a spreadsheet that powers our tracker**
 
-Last week I published [a piece](https://www.washingtonpost.com/politics/interactive/2025/trump-administration-actions/) tracking and connecting what the Trump administration is doing. It's an exciting piece in many ways, but the most revelatory isn't on the page but is behind the scenes. I'm using an LLM to help me keep it updated -- in about 15 minutes a day.
+Last week I published [a piece](https://www.washingtonpost.com/politics/interactive/2025/trump-administration-actions/) tracking and categorizing what the Trump administration is doing. It's an exciting piece in many ways, but the most revelatory isn't on the page but is behind the scenes. I'm using an LLM to help me keep it updated -- in about 15 minutes a day.
 
 - [A good task for AI](#a-good-task-for-AI)
 - [The pipeline](#the-pipeline)
