@@ -1,10 +1,10 @@
 ---
-title: 'You need your own LLM evals. Here’s how I set mine up.'
-date: '2025-04-10T21:15:46-05:00'
-slug: '2025-04-10-your-own-llm-evals'
+title: "You need your own LLM evals. Here’s how I set mine up."
+date: "2025-04-10T21:15:46-05:00"
+slug: "2025-04-10-your-own-llm-evals"
 tags: []
 show_on_homepage: yes
-blurb: ''
+blurb: ""
 tease: false
 ---
 
@@ -12,7 +12,7 @@ tease: false
 
 Every week some company releases another LLM that blows the previous models out of the water, according to the benchmarks. The charts only go up. The benchmarks are useful on some level. But honestly, they are pretty weird.
 
-If you're doing anything at all interesting with large language models, you need to set up your own evals. Whether you're trying to [extract committee names from political emails](https://thescoop.org/archives/2025/01/27/llm-extraction-challenge-fundraising-emails/index.html), [classify campaign expenditures](https://palewi.re/docs/first-llm-classifier/) or [keep a tracker updated](https://kschaul.com/post/2025/03/05/2025-03-05-use-llm-to-keep-trackers-updated/), I promise that your use cases are much more useful than the benchmarks. Only setting up your own evals will tell you what combination of models and prompts work best for you. After all, you will be directly testing how *you* use them!
+If you're doing anything at all interesting with large language models, you need to set up your own evals. Whether you're trying to [extract committee names from political emails](https://thescoop.org/archives/2025/01/27/llm-extraction-challenge-fundraising-emails/index.html), [classify campaign expenditures](https://palewi.re/docs/first-llm-classifier/) or [keep a tracker updated](https://kschaul.com/post/2025/03/05/2025-03-05-use-llm-to-keep-trackers-updated/), I promise that your use cases are much more useful than the benchmarks. Only setting up your own evals will tell you what combination of models and prompts work best for you. After all, you will be directly testing how _you_ use them!
 
 Unfortunately setting up evals remains a bit painful. There are lots of ways to test LLMs, but they all feel a bit messy. Trying out a bunch helped me figure out the features I'm looking for.
 
@@ -38,26 +38,31 @@ The format I settled on is for each eval to output two dataframes/csvs:
 
 1. An aggregate version that calculates summary statistics across model-prompt variations. This lets you sort by your summary statistic to quickly see the best combination.
 
-| ------------------------------------------------------------------------- |
+<style>
+table {
+    max-width: 100%;
+    display: block;
+    overflow-x: auto;
+  }
+</style>
+
 | attributes.model | attributes.prompt | count | is_correct | share_correct |
-| ------------------------------------------------------------------------- |
-| gemini-1.5-flas… | Is this article … |   200 |        163 |          0.82 |
-| openai/gpt4.1    | Is this article … |   200 |        152 |          0.76 |
-| gemini-2.0-flas… | Is this article … |   200 |        151 |          0.76 |
+| ---------------- | ----------------- | ----- | ---------- | ------------- |
+| gemini-1.5-flas… | Is this article … | 200   | 163        | 0.82          |
+| openai/gpt4.1    | Is this article … | 200   | 152        | 0.76          |
+| gemini-2.0-flas… | Is this article … | 200   | 151        | 0.76          |
 
 2. A full version that lists out the results for each test-model-prompt combination. This lets you browse specific results to hopefully better understand what's happening.
 
-| --------------------------------------------------------------------------------------------- |
 | attributes.model | attributes.prompt | input.headline | expected_output | output | is_correct |
-| --------------------------------------------------------------------------------------------- |
-| openai/gpt4.1    | Is this article … | Noem: Guantán… | True            | True   | ✔          |
-| openai/gpt4.1    | Is this article … | Medical evacu… | False           | False  | ✔          |
-| openai/gpt4.1    | Is this article … | Cherry blosso… | False           | False  | ✔          |
+| ---------------- | ----------------- | -------------- | --------------- | ------ | ---------- |
+| openai/gpt4.1    | Is this article … | Noem: Guantán… | True            | True   | ✔         |
+| openai/gpt4.1    | Is this article … | Medical evacu… | False           | False  | ✔         |
+| openai/gpt4.1    | Is this article … | Cherry blosso… | False           | False  | ✔         |
 
 Together these outputs give me everything I want to do, so far at least.
 
 I would love to see some of this become either standard in the library or hidden behind another tool (CLI anyone?). But for now this is working great. I'd love to not have to write this code in the future.
-
 
 ## My previous favorite: `promptfoo`
 
@@ -84,4 +89,3 @@ I toyed around with building [a similar library](https://github.com/kevinschaul/
 ## How are you running evals?
 
 If there are other good eval frameworks, please let me know. I don't feel like I've fully cracked the nut yet, though I'm in a much better spot than a few months ago.
-
