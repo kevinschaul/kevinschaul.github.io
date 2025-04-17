@@ -8,13 +8,19 @@ blurb: ''
 tease: false
 ---
 
+**Update 4/17/25: Added screenshots of my dashboard, and noted switch to pydantic-evals**
+
 Every week some company releases another LLM that blows the previous models out of the water, according to the benchmarks. The charts only go up. The benchmarks are useful on some level. But honestly, they are pretty weird.
 
 If you're doing anything at all interesting with large language models, you need to set up your own evals. Whether you're trying to [extract committee names from political emails](https://thescoop.org/archives/2025/01/27/llm-extraction-challenge-fundraising-emails/index.html), [classify campaign expenditures](https://palewi.re/docs/first-llm-classifier/) or [keep a tracker updated](https://kschaul.com/post/2025/03/05/2025-03-05-use-llm-to-keep-trackers-updated/), I promise that your use cases are much more useful than the benchmarks. Only setting up your own evals will tell you what combination of models and prompts work best for you. After all, you will be directly testing how *you* use them!
 
 Unfortunately setting up evals remains a bit painful. There are lots of ways to test LLMs, but they all feel a bit messy. Trying out a bunch helped me figure out the features I'm looking for.
 
-Here are my [llm evals](https://github.com/kevinschaul/llm-evals). Many more coming soon.
+Here are my [LLM evals](https://kschaul.com/llm-evals/evals/) ([and code](https://github.com/kevinschaul/llm-evals). More coming soon.
+
+And here's what one looks like:
+
+![Screenshot of a website showing how well different LLM models performed on a task about whether an article is describing a new action/policy by the Trump administration. gemini-1.5-flash-latest leads](dashboard-article-tracking-trump.png)
 
 ## What I want in an LMM eval framework
 
@@ -24,7 +30,36 @@ Here are my [llm evals](https://github.com/kevinschaul/llm-evals). Many more com
 - **Cache everything** Let me rerun everything without re-pinging all the APIs. But be smart enough to detect changes to stuff like the prompt, any wrapper code, test cases. I'd love to share this across machines -- maybe directly in git?
 - **Stability** Don't try to do too much. Just do it well.
 
-## My overall favorite: `promptfoo`
+## My new favorite: [Pydantic's `evals`](https://ai.pydantic.dev/evals/)
+
+This library is promising. It's faily base-bones right now, but I was able to pretty quickly write some helpers to handle caching, calculating aggregate statistics that I want and output files in a nice format for analysis.
+
+The format I settled on is for each eval to output two dataframes/csvs:
+
+1. An aggregate version that calculates summary statistics across model-prompt variations. This lets you sort by your summary statistic to quickly see the best combination.
+
+| ------------------------------------------------------------------------- |
+| attributes.model | attributes.prompt | count | is_correct | share_correct |
+| ------------------------------------------------------------------------- |
+| gemini-1.5-flas… | Is this article … |   200 |        163 |          0.82 |
+| openai/gpt4.1    | Is this article … |   200 |        152 |          0.76 |
+| gemini-2.0-flas… | Is this article … |   200 |        151 |          0.76 |
+
+2. A full version that lists out the results for each test-model-prompt combination. This lets you browse specific results to hopefully better understand what's happening.
+
+| --------------------------------------------------------------------------------------------- |
+| attributes.model | attributes.prompt | input.headline | expected_output | output | is_correct |
+| --------------------------------------------------------------------------------------------- |
+| openai/gpt4.1    | Is this article … | Noem: Guantán… | True            | True   | ✔          |
+| openai/gpt4.1    | Is this article … | Medical evacu… | False           | False  | ✔          |
+| openai/gpt4.1    | Is this article … | Cherry blosso… | False           | False  | ✔          |
+
+Together these outputs give me everything I want to do, so far at least.
+
+I would love to see some of this become either standard in the library or hidden behind another tool (CLI anyone?). But for now this is working great. I'd love to not have to write this code in the future.
+
+
+## My previous favorite: `promptfoo`
 
 [Here is my setup](https://github.com/kevinschaul/llm-evals/tree/main/political-fundraising-emails) for `promptfoo`. It's basically three steps:
 
@@ -45,10 +80,6 @@ It took me a while to figure out how to get `promptfoo` to work, but overall it 
 This library attempts to treat llm evals somewhat like unit tests, letting you run them with `pytest`. It's an interesting idea that I generally like. It does require you to roll your own analysis functions, though.
 
 I toyed around with building [a similar library](https://github.com/kevinschaul/pytest-llmeval) that simplified usage, including analysis functions and caching for you. But I don't think this is the way forward. I'm more inclined to spend time making `promptfoo` work for me.
-
-## Have not tried: [Pydantic's `evals`](https://ai.pydantic.dev/evals/)
-
-This library looks promising. I don't think it does caching, and I'm not sure how well the results would look when running hundreds of test cases. But I should probably check it out.
 
 ## How are you running evals?
 
