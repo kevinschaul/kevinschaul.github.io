@@ -1,53 +1,88 @@
-{{ partial "header.html" . }}
+{{- define "main" -}}
 
-<h2>Micro posts</h2>
-<div class="links">
-  <ul>
-    {{ range first 3 (where (.Site.RegularPages) "Type" "==" "link") }}
-    <li>
-      {{ if .Plain }}
-        {{ .Plain | safeHTML }} -->
-      {{ end }}
-      {{ if .Params.external_url }}
-        <b><a href="{{ .Params.external_url }}">{{ .Title }}</a></b>
-      {{ end }}
-    </li>
-    {{ end }}
-  </ul>
-  <a href="link/">More micro posts</a>
-</div>
+<!-- Homepage Content -->
+{{ .Content }}
 
-
-<!-- <h2>Today I learned</h2> -->
-<!-- <div class="tils"> -->
-<!--   <ul> -->
-<!--     {{ range first 3 (where (.Site.RegularPages) "Type" "==" "til") }} -->
-<!--       <li><a href="{{ .Permalink }}">{{ .Title }}</a></li> -->
-<!--     {{ end }} -->
-<!--   </ul> -->
-<!--   <a href="til/">More TILs</a> -->
-<!-- </div> -->
-
-
-<h2>Full posts</h2>
-<div class="posts">
-  <ul>
-    {{ range first 3 (where (.Site.RegularPages) "Type" "==" "post") }}
-      <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
-    {{ end }}
-  </ul>
-  <a href="post/">More posts</a>
-</div>
-
-
-<h2>Projects</h2>
-<div class="projects">
-  {{ range (where (.Site.RegularPages) "Type" "==" "project") }}
-      {{ if .Params.show_on_homepage }}
-        {{ .Render "summary"}}
-      {{ end }}
+<!-- Stream section with 5 most recent links -->
+<div class="space-y-3 mb-8">
+  {{ range first 5 (where site.RegularPages "Type" "link") }}
+  <div class="bg-black/[3%] dark:bg-white/[10%] rounded-lg p-4">
+    <div class="">
+      {{ .Content | chomp }}
+    </div>
+    <time class="text-xs"
+      >{{ .Date | time.Format ":date_medium" }}</time
+    >
+  </div>
   {{ end }}
 </div>
-<a href="project/">More projects</a>
+<p class="mb-12">
+  <a href="/link/" class="text-orange-500 hover:underline">More links →</a>
+</p>
 
-{{ partial "footer.html" . }}
+<!-- Posts section with 3 most recent excerpts -->
+<h2 class="mb-6 text-xl font-medium">Posts</h2>
+{{ range first 3 (where site.RegularPages "Type" "post") }}
+<section class="relative my-6 first-of-type:mt-0">
+  <h3 class="my-0 text-lg">
+    <a
+      href="{{ .Permalink }}"
+      class="text-black dark:text-white hover:text-orange-500"
+    >
+      {{ .Title }}
+    </a>
+  </h3>
+  <time class="text-xs antialiased opacity-60"
+    >{{ .Date | time.Format ":date_medium" }}</time
+  >
+  <div class="mt-2">
+    {{ if .Summary }} {{ .Summary }} {{ else }} {{ .Content | truncate 200 }} {{
+    end }}
+  </div>
+  <p class="mt-2">
+    <a href="{{ .Permalink }}" class="text-orange-500 hover:underline"
+      >Read more →</a
+    >
+  </p>
+</section>
+{{ end }}
+
+<!-- Projects section with 4 most recent excerpts -->
+<h2 class="mb-6 text-xl font-medium">Projects</h2>
+{{ range first 4 (where site.RegularPages "Type" "project") }}
+<section class="relative my-6 first-of-type:mt-0">
+  {{ $image := .Resources.GetMatch "tease.png" }} {{ if $image }}
+  <div class="mb-4">
+    <a href="{{ .Params.external_url | default .Permalink }}">
+      <img
+        src="{{ $image.Permalink }}"
+        alt="{{ .Title }}"
+        class="w-full rounded border border-black/10"
+      />
+    </a>
+  </div>
+  {{ end }}
+  <h3 class="my-0 text-lg">
+    <a
+      href="{{ .Params.external_url | default .Permalink }}"
+      class="text-black dark:text-white hover:text-orange-500"
+    >
+      {{ .Title }}
+    </a>
+  </h3>
+  <time class="text-xs antialiased opacity-60"
+    >{{ .Date | time.Format ":date_medium" }}</time
+  >
+  <div class="mt-2">
+    {{ if .Summary }} {{ .Summary }} {{ else }} {{ .Content | truncate 200 }} {{
+    end }}
+  </div>
+  {{ if not .Params.external_url }}
+  <p class="mt-2">
+    <a href="{{ .Permalink }}" class="text-orange-500 hover:underline"
+      >Read more →</a
+    >
+  </p>
+  {{ end }}
+</section>
+{{ end }} {{- end -}}

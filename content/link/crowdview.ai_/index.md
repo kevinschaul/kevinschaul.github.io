@@ -1,7 +1,6 @@
 ---
-title: "CrowdView"
 date: 2023-08-07 20:37:10.495000
-external_url: "https://crowdview.ai/"
+title: CrowdView
 ---
 
-A search engine for forums
+A search engine for forums --> [CrowdView](https://crowdview.ai/)

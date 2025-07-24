@@ -8,4 +8,5 @@ public/*
 __pycache__
 .python-version
 .aider*
+.claude
 .env

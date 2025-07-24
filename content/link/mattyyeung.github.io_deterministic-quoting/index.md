@@ -1,7 +1,6 @@
 ---
-title: "Hallucination-Free RAG: Making LLMs Safe for Healthcare"
 date: 2024-05-08 14:00:54.202000
-external_url: "https://mattyyeung.github.io/deterministic-quoting"
+title: 'Hallucination-Free RAG: Making LLMs Safe for Healthcare'
 ---
 
-I think there's some potential here
+I think there's some potential here --> [Hallucination-Free RAG: Making LLMs Safe for Healthcare](https://mattyyeung.github.io/deterministic-quoting)

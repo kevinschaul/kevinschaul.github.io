@@ -1,8 +1,8 @@
 ---
-title: "Clicks Keyboard for iPhone"
 date: 2024-08-27 14:14:43.399000
-external_url: "https://www.clicks.tech/"
-tags: [link]
+tags:
+- link
+title: Clicks Keyboard for iPhone
 ---
 
-Honestly tempting. But no support for the mini? :(
+Honestly tempting. But no support for the mini? :( --> [Clicks Keyboard for iPhone](https://www.clicks.tech/)
