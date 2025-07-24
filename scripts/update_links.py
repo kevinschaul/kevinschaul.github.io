@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import json
 import re
 import os
 import requests
@@ -119,6 +120,7 @@ def slugify(name: str) -> str:
 
 
 def save_link(story: Story) -> None:
+    print(f"Saving link: {json.dumps(story)}")
     url = story["url"]
     parsed_url = parse.urlparse(url)
     # Remove querystring
@@ -248,6 +250,7 @@ def post_to_bluesky(story: Story) -> None:
 
 def main() -> None:
     links = get_links_from_github()
+    print(f"Found {len(links)} links.")
     for link in links:
         save_link(link)
 
