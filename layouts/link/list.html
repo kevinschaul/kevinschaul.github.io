@@ -1,0 +1,28 @@
+{{- define "main" -}}
+<div class="stream">
+  {{ range .Paginator.Pages }}
+    {{ partial "link-item.html" . }}
+  {{ end }}
+</div>
+
+<!-- Pagination -->
+{{ if gt .Paginator.TotalPages 1 }}
+<nav class="flex justify-between items-center mt-8">
+  <div>
+    {{ if .Paginator.HasPrev }}
+      <a href="{{ .Paginator.Prev.URL }}" class="text-orange-500 hover:underline">← Previous</a>
+    {{ end }}
+  </div>
+  
+  <div class="text-sm opacity-60">
+    Page {{ .Paginator.PageNumber }} of {{ .Paginator.TotalPages }}
+  </div>
+  
+  <div>
+    {{ if .Paginator.HasNext }}
+      <a href="{{ .Paginator.Next.URL }}" class="text-orange-500 hover:underline">Next →</a>
+    {{ end }}
+  </div>
+</nav>
+{{ end }}
+{{- end -}}

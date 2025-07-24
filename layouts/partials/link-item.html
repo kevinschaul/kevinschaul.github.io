@@ -1,0 +1,8 @@
+<div class="link-item pb-2">
+  {{ .Content | chomp }}
+  <time class="text-xs text-gray-500">
+    <a href="{{ .Permalink }}" class="text-gray-400 hover:text-gray-200"
+      >{{ .Date | time.Format ":date_medium" }}</a
+    >
+  </time>
+</div>

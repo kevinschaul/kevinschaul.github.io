@@ -3,21 +3,14 @@
 <!-- Homepage Content -->
 {{ .Content }}
 
-<!-- Stream section with 5 most recent links -->
-<div class="space-y-3 mb-8">
-  {{ range first 5 (where site.RegularPages "Type" "link") }}
-  <div class="bg-black/[3%] dark:bg-white/[10%] rounded-lg p-4">
-    <div class="">
-      {{ .Content | chomp }}
-    </div>
-    <time class="text-xs"
-      >{{ .Date | time.Format ":date_medium" }}</time
-    >
-  </div>
+<h2 class="text-sm uppercase mb-0">Short posts</h2>
+<div class="divide-y divide-solid divide-gray-500">
+  {{ range first 3 (where site.RegularPages "Type" "link") }}
+    {{ partial "link-item.html" . }}
   {{ end }}
 </div>
 <p class="mb-12">
-  <a href="/link/" class="text-orange-500 hover:underline">More links →</a>
+  <a href="/link/" class="text-purple-300 hover:underline">More short posts →</a>
 </p>
 
 <!-- Posts section with 3 most recent excerpts -->

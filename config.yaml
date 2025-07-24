@@ -23,9 +23,6 @@ menu:
     - name: "Blog"
       url: "/post/"
       weight: 3
-    - name: "Today I learned"
-      url: "/til/"
-      weight: 4
 
 rssLimit: 10
 paginate: 20

@@ -10,3 +10,4 @@ __pycache__
 .aider*
 .claude
 .env
+node_modules
