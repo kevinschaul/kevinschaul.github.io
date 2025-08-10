@@ -7,6 +7,7 @@
     "test": "tests"
   },
   "scripts": {
+    "copy-assets": "cp themes/paper/static/*.svg static/css",
     "dev:tailwind": "npx @tailwindcss/cli -i ./assets/tailwind.css -o ./static/css/main.css --watch=always",
     "build:tailwind": "npx @tailwindcss/cli -i ./assets/tailwind.css -o ./static/css/main.css",
     "test": "echo \"Error: no test specified\" && exit 1"

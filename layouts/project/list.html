@@ -1,9 +1,9 @@
 {{- define "main" -}}
 
-<h2 class="text-sm uppercase mb-0">Short posts</h2>
+<h2 class="text-sm uppercase mb-0">Projects</h2>
 <div class="stream divide-y divide-solid divide-black/10">
   {{ range .Paginator.Pages }}
-    {{ partial "link-item.html" . }}
+    {{ partial "project-item.html" . }}
   {{ end }}
 </div>
 

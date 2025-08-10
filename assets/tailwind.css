@@ -1,24 +1,29 @@
 /* Import the Paper theme's styles */
 @import "../themes/paper/assets/app.css";
 
+/* Override page background to be subtle gray */
+body {
+  background-color: color-mix(in srgb, #000 3%, transparent) !important;
+}
+
+body:where(.dark, .dark *) {
+  background-color: color-mix(in srgb, #fff 8%, transparent) !important;
+}
+
 /* Override prose link colors */
 .prose {
-  --tw-prose-links: var(--color-gray-300);
-}
-
-.prose :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-  font-weight: 400;
-}
-
-.prose :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)):hover {
-  text-decoration: underline;
+  --tw-prose-links: var(--color-purple-400);
 }
 
 .link-item p {
   margin-top: 0.5em;
-  margin-bottom: 0.5em;
+  margin-bottom: 0;
 }
-.link-item p {
+.project-item p {
+  margin-top: 0.5em;
+}
+.project-item img {
+  margin-top: 0;
   margin-bottom: 0;
 }
 

@@ -1,0 +1,7 @@
+{{- define "main" -}}
+
+{{ if .Params.external_url }}
+  <meta http-equiv="refresh" content="0; url={{ .Params.external_url }}" />
+{{ end }}
+
+{{- end -}}

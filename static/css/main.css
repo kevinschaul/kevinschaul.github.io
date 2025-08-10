@@ -8,9 +8,8 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --color-orange-500: oklch(70.5% 0.213 47.604);
-    --color-purple-300: oklch(82.7% 0.119 306.383);
+    --color-purple-400: oklch(71.4% 0.203 305.504);
     --color-gray-200: oklch(92.8% 0.006 264.531);
-    --color-gray-300: oklch(87.2% 0.01 258.338);
     --color-gray-400: oklch(70.7% 0.022 261.325);
     --color-gray-500: oklch(55.1% 0.027 264.364);
     --color-black: #000;
@@ -266,9 +265,6 @@
   }
   .my-0\! {
     margin-block: calc(var(--spacing) * 0) !important;
-  }
-  .my-6 {
-    margin-block: calc(var(--spacing) * 6);
   }
   .my-10 {
     margin-block: calc(var(--spacing) * 10);
@@ -691,11 +687,17 @@
   .-mt-2 {
     margin-top: calc(var(--spacing) * -2);
   }
+  .mt-0 {
+    margin-top: calc(var(--spacing) * 0);
+  }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
   }
   .mt-3 {
     margin-top: calc(var(--spacing) * 3);
+  }
+  .mt-4 {
+    margin-top: calc(var(--spacing) * 4);
   }
   .mt-8 {
     margin-top: calc(var(--spacing) * 8);
@@ -724,8 +726,8 @@
   .mb-4 {
     margin-bottom: calc(var(--spacing) * 4);
   }
-  .mb-6 {
-    margin-bottom: calc(var(--spacing) * 6);
+  .mb-8 {
+    margin-bottom: calc(var(--spacing) * 8);
   }
   .mb-12 {
     margin-bottom: calc(var(--spacing) * 12);
@@ -861,9 +863,12 @@
       border-style: solid;
     }
   }
-  .divide-gray-500 {
+  .divide-black\/10 {
     :where(& > :not(:last-child)) {
-      border-color: var(--color-gray-500);
+      border-color: color-mix(in srgb, #000 10%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        border-color: color-mix(in oklab, var(--color-black) 10%, transparent);
+      }
     }
   }
   .truncate {
@@ -873,9 +878,6 @@
   }
   .overflow-hidden {
     overflow: hidden;
-  }
-  .rounded {
-    border-radius: 0.25rem;
   }
   .rounded-full {
     border-radius: calc(infinity * 1px);
@@ -915,6 +917,9 @@
       background-color: color-mix(in oklab, var(--color-black) 3%, transparent);
     }
   }
+  .bg-white {
+    background-color: var(--color-white);
+  }
   .bg-white\/50 {
     background-color: color-mix(in srgb, #fff 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -923,6 +928,9 @@
   }
   .p-3 {
     padding: calc(var(--spacing) * 3);
+  }
+  .p-5 {
+    padding: calc(var(--spacing) * 5);
   }
   .px-5 {
     padding-inline: calc(var(--spacing) * 5);
@@ -1012,8 +1020,8 @@
   .text-orange-500 {
     color: var(--color-orange-500);
   }
-  .text-purple-300 {
-    color: var(--color-purple-300);
+  .text-purple-400 {
+    color: var(--color-purple-400);
   }
   .capitalize {
     text-transform: capitalize;
@@ -1177,13 +1185,6 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-gray-200);
-      }
-    }
-  }
-  .hover\:text-orange-500 {
-    &:hover {
-      @media (hover: hover) {
-        color: var(--color-orange-500);
       }
     }
   }
@@ -1394,6 +1395,19 @@
       @media (width >= 64rem) {
         margin-right: calc(var(--spacing) * 14);
       }
+    }
+  }
+  .dark\:border-white\/10 {
+    &:where(.dark, .dark *) {
+      border-color: color-mix(in srgb, #fff 10%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        border-color: color-mix(in oklab, var(--color-white) 10%, transparent);
+      }
+    }
+  }
+  .dark\:bg-black {
+    &:where(.dark, .dark *) {
+      background-color: var(--color-black);
     }
   }
   .dark\:bg-black\/80\! {
@@ -1728,20 +1742,24 @@ article {
 .open {
   overflow: hidden;
 }
+body {
+  background-color: color-mix(in srgb, #000 3%, transparent) !important;
+}
+body:where(.dark, .dark *) {
+  background-color: color-mix(in srgb, #fff 8%, transparent) !important;
+}
 .prose {
-  --tw-prose-links: var(--color-gray-300);
-}
-.prose :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-  font-weight: 400;
-}
-.prose :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)):hover {
-  text-decoration: underline;
+  --tw-prose-links: var(--color-purple-400);
 }
 .link-item p {
   margin-top: 0.5em;
-  margin-bottom: 0.5em;
+  margin-bottom: 0;
 }
-.link-item p {
+.project-item p {
+  margin-top: 0.5em;
+}
+.project-item img {
+  margin-top: 0;
   margin-bottom: 0;
 }
 time a {

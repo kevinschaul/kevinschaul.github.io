@@ -3,79 +3,56 @@
 <!-- Homepage Content -->
 {{ .Content }}
 
-<h2 class="text-sm uppercase mb-0">Short posts</h2>
-<div class="divide-y divide-solid divide-gray-500">
-  {{ range first 3 (where site.RegularPages "Type" "link") }}
-    {{ partial "link-item.html" . }}
-  {{ end }}
+<div
+  class="rounded-lg bg-white dark:bg-black border border-black/10 dark:border-white/10 p-5 mb-8"
+>
+  <h2 class="text-sm uppercase mt-0 mb-4">Short posts</h2>
+  <div class="divide-y divide-solid divide-black/10">
+    {{ range first 3 (where site.RegularPages "Type" "link") }} {{ partial
+    "link-item.html" . }} {{ end }}
+  </div>
+  <p class="mt-4 mb-0">
+    <a href="/link/" class="text-purple-400 hover:underline"
+      >More short posts →</a
+    >
+  </p>
 </div>
-<p class="mb-12">
-  <a href="/link/" class="text-purple-300 hover:underline">More short posts →</a>
-</p>
 
 <!-- Posts section with 3 most recent excerpts -->
-<h2 class="mb-6 text-xl font-medium">Posts</h2>
-{{ range first 3 (where site.RegularPages "Type" "post") }}
-<section class="relative my-6 first-of-type:mt-0">
-  <h3 class="my-0 text-lg">
-    <a
-      href="{{ .Permalink }}"
-      class="text-black dark:text-white hover:text-orange-500"
-    >
-      {{ .Title }}
-    </a>
-  </h3>
-  <time class="text-xs antialiased opacity-60"
-    >{{ .Date | time.Format ":date_medium" }}</time
-  >
-  <div class="mt-2">
-    {{ if .Summary }} {{ .Summary }} {{ else }} {{ .Content | truncate 200 }} {{
-    end }}
+<div
+  class="rounded-lg bg-white dark:bg-black border border-black/10 dark:border-white/10 p-5 mb-8"
+>
+  <h2 class="text-sm uppercase mt-0 mb-4">Long posts</h2>
+  <div class="divide-y divide-solid divide-black/10">
+    {{ range first 3 (where site.RegularPages "Type" "post") }}
+    <div class="post-item pb-2">
+      <p class="mb-0"><a href="{{ .Permalink }}">{{ .Title }}</a></p>
+      <time class="text-xs text-gray-500">
+        {{ .Date | time.Format ":date_medium" }}
+      </time>
+    </div>
+    {{ end }}
   </div>
-  <p class="mt-2">
-    <a href="{{ .Permalink }}" class="text-orange-500 hover:underline"
-      >Read more →</a
+  <p class="mt-4 mb-0">
+    <a href="/post/" class="text-purple-400 hover:underline"
+      >More long posts →</a
     >
   </p>
-</section>
-{{ end }}
+</div>
 
 <!-- Projects section with 4 most recent excerpts -->
-<h2 class="mb-6 text-xl font-medium">Projects</h2>
-{{ range first 4 (where site.RegularPages "Type" "project") }}
-<section class="relative my-6 first-of-type:mt-0">
-  {{ $image := .Resources.GetMatch "tease.png" }} {{ if $image }}
-  <div class="mb-4">
-    <a href="{{ .Params.external_url | default .Permalink }}">
-      <img
-        src="{{ $image.Permalink }}"
-        alt="{{ .Title }}"
-        class="w-full rounded border border-black/10"
-      />
-    </a>
+<div
+  class="rounded-lg bg-white dark:bg-black border border-black/10 dark:border-white/10 p-5 mb-0"
+>
+  <h2 class="text-sm uppercase mt-0 mb-4">Projects</h2>
+  <div class="divide-y divide-solid divide-black/10">
+    {{ range first 4 (where site.RegularPages "Type" "project") }} {{ partial
+    "project-item.html" . }} {{ end }}
   </div>
-  {{ end }}
-  <h3 class="my-0 text-lg">
-    <a
-      href="{{ .Params.external_url | default .Permalink }}"
-      class="text-black dark:text-white hover:text-orange-500"
-    >
-      {{ .Title }}
-    </a>
-  </h3>
-  <time class="text-xs antialiased opacity-60"
-    >{{ .Date | time.Format ":date_medium" }}</time
-  >
-  <div class="mt-2">
-    {{ if .Summary }} {{ .Summary }} {{ else }} {{ .Content | truncate 200 }} {{
-    end }}
-  </div>
-  {{ if not .Params.external_url }}
-  <p class="mt-2">
-    <a href="{{ .Permalink }}" class="text-orange-500 hover:underline"
-      >Read more →</a
+  <p class="mt-4 mb-0">
+    <a href="/project/" class="text-purple-400 hover:underline"
+      >More projects →</a
     >
   </p>
-  {{ end }}
-</section>
-{{ end }} {{- end -}}
+</div>
+{{- end -}}

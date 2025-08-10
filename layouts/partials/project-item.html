@@ -1,0 +1,18 @@
+<div class="project-item pb-2">
+  {{ $image := .Resources.GetMatch "tease.png" }} {{ if $image }}
+  <div class="mt-8">
+    <a href="{{ .Params.external_url | default .Permalink }}">
+      <img src="{{ $image.Permalink }}" alt="{{ .Title }}" class="w-full" />
+    </a>
+  </div>
+  {{ end }}
+  <p class="my-0 mb-0">
+    <a href="{{ .Params.external_url | default .Permalink }}">{{ .Title }}</a>
+  </p>
+  <time class="text-xs text-gray-500">
+    {{ .Date | time.Format ":date_medium" }}
+  </time>
+  {{ if .Summary }}
+  <div class="mt-2">{{ .Summary }}</div>
+  {{ end }}
+</div>

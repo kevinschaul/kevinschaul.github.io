@@ -103,8 +103,14 @@
   />
   {{- end -}}
 
+  <!-- redirect meta tag for projects with external URLs -->
+  {{- if and (eq .Type "project") .Params.external_url -}}
+  <meta http-equiv="refresh" content="0; url={{ .Params.external_url }}" />
+  <link rel="canonical" href="{{- .Params.external_url -}}" />
+  {{- else -}}
   <!-- canonical -->
   <link rel="canonical" href="{{- .Permalink -}}" />
+  {{- end -}}
   {{- end -}}
   <!---->
 </head>
