@@ -1,0 +1,35 @@
+{{- define "main" -}}
+
+<h2 class="text-sm uppercase mb-0">Long posts</h2>
+<div class="stream divide-y divide-solid divide-black/10">
+  {{ range .Paginator.Pages }}
+    <div class="post-item pb-2">
+      <p class="mb-0"><a href="{{ .Permalink }}">{{ .Title }}</a></p>
+      <time class="text-xs text-gray-500">
+        {{ .Date | time.Format ":date_medium" }}
+      </time>
+    </div>
+  {{ end }}
+</div>
+
+<!-- Pagination -->
+{{ if gt .Paginator.TotalPages 1 }}
+<nav class="flex justify-between items-center mt-8">
+  <div>
+    {{ if .Paginator.HasPrev }}
+      <a href="{{ .Paginator.Prev.URL }}" class="text-purple-400 hover:underline">← Previous</a>
+    {{ end }}
+  </div>
+  
+  <div class="text-sm opacity-60">
+    Page {{ .Paginator.PageNumber }} of {{ .Paginator.TotalPages }}
+  </div>
+  
+  <div>
+    {{ if .Paginator.HasNext }}
+      <a href="{{ .Paginator.Next.URL }}" class="text-purple-400 hover:underline">Next →</a>
+    {{ end }}
+  </div>
+</nav>
+{{ end }}
+{{- end -}}
