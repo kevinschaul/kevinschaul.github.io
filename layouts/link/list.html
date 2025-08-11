@@ -12,7 +12,7 @@
 <nav class="flex justify-between items-center mt-8">
   <div>
     {{ if .Paginator.HasPrev }}
-      <a href="{{ .Paginator.Prev.URL }}" class="text-purple-400 hover:underline">← Previous</a>
+      <a href="{{ .Paginator.Prev.URL }}" class="text-purple-800 hover:underline">← Previous</a>
     {{ end }}
   </div>
   
@@ -22,7 +22,7 @@
   
   <div>
     {{ if .Paginator.HasNext }}
-      <a href="{{ .Paginator.Next.URL }}" class="text-purple-400 hover:underline">Next →</a>
+      <a href="{{ .Paginator.Next.URL }}" class="text-purple-800 hover:underline">Next →</a>
     {{ end }}
   </div>
 </nav>

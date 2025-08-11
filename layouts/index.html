@@ -12,8 +12,24 @@
     "link-item.html" . }} {{ end }}
   </div>
   <p class="mt-4 mb-0">
-    <a href="/link/" class="text-purple-400 hover:underline"
+    <a href="/link/" class="text-purple-800 hover:underline"
       >More short posts →</a
+    >
+  </p>
+</div>
+
+<!-- Projects section with 4 most recent excerpts -->
+<div
+  class="rounded-lg bg-white dark:bg-black border border-black/10 dark:border-white/10 p-5 mb-8"
+>
+  <h2 class="text-sm uppercase mt-0 mb-4">Projects</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {{ range first 4 (where site.RegularPages "Type" "project") }} {{ partial
+    "project-item.html" . }} {{ end }}
+  </div>
+  <p class="mt-4 mb-0">
+    <a href="/project/" class="text-purple-800 hover:underline"
+      >More projects →</a
     >
   </p>
 </div>
@@ -22,7 +38,7 @@
 <div
   class="rounded-lg bg-white dark:bg-black border border-black/10 dark:border-white/10 p-5 mb-8"
 >
-  <h2 class="text-sm uppercase mt-0 mb-4">Long posts</h2>
+  <h2 class="text-sm uppercase mt-0 mb-4">Blog posts</h2>
   <div class="divide-y divide-solid divide-black/10">
     {{ range first 3 (where site.RegularPages "Type" "post") }}
     <div class="post-item pb-2">
@@ -34,25 +50,10 @@
     {{ end }}
   </div>
   <p class="mt-4 mb-0">
-    <a href="/post/" class="text-purple-400 hover:underline"
-      >More long posts →</a
+    <a href="/post/" class="text-purple-800 hover:underline"
+      >More blog posts →</a
     >
   </p>
 </div>
 
-<!-- Projects section with 4 most recent excerpts -->
-<div
-  class="rounded-lg bg-white dark:bg-black border border-black/10 dark:border-white/10 p-5 mb-0"
->
-  <h2 class="text-sm uppercase mt-0 mb-4">Projects</h2>
-  <div class="divide-y divide-solid divide-black/10">
-    {{ range first 4 (where site.RegularPages "Type" "project") }} {{ partial
-    "project-item.html" . }} {{ end }}
-  </div>
-  <p class="mt-4 mb-0">
-    <a href="/project/" class="text-purple-400 hover:underline"
-      >More projects →</a
-    >
-  </p>
-</div>
 {{- end -}}

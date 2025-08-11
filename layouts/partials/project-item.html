@@ -1,8 +1,8 @@
 <div class="project-item pb-2">
   {{ $image := .Resources.GetMatch "tease.png" }} {{ if $image }}
-  <div class="mt-8">
+  <div class="mt-0">
     <a href="{{ .Params.external_url | default .Permalink }}">
-      <img src="{{ $image.Permalink }}" alt="{{ .Title }}" class="w-full" />
+      <img src="{{ $image.Permalink }}" alt="{{ .Title }}" class="w-full" loading="lazy" />
     </a>
   </div>
   {{ end }}

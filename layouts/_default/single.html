@@ -1,0 +1,62 @@
+{{- define "main" -}}
+
+<article>
+  <header class="mb-4">
+    <h1 class="my-0! pb-2.5">{{- .Title -}}</h1>
+
+    {{- if ne .Type "page" -}}
+    <div class="text-xs antialiased opacity-60">
+      {{- if .Date -}}
+      <time>{{- .Date | time.Format ":date_medium" -}}</time>
+      {{- end -}}<!---->
+      {{- $single_author := or .Params.Author site.Author.name -}}
+      <!---->
+      {{- if $single_author -}}
+      <span class="mx-1">&middot;</span>
+      <span>{{- $single_author -}}</span>
+      {{- end -}}
+    </div>
+    {{- end -}}
+  </header>
+
+  <section>{{- .Content -}}</section>
+
+  <!-- Post Tags -->
+  {{- if .Params.tags -}}
+  <footer class="mt-12 flex flex-wrap">
+    {{- range .Params.tags -}} {{- $href := print (absURL "tags/") (urlize .)
+    -}}
+    <a
+      class="mb-1.5 rounded-lg bg-black/[3%] px-5 py-1 no-underline hover:bg-black/[6%] ltr:mr-1.5 rtl:ml-1.5 dark:bg-white/[8%] dark:hover:bg-white/[12%]"
+      href="{{- $href -}}"
+      >{{- . -}}</a
+    >
+    {{- end -}}
+  </footer>
+  {{- end -}}
+
+  <!-- Post Nav -->
+  {{- if not site.Params.disablePostNavigation -}}<!---->
+  {{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections -}}<!---->
+  {{- if and (gt (len $pages) 1) (in $pages . ) -}}
+  <nav
+    class="mt-24 flex overflow-hidden rounded-xl bg-black/[3%] text-lg leading-[1.2]! *:flex *:w-1/2 *:items-center *:p-5 *:font-medium *:no-underline dark:bg-white/[8%] [&>*:hover]:bg-black/[2%] dark:[&>*:hover]:bg-white/[3%]"
+  >
+    {{- with $pages.Next . -}}
+    <a class="ltr:pr-3 rtl:pl-3" href="{{- .Permalink -}}"
+      ><span class="ltr:mr-1.5 rtl:ml-1.5">←</span><span>{{- .Name -}}</span></a
+    >
+    {{- end -}}<!---->
+    {{- with $pages.Prev . -}}
+    <a
+      class="justify-end pl-3 ltr:ml-auto rtl:mr-auto"
+      href="{{- .Permalink -}}"
+      ><span>{{- .Name -}}</span><span class="ltr:ml-1.5 rtl:mr-1.5">→</span></a
+    >
+    {{- end -}}
+  </nav>
+  {{- end -}}<!---->
+  {{- end -}}
+</article>
+
+{{- end -}}

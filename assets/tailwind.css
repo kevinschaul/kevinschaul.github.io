@@ -10,9 +10,22 @@ body:where(.dark, .dark *) {
   background-color: color-mix(in srgb, #fff 8%, transparent) !important;
 }
 
+main {
+  padding-top: calc(var(--spacing) * 5);
+  padding-bottom: calc(var(--spacing) * 5);
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+article code {
+  font-size: inherit !important;
+}
+
 /* Override prose link colors */
 .prose {
-  --tw-prose-links: var(--color-purple-400);
+  --tw-prose-links: var(--color-purple-800);
 }
 
 .link-item p {
@@ -29,4 +42,15 @@ body:where(.dark, .dark *) {
 
 time a {
   text-decoration: none !important;
+}
+
+/* Scale down fonts and spacing on very small screens */
+@media (max-width: 475px) {
+  :root {
+    --spacing: 0.2rem; /* Smaller base spacing unit */
+  }
+  
+  html {
+    font-size: 14px; /* Makes all rem units smaller */
+  }
 }

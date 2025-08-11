@@ -32,13 +32,6 @@
   <!-- css - use our custom Tailwind CSS build -->  
   <link rel="preload stylesheet" as="style" href="{{ "css/main.css" | absURL }}" />
 
-  <!-- dark icon -->
-  {{- $dark_icon := "theme.png" -}}
-  <!---->
-  {{- if site.Params.monoDarkIcon -}}{{- $dark_icon = "theme.svg" -}}{{- end -}}
-  <!---->
-  <link rel="preload" as="image" href="{{- $dark_icon | absURL -}}" />
-
   <!-- avatar -->
   {{- $avatar_url := $.Scratch.Get "avatar_url" -}}
   <!---->

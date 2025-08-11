@@ -14,27 +14,27 @@ taxonomies:
 
 menu:
   main:
-    - name: "Contact"
+    - name: "About"
       url: "/contact/"
       weight: 1
-    - name: "Micro"
-      url: "/link/"
+    - name: "LLM evals"
+      url: "https://kschaul.com/llm-evals/"
       weight: 2
-    - name: "Blog"
-      url: "/post/"
+    - name: "Follow"
+      url: "/follow/"
       weight: 3
 
 rssLimit: 10
-paginate: 20
+paginate: 10
 
 params:
-  description: "Visual journalist/hacker"
+  description: "Visual journalist/hacker covering AI"
   dateFormat: "Jan. 1, 2006"
   color: "gray"
-  github: "kevinschaul"
-  mastodon: "https://mastodon.social/@kevinschaul"
-  bluesky: "kevinschaul.bsky.social"
-  rss: true
+  # github: "kevinschaul"
+  # mastodon: "https://mastodon.social/@kevinschaul"
+  # bluesky: "kevinschaul.bsky.social"
+  # rss: true
   monoDarkIcon: true
 
 markup:

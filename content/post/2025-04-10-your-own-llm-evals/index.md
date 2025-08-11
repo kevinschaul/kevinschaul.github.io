@@ -16,7 +16,7 @@ If you're doing anything at all interesting with large language models, you need
 
 Unfortunately setting up evals remains a bit painful. There are lots of ways to test LLMs, but they all feel a bit messy. Trying out a bunch helped me figure out the features I'm looking for.
 
-Here are my [LLM evals](https://kschaul.com/llm-evals/evals/) ([and code](https://github.com/kevinschaul/llm-evals). More coming soon.
+Here are my [LLM evals](https://kschaul.com/llm-evals/evals/) ([and code](https://github.com/kevinschaul/llm-evals)). More coming soon.
 
 And here's what one looks like:
 

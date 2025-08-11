@@ -1,7 +1,7 @@
 {{- define "main" -}}
 
-<h2 class="text-sm uppercase mb-0">Projects</h2>
-<div class="stream divide-y divide-solid divide-black/10">
+<h2 class="text-sm uppercase mb-4">Projects</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
   {{ range .Paginator.Pages }}
     {{ partial "project-item.html" . }}
   {{ end }}
@@ -12,7 +12,7 @@
 <nav class="flex justify-between items-center mt-8">
   <div>
     {{ if .Paginator.HasPrev }}
-      <a href="{{ .Paginator.Prev.URL }}" class="text-purple-400 hover:underline">← Previous</a>
+      <a href="{{ .Paginator.Prev.URL }}" class="text-purple-800 hover:underline">← Previous</a>
     {{ end }}
   </div>
   
@@ -22,7 +22,7 @@
   
   <div>
     {{ if .Paginator.HasNext }}
-      <a href="{{ .Paginator.Next.URL }}" class="text-purple-400 hover:underline">Next →</a>
+      <a href="{{ .Paginator.Next.URL }}" class="text-purple-800 hover:underline">Next →</a>
     {{ end }}
   </div>
 </nav>
