@@ -17,6 +17,7 @@ load_dotenv()
 
 class ImageInfo(TypedDict):
     """Represents an image with metadata"""
+
     src: str
     alt: Optional[str]
 
@@ -88,13 +89,13 @@ def process_issue_text(text: str) -> tuple[str, List[ImageInfo]]:
 
     # Process HTML img tags: extract both src and alt attributes
     # First extract all img tags
-    img_tags = re.findall(r'<img[^>]*>', text, re.IGNORECASE)
+    img_tags = re.findall(r"<img[^>]*>", text, re.IGNORECASE)
     for img_tag in img_tags:
         # Extract src
         src_match = re.search(r'src=["\']([^"\']+)["\']', img_tag, re.IGNORECASE)
         # Extract alt
         alt_match = re.search(r'alt=["\']([^"\']*)["\']', img_tag, re.IGNORECASE)
-        
+
         if src_match:
             src_url = src_match.group(1)
             alt_text = alt_match.group(1) if alt_match else None
@@ -289,9 +290,11 @@ def generate_markdown_content(post: Post, downloaded_images: List[str] = None) -
             for i, downloaded_filename in enumerate(downloaded_images):
                 if i < len(post["images"]):
                     src_to_filename[post["images"][i]["src"]] = downloaded_filename
-        
+
         for image_info in post["images"]:
-            downloaded_filename = src_to_filename.get(image_info["src"], image_info["src"])
+            downloaded_filename = src_to_filename.get(
+                image_info["src"], image_info["src"]
+            )
             content.append(f"  - src: {downloaded_filename}")
             if image_info.get("alt"):
                 content.append(f"    alt: \"{image_info['alt']}\"")
@@ -339,18 +342,18 @@ def save_post(post: Post) -> None:
         with open(os.path.join(post_dir, "index.md"), "w", encoding="utf-8") as f:
             f.write(markdown_content)
 
-        # post_to_mastodon(post)
-        # post_to_bluesky(post)
+        post_to_mastodon(post, post_dir)
+        post_to_bluesky(post, post_dir)
 
 
-def search_similar_posts_mastodon(story: Post, token: str) -> bool:
+def search_similar_posts_mastodon(post: Post, token: str) -> bool:
     search_url = "https://mastodon.social/api/v2/search"
     headers = {
         "Authorization": f"Bearer {token}",
     }
     # Search for posts in the last 7 days
     since_date = (datetime.utcnow() - timedelta(days=7)).isoformat()
-    search_term = story.get("url", story["title"][:50])  # Use URL or title for search
+    search_term = post["text"][:30]
     params = {
         "q": search_term,
         "type": "statuses",
@@ -359,7 +362,7 @@ def search_similar_posts_mastodon(story: Post, token: str) -> bool:
     }
     try:
         response = requests.get(search_url, headers=headers, params=params, timeout=10)
-        response.raise_for_status()  # Raises an HTTPError for bad responses
+        response.raise_for_status()
         results = response.json()
         return len(results.get("statuses", [])) > 0
     except requests.exceptions.RequestException as e:
@@ -367,10 +370,10 @@ def search_similar_posts_mastodon(story: Post, token: str) -> bool:
         return True
 
 
-def search_similar_posts_bluesky(story: Post, client: Client) -> bool:
+def search_similar_posts_bluesky(post: Post, client: Client) -> bool:
     # Search for posts in the last 7 days
     since_date = (datetime.utcnow() - timedelta(days=7)).strftime("%Y-%m-%dT%H:%I:%SZ")
-    search_term = story.get("url", story["title"][:50])  # Use URL or title for search
+    search_term = post["text"][:30]
     params = {
         "q": search_term,
         "author": BLUESKY_HANDLE,
@@ -385,36 +388,81 @@ def search_similar_posts_bluesky(story: Post, client: Client) -> bool:
         return True
 
 
-def post_to_mastodon(story: Post) -> None:
+def upload_media_to_mastodon(
+    image_path: str, token: str, alt_text: Optional[str] = None
+) -> Optional[str]:
+    """Upload an image to Mastodon and return the media ID"""
+    url = "https://mastodon.social/api/v2/media"
+
+    try:
+        headers = {
+            "Authorization": f"Bearer {token}",
+        }
+
+        with open(image_path, "rb") as image_file:
+            files = {"file": image_file}
+            data = {}
+            if alt_text:
+                data["description"] = alt_text
+
+            response = requests.post(url, headers=headers, files=files, data=data)
+            response.raise_for_status()
+
+            media_data = response.json()
+            return media_data.get("id")
+    except Exception as e:
+        print(f"Error uploading image {image_path} to Mastodon: {e}")
+        return None
+
+
+def post_to_mastodon(post: Post, post_dir: Optional[str] = None) -> None:
     url = "https://mastodon.social/api/v1/statuses/"
 
     try:
         token = os.environ["MASTODON_ACCESS_TOKEN"]
         headers = {
             "Authorization": f"Bearer {token}",
-            "Idempotency-Key": story.get("url", story["hash"]),
+            "Idempotency-Key": post.get("url", post["hash"]),
         }
 
         # Check for similar posts
-        if search_similar_posts_mastodon(story, token):
+        if search_similar_posts_mastodon(post, token):
             print(
-                f"Similar Mastodon post already exists for {story.get('url', story['title'])}. Skipping."
+                f"Similar Mastodon post already exists for {post['text'][30:]}. Skipping."
             )
             return
 
-        if story["post_type"] == "link":
-            status = story["url"]
-            if story["description"]:
-                status = story["description"] + " --> " + status
-        else:  # text post
-            status = story["description"] or story["title"]
+        status = post["text"]
+        media_ids = []
+
+        # Upload images if they exist and we have a post directory
+        if post.get("images") and post_dir and os.path.isdir(post_dir):
+            # Get all downloaded image files
+            image_files = [
+                f
+                for f in os.listdir(post_dir)
+                if f.endswith((".jpg", ".jpeg", ".png", ".gif", ".webp"))
+            ]
+
+            # Upload each image (match by order since we download in order)
+            for i, image_info in enumerate(post["images"]):
+                if i < len(image_files):
+                    image_path = os.path.join(post_dir, image_files[i])
+                    media_id = upload_media_to_mastodon(
+                        image_path, token, image_info.get("alt")
+                    )
+                    if media_id:
+                        media_ids.append(media_id)
 
         data = {"status": status}
+        if media_ids:
+            data["media_ids"] = media_ids
+
         response = requests.post(url, headers=headers, data=data)
         if response.status_code == 200:
-            print(
-                f"Successfully posted to Mastodon: {story.get('url', story['title'])}"
-            )
+            print(f"Successfully posted to Mastodon: {post['text']}")
+            if media_ids:
+                print(f"  with {len(media_ids)} images")
         else:
             print(f"Failed to post to Mastodon. Status code: {response.status_code}")
     except KeyError as e:
@@ -424,29 +472,60 @@ def post_to_mastodon(story: Post) -> None:
         print(f"An error occurred while posting to Mastodon: {str(e)}")
 
 
-def post_to_bluesky(story: Post) -> None:
+def post_to_bluesky(post: Post, post_dir: Optional[str] = None) -> None:
     try:
         client = Client()
         client.login(BLUESKY_HANDLE, os.environ["BLUESKY_APP_PASSWORD"])
 
         # Check for similar posts
-        if search_similar_posts_bluesky(story, client):
-            print(
-                f"Similar Bluesky post already exists for {story.get('url', story['title'])}. Skipping."
-            )
+        if search_similar_posts_bluesky(post, client):
+            print(f"Similar Bluesky post already exists for {post['text']}. Skipping.")
             return
 
         tb = client_utils.TextBuilder()
+        tb.text(post["text"])
 
-        if story["post_type"] == "link":
-            if story["description"]:
-                tb.text(story["description"] + " --> ")
-            tb.link(story["url"], story["url"])
-        else:  # text post
-            tb.text(story["description"] or story["title"])
+        # Upload images if they exist and we have a post directory
+        images_to_embed = []
+        if post.get("images") and post_dir and os.path.isdir(post_dir):
+            # Get all downloaded image files
+            image_files = [
+                f
+                for f in os.listdir(post_dir)
+                if f.endswith((".jpg", ".jpeg", ".png", ".gif", ".webp"))
+            ]
 
-        client.send_post(tb)
-        print(f"Successfully posted to Bluesky: {story.get('url', story['title'])}")
+            # Upload each image (match by order since we download in order)
+            for i, image_info in enumerate(post["images"]):
+                if i < len(image_files):
+                    image_path = os.path.join(post_dir, image_files[i])
+                    try:
+                        with open(image_path, "rb") as image_file:
+                            image_data = image_file.read()
+
+                        # Upload the image to Bluesky
+                        upload_response = client.upload_blob(image_data)
+
+                        # Create image embed with alt text
+                        image_embed = {
+                            "alt": image_info.get("alt", ""),
+                            "image": upload_response.blob,
+                        }
+                        images_to_embed.append(image_embed)
+                    except Exception as e:
+                        print(f"Error uploading image {image_path} to Bluesky: {e}")
+
+        # Send the post with embedded images
+        if images_to_embed:
+            client.send_post(
+                tb, embed={"$type": "app.bsky.embed.images", "images": images_to_embed}
+            )
+        else:
+            client.send_post(tb)
+
+        print(f"Successfully posted to Bluesky: {post['text']}")
+        if images_to_embed:
+            print(f"  with {len(images_to_embed)} images")
     except KeyError as e:
         print("Warning: Missing BLUESKY_APP_PASSWORD, so not posting to Bluesky")
         print(e)
