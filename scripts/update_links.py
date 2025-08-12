@@ -11,6 +11,8 @@ from github import Github
 from atproto import Client, client_utils
 import uuid
 from dotenv import load_dotenv
+from PIL import Image
+import io
 
 load_dotenv()
 
@@ -238,7 +240,7 @@ def process_github_issues(issues) -> List[Post]:
         posts.append(post)
 
         # Close the issue since it's been processed
-        issue.edit(state="closed")
+        # issue.edit(state="closed")
 
     return posts
 
@@ -342,7 +344,7 @@ def save_post(post: Post) -> None:
         with open(os.path.join(post_dir, "index.md"), "w", encoding="utf-8") as f:
             f.write(markdown_content)
 
-        post_to_mastodon(post, post_dir)
+        # post_to_mastodon(post, post_dir)
         post_to_bluesky(post, post_dir)
 
 
@@ -416,13 +418,12 @@ def upload_media_to_mastodon(
 
 
 def post_to_mastodon(post: Post, post_dir: Optional[str] = None) -> None:
-    url = "https://mastodon.social/api/v1/statuses/"
+    url = "https://mastodon.social/api/v1/statuses"
 
     try:
         token = os.environ["MASTODON_ACCESS_TOKEN"]
         headers = {
             "Authorization": f"Bearer {token}",
-            "Idempotency-Key": post.get("url", post["hash"]),
         }
 
         # Check for similar posts
@@ -454,17 +455,15 @@ def post_to_mastodon(post: Post, post_dir: Optional[str] = None) -> None:
                     if media_id:
                         media_ids.append(media_id)
 
-        data = {"status": status}
+        data = {'status': status}
         if media_ids:
-            data["media_ids"] = media_ids
+            data['media_ids[]'] = media_ids
 
         response = requests.post(url, headers=headers, data=data)
-        if response.status_code == 200:
-            print(f"Successfully posted to Mastodon: {post['text']}")
-            if media_ids:
-                print(f"  with {len(media_ids)} images")
-        else:
-            print(f"Failed to post to Mastodon. Status code: {response.status_code}")
+        response.raise_for_status()
+        print(f"Successfully posted to Mastodon: {post['text']}")
+        if media_ids:
+            print(f"  with {len(media_ids)} images")
     except KeyError as e:
         print("Warning: Missing MASTODON_ACCESS_TOKEN, so not posting to Mastodon")
         print(e)
@@ -482,8 +481,26 @@ def post_to_bluesky(post: Post, post_dir: Optional[str] = None) -> None:
             print(f"Similar Bluesky post already exists for {post['text']}. Skipping.")
             return
 
+        # Build text with clickable links
         tb = client_utils.TextBuilder()
-        tb.text(post["text"])
+        text = post["text"]
+        url_pattern = r"https?://[^\s]+"
+
+        # Split text by URLs and rebuild with proper links
+        last_end = 0
+        for match in re.finditer(url_pattern, text):
+            # Add text before the URL
+            if match.start() > last_end:
+                tb.text(text[last_end : match.start()])
+
+            # Add the URL as a link
+            url = match.group()
+            tb.link(url, url)
+            last_end = match.end()
+
+        # Add any remaining text after the last URL
+        if last_end < len(text):
+            tb.text(text[last_end:])
 
         # Upload images if they exist and we have a post directory
         images_to_embed = []
@@ -503,13 +520,19 @@ def post_to_bluesky(post: Post, post_dir: Optional[str] = None) -> None:
                         with open(image_path, "rb") as image_file:
                             image_data = image_file.read()
 
+                        # Get image dimensions for aspect ratio
+                        with Image.open(io.BytesIO(image_data)) as img:
+                            width, height = img.size
+                            aspect_ratio = {"width": width, "height": height}
+
                         # Upload the image to Bluesky
                         upload_response = client.upload_blob(image_data)
 
-                        # Create image embed with alt text
+                        # Create image embed with alt text and aspect ratio
                         image_embed = {
                             "alt": image_info.get("alt", ""),
                             "image": upload_response.blob,
+                            "aspectRatio": aspect_ratio,
                         }
                         images_to_embed.append(image_embed)
                     except Exception as e:
