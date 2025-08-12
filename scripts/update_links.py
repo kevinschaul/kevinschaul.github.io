@@ -240,7 +240,7 @@ def process_github_issues(issues) -> List[Post]:
         posts.append(post)
 
         # Close the issue since it's been processed
-        # issue.edit(state="closed")
+        issue.edit(state="closed")
 
     return posts
 
