@@ -24,13 +24,14 @@ article code {
 }
 
 /* Override prose link colors */
-.prose {
-  --tw-prose-links: var(--color-purple-800);
-}
+/* .prose { */
+/*   --tw-prose-links: var(--color-purple-800); */
+/*   --tw-prose-invert-links: var(--color-purple-400); */
+/* } */
 
 .link-item p {
-  margin-top: 0.5em;
-  margin-bottom: 0;
+  margin-top: 0.2em;
+  margin-bottom: 0.5em;
 }
 .project-item p {
   margin-top: 0.5em;
@@ -49,7 +50,7 @@ time a {
   :root {
     --spacing: 0.2rem; /* Smaller base spacing unit */
   }
-  
+
   html {
     font-size: 14px; /* Makes all rem units smaller */
   }

@@ -1,0 +1,18 @@
+[project]
+name = "kevinschaul-github-io"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "atproto>=0.0.61",
+    "beautifulsoup4>=4.13.4",
+    "pygithub>=2.7.0",
+    "python-dotenv>=1.1.1",
+    "requests>=2.32.4",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+]

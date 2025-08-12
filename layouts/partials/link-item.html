@@ -1,8 +1,22 @@
-<div class="link-item pb-2">
-  {{ .Content | chomp }}
-  <time class="text-xs text-gray-500">
-    <a href="{{ .Permalink }}" class="text-gray-400 hover:text-gray-200"
+<div class="link-item pb-2 mb-2">
+  <time class="block mt-4 text-xs">
+    <a href="{{ .Permalink }}" class="text-gray-500 hover:text-gray-400"
       >{{ .Date | time.Format ":date_medium" }}</a
     >
   </time>
+
+  {{ .Content }}
+
+  {{ if .Params.images }}
+    <div>
+      {{ range .Params.images }}
+        {{ $image := $.Resources.Get .src }}
+        <img
+          src="{{ $image.RelPermalink }}"
+          alt="{{ .alt }}"
+          class="mt-2 mb-1 border border-black/10 dark:border-white/10"
+        />
+      {{ end }}
+  </div>
+  {{ end }}
 </div>

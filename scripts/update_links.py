@@ -5,21 +5,28 @@ import re
 import os
 import requests
 from datetime import datetime, timedelta
-from urllib import parse
 from typing import Dict, List, Optional, TypedDict
 from bs4 import BeautifulSoup
 from github import Github
 from atproto import Client, client_utils
+import uuid
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
-class Story(TypedDict):
-    """Represents a link story with metadata"""
+class ImageInfo(TypedDict):
+    """Represents an image with metadata"""
+    src: str
+    alt: Optional[str]
 
-    title: str
-    date: str  # ISO format date string
-    url: str
-    description: str
-    hash: str  # Format: github-issue-{number}
+
+class Post(TypedDict):
+    """Represents a post with metadata"""
+
+    date: str
+    text: str
+    images: Optional[List[ImageInfo]]
 
 
 # https://mastodon.social/api/v1/accounts/lookup?acct=kevinschaul
@@ -64,44 +71,185 @@ def get_url_metadata(url: str) -> Dict[str, Optional[str]]:
         return {}
 
 
-def get_links_from_github() -> List[Story]:
-    """Fetch links from GitHub issues"""
-    links = []
+def process_issue_text(text: str) -> tuple[str, List[ImageInfo]]:
+    """Extract images from text and return cleaned text and image info with alt text"""
+    if not text:
+        return text, []
 
-    # Initialize GitHub client
-    g = Github(os.environ["GITHUB_TOKEN"])
-    repo = g.get_repo(os.environ["GITHUB_REPOSITORY"])
+    images = []
+    cleaned_text = text
 
-    # Get repository owner (your GitHub username)
-    repo_owner = repo.owner.login
+    # Process markdown image syntax: ![alt](url)
+    markdown_pattern = r"!\[(.*?)\]\((https?://[^\s\)]+)\)"
+    markdown_matches = re.findall(markdown_pattern, text)
+    for alt_text, url in markdown_matches:
+        images.append({"src": url, "alt": alt_text if alt_text else None})
+    cleaned_text = re.sub(r"!\[.*?\]\([^\)]+\)", "", cleaned_text)
 
-    # Get all open issues with 'link' label, filtered by author
-    issues = repo.get_issues(state="open", labels=["link"], creator=repo_owner)
+    # Process HTML img tags: extract both src and alt attributes
+    # First extract all img tags
+    img_tags = re.findall(r'<img[^>]*>', text, re.IGNORECASE)
+    for img_tag in img_tags:
+        # Extract src
+        src_match = re.search(r'src=["\']([^"\']+)["\']', img_tag, re.IGNORECASE)
+        # Extract alt
+        alt_match = re.search(r'alt=["\']([^"\']*)["\']', img_tag, re.IGNORECASE)
+        
+        if src_match:
+            src_url = src_match.group(1)
+            alt_text = alt_match.group(1) if alt_match else None
+            images.append({"src": src_url, "alt": alt_text})
+    cleaned_text = re.sub(r"<img[^>]*>", "", cleaned_text, flags=re.IGNORECASE)
+
+    # Process standalone GitHub asset URLs (not already in HTML tags)
+    # These won't have alt text
+    github_assets_pattern = (
+        r'(?<!src=["\'])https://github\.com/user-attachments/assets/[^\s]+'
+    )
+    github_assets = re.findall(
+        github_assets_pattern, cleaned_text
+    )  # Use cleaned_text to avoid HTML duplicates
+    for url in github_assets:
+        images.append({"src": url, "alt": None})
+    cleaned_text = re.sub(github_assets_pattern, "", cleaned_text)
+
+    # Process standalone user-attachments URLs (not already in HTML tags)
+    # These won't have alt text
+    user_attachments_pattern = (
+        r'(?<!src=["\'])https://user-images\.githubusercontent\.com/[^\s]+'
+    )
+    user_attachments = re.findall(
+        user_attachments_pattern, cleaned_text
+    )  # Use cleaned_text to avoid HTML duplicates
+    for url in user_attachments:
+        images.append({"src": url, "alt": None})
+    cleaned_text = re.sub(user_attachments_pattern, "", cleaned_text)
+
+    # Clean up extra whitespace and empty lines
+    cleaned_text = re.sub(
+        r"\n\s*\n", "\n\n", cleaned_text
+    )  # Replace multiple newlines with double newlines
+    cleaned_text = cleaned_text.strip()
+
+    # Remove duplicate images based on src
+    seen_srcs = set()
+    unique_images = []
+    for img in images:
+        if img["src"] not in seen_srcs:
+            unique_images.append(img)
+            seen_srcs.add(img["src"])
+
+    return cleaned_text, unique_images
+
+
+def extract_images_from_issue(issue_body: str) -> List[str]:
+    """Extract image URLs from GitHub issue markdown content (legacy function)"""
+    _, images = process_issue_text(issue_body)
+    return [img["src"] for img in images]
+
+
+def remove_images_from_text(text: str) -> str:
+    """Remove image HTML and markdown from text content (legacy function)"""
+    cleaned_text, _ = process_issue_text(text)
+    return cleaned_text
+
+
+def download_image(image_url: str, dest_path: str) -> Optional[str]:
+    """Download an image and save it to the specified path"""
+    try:
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+            "Authorization": (
+                f"token {os.environ.get('GITHUB_TOKEN', '')}"
+                if "github" in image_url
+                else None
+            ),
+        }
+        # Remove None values from headers
+        headers = {k: v for k, v in headers.items() if v is not None}
+
+        response = requests.get(image_url, headers=headers, timeout=30)
+        response.raise_for_status()
+
+        # Get file extension from URL or content type
+        file_ext = ""
+        if "." in image_url.split("/")[-1]:
+            file_ext = "." + image_url.split("/")[-1].split(".")[-1].split("?")[0]
+        elif response.headers.get("content-type"):
+            content_type = response.headers["content-type"]
+            if "jpeg" in content_type or "jpg" in content_type:
+                file_ext = ".jpg"
+            elif "png" in content_type:
+                file_ext = ".png"
+            elif "gif" in content_type:
+                file_ext = ".gif"
+            elif "webp" in content_type:
+                file_ext = ".webp"
+
+        if not file_ext:
+            file_ext = ".jpg"  # Default fallback
+
+        filename = f"{uuid.uuid4().hex}{file_ext}"
+        full_path = os.path.join(dest_path, filename)
+
+        with open(full_path, "wb") as f:
+            f.write(response.content)
+
+        return filename
+    except Exception as e:
+        print(f"Error downloading image {image_url}: {e}")
+        return None
+
+
+def should_skip_issue(issue) -> bool:
+    """Check if an issue should be skipped based on labels"""
+    label_names = [label.name for label in issue.labels]
+    return "do-not-post" in label_names
+
+
+def convert_issue_to_post(issue) -> Post:
+    """Convert a GitHub issue to a Post object"""
+    body = issue.body
+
+    # Process text once to get both cleaned text and images
+    text, images = process_issue_text(body)
+
+    if images:
+        print(f"Found {len(images)} images: {images}")
+
+    return {
+        "date": issue.created_at.isoformat(),
+        "text": text,
+        "images": images,
+        "hash": f"{issue.number}",
+    }
+
+
+def process_github_issues(issues) -> List[Post]:
+    """Process a list of GitHub issues and return Posts"""
+    posts = []
 
     for issue in issues:
-        # Extract the first URL from the issue body
-        url = None
-        for line in issue.body.split("\n"):
-            if line.startswith("http://") or line.startswith("https://"):
-                url = line.strip()
-                break
-
-        if not url:
+        if should_skip_issue(issue):
             continue
 
-        link = {
-            "title": issue.title,
-            "date": issue.created_at.isoformat(),
-            "url": url,
-            "description": issue.body.replace(url, "").strip(),
-            "hash": f"github-issue-{issue.number}",
-        }
-        links.append(link)
+        post = convert_issue_to_post(issue)
+        posts.append(post)
 
         # Close the issue since it's been processed
         issue.edit(state="closed")
 
-    return links
+    return posts
+
+
+def get_posts_from_github() -> List[Post]:
+    """Fetch posts from GitHub issues"""
+    g = Github(os.environ["GITHUB_TOKEN"])
+    repo = g.get_repo(os.environ["GITHUB_REPOSITORY"])
+    repo_owner = repo.owner.login
+
+    issues = repo.get_issues(state="open", creator=repo_owner)
+    return process_github_issues(issues)
 
 
 def slugify(name: str) -> str:
@@ -119,46 +267,92 @@ def slugify(name: str) -> str:
     return s
 
 
-def save_link(story: Story) -> None:
-    print(f"Saving link: {json.dumps(story)}")
-    url = story["url"]
-    parsed_url = parse.urlparse(url)
-    # Remove querystring
-    slugged_url = slugify(parsed_url.netloc + parsed_url.path)
-    filename = os.path.join("./content", "link", slugged_url)
-
-    metadata = get_url_metadata(url)
-
-    # Save the link if it does not already exist
-    if not os.path.isdir(filename):
-        os.mkdir(filename)
-        with open(os.path.join(filename, "index.md"), "w", encoding="utf-8") as f:
-            title = metadata.get("title", story["title"])
-            title = title.strip().replace('"', "")
-            shared_date = story["date"]
-            f.write("---\n")
-            f.write(f'title: "{title}"\n')
-            f.write(f"date: {shared_date}\n")
-            f.write(f'external_url: "{url}"\n')
-            f.write(f"tags: [link]\n")
-            f.write("---\n\n")
-
-            if story["description"]:
-                f.write(story["description"])
-
-        post_to_mastodon(story)
-        post_to_bluesky(story)
+def get_post_directory_path(post: Post, content_dir: str = "./content") -> str:
+    """Generate the directory path for a post based on its content"""
+    # Extract just the date part (YYYY-MM-DD) from the ISO timestamp
+    date_part = post["date"].split("T")[0]
+    slug = slugify(f"{date_part}_{post['text'][:30]}")
+    return os.path.join(content_dir, "link", slug)
 
 
-def search_similar_posts_mastodon(story: Story, token: str) -> bool:
+def generate_markdown_content(post: Post, downloaded_images: List[str] = None) -> str:
+    """Generate the markdown content for a post"""
+    content = ["---"]
+    content.append(f"date: {post['date']}")
+
+    if downloaded_images and post.get("images"):
+        content.append("images:")
+        # Create a mapping from original src to downloaded filename
+        src_to_filename = {}
+        if post["images"] and downloaded_images:
+            # Match downloaded filenames to original srcs by order
+            for i, downloaded_filename in enumerate(downloaded_images):
+                if i < len(post["images"]):
+                    src_to_filename[post["images"][i]["src"]] = downloaded_filename
+        
+        for image_info in post["images"]:
+            downloaded_filename = src_to_filename.get(image_info["src"], image_info["src"])
+            content.append(f"  - src: {downloaded_filename}")
+            if image_info.get("alt"):
+                content.append(f"    alt: \"{image_info['alt']}\"")
+    elif downloaded_images:
+        # Fallback for backward compatibility when images is just a list of strings
+        content.append("images:")
+        for image in downloaded_images:
+            content.append(f"  - src: {image}")
+
+    content.append("---")
+    content.append("")
+    content.append(post["text"])
+
+    return "\n".join(content)
+
+
+def download_post_images(post: Post, dest_path: str) -> List[str]:
+    """Download all images for a post and return the list of downloaded filenames"""
+    downloaded_images = []
+    if post.get("images"):
+        for image_info in post["images"]:
+            image_url = image_info["src"]
+            downloaded_filename = download_image(image_url, dest_path)
+            if downloaded_filename:
+                downloaded_images.append(downloaded_filename)
+                print(f"Downloaded image: {downloaded_filename}")
+    return downloaded_images
+
+
+def save_post(post: Post) -> None:
+    print(f"Saving post: {json.dumps(post)}")
+
+    post_dir = get_post_directory_path(post)
+
+    # Save the post if it does not already exist
+    if not os.path.isdir(post_dir):
+        os.makedirs(post_dir)
+
+        # Download images if any
+        downloaded_images = download_post_images(post, post_dir)
+
+        # Generate and write markdown content
+        markdown_content = generate_markdown_content(post, downloaded_images)
+
+        with open(os.path.join(post_dir, "index.md"), "w", encoding="utf-8") as f:
+            f.write(markdown_content)
+
+        # post_to_mastodon(post)
+        # post_to_bluesky(post)
+
+
+def search_similar_posts_mastodon(story: Post, token: str) -> bool:
     search_url = "https://mastodon.social/api/v2/search"
     headers = {
         "Authorization": f"Bearer {token}",
     }
     # Search for posts in the last 7 days
     since_date = (datetime.utcnow() - timedelta(days=7)).isoformat()
+    search_term = story.get("url", story["title"][:50])  # Use URL or title for search
     params = {
-        "q": story["url"],
+        "q": search_term,
         "type": "statuses",
         "account_id": MASTODON_USER_ID,
         "since_id": since_date,
@@ -173,11 +367,12 @@ def search_similar_posts_mastodon(story: Story, token: str) -> bool:
         return True
 
 
-def search_similar_posts_bluesky(story: Story, client: Client) -> bool:
+def search_similar_posts_bluesky(story: Post, client: Client) -> bool:
     # Search for posts in the last 7 days
     since_date = (datetime.utcnow() - timedelta(days=7)).strftime("%Y-%m-%dT%H:%I:%SZ")
+    search_term = story.get("url", story["title"][:50])  # Use URL or title for search
     params = {
-        "q": story["url"],
+        "q": search_term,
         "author": BLUESKY_HANDLE,
         "type": "statuses",
         "since": since_date,
@@ -190,30 +385,36 @@ def search_similar_posts_bluesky(story: Story, client: Client) -> bool:
         return True
 
 
-def post_to_mastodon(story: Story) -> None:
+def post_to_mastodon(story: Post) -> None:
     url = "https://mastodon.social/api/v1/statuses/"
 
     try:
         token = os.environ["MASTODON_ACCESS_TOKEN"]
         headers = {
             "Authorization": f"Bearer {token}",
-            "Idempotency-Key": story["url"],
+            "Idempotency-Key": story.get("url", story["hash"]),
         }
 
         # Check for similar posts
         if search_similar_posts_mastodon(story, token):
-            print(f"Similar Mastodon post already exists for {story['url']}. Skipping.")
+            print(
+                f"Similar Mastodon post already exists for {story.get('url', story['title'])}. Skipping."
+            )
             return
 
-        status = story["url"]
-
-        if story["description"]:
-            status = story["description"] + " --> " + status
+        if story["post_type"] == "link":
+            status = story["url"]
+            if story["description"]:
+                status = story["description"] + " --> " + status
+        else:  # text post
+            status = story["description"] or story["title"]
 
         data = {"status": status}
         response = requests.post(url, headers=headers, data=data)
         if response.status_code == 200:
-            print(f"Successfully posted to Mastodon: {story['url']}")
+            print(
+                f"Successfully posted to Mastodon: {story.get('url', story['title'])}"
+            )
         else:
             print(f"Failed to post to Mastodon. Status code: {response.status_code}")
     except KeyError as e:
@@ -223,24 +424,29 @@ def post_to_mastodon(story: Story) -> None:
         print(f"An error occurred while posting to Mastodon: {str(e)}")
 
 
-def post_to_bluesky(story: Story) -> None:
+def post_to_bluesky(story: Post) -> None:
     try:
         client = Client()
         client.login(BLUESKY_HANDLE, os.environ["BLUESKY_APP_PASSWORD"])
 
         # Check for similar posts
         if search_similar_posts_bluesky(story, client):
-            print(f"Similar Bluesky post already exists for {story['url']}. Skipping.")
+            print(
+                f"Similar Bluesky post already exists for {story.get('url', story['title'])}. Skipping."
+            )
             return
 
         tb = client_utils.TextBuilder()
-        if story["description"]:
-            tb.text(story["description"] + " --> ")
 
-        tb.link(story["url"], story["url"])
+        if story["post_type"] == "link":
+            if story["description"]:
+                tb.text(story["description"] + " --> ")
+            tb.link(story["url"], story["url"])
+        else:  # text post
+            tb.text(story["description"] or story["title"])
 
         client.send_post(tb)
-        print(f"Successfully posted to Bluesky: {story['url']}")
+        print(f"Successfully posted to Bluesky: {story.get('url', story['title'])}")
     except KeyError as e:
         print("Warning: Missing BLUESKY_APP_PASSWORD, so not posting to Bluesky")
         print(e)
@@ -249,10 +455,10 @@ def post_to_bluesky(story: Story) -> None:
 
 
 def main() -> None:
-    links = get_links_from_github()
-    print(f"Found {len(links)} links.")
-    for link in links:
-        save_link(link)
+    posts = get_posts_from_github()
+    print(f"Found {len(posts)} posts.")
+    for post in posts:
+        save_post(post)
 
 
 if __name__ == "__main__":
