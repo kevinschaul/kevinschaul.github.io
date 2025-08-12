@@ -30,6 +30,9 @@ install:
 css:
 	npm run build:tailwind
 
+install-hugo:
+	go install github.com/gohugoio/hugo@v0.111.3
+
 # Help command
 help:
 	@echo "Available commands:"
