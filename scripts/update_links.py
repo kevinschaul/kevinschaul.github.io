@@ -344,7 +344,7 @@ def save_post(post: Post) -> None:
         with open(os.path.join(post_dir, "index.md"), "w", encoding="utf-8") as f:
             f.write(markdown_content)
 
-        # post_to_mastodon(post, post_dir)
+        post_to_mastodon(post, post_dir)
         post_to_bluesky(post, post_dir)
 
 
