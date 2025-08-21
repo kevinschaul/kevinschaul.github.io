@@ -349,45 +349,59 @@ def save_post(post: Post) -> None:
 
 
 def search_similar_posts_mastodon(post: Post, token: str) -> bool:
-    search_url = "https://mastodon.social/api/v2/search"
+    search_term = post["text"][:30]
     headers = {
         "Authorization": f"Bearer {token}",
     }
-    # Search for posts in the last 7 days
-    since_date = (datetime.utcnow() - timedelta(days=7)).isoformat()
-    search_term = post["text"][:30]
-    params = {
-        "q": search_term,
-        "type": "statuses",
-        "account_id": MASTODON_USER_ID,
-        "since_id": since_date,
-    }
+
     try:
-        response = requests.get(search_url, headers=headers, params=params, timeout=10)
+        statuses_url = (
+            f"https://mastodon.social/api/v1/accounts/{MASTODON_USER_ID}/statuses"
+        )
+        params = {
+            "limit": 20,
+            "exclude_replies": True,
+            "exclude_reblogs": True,
+        }
+
+        response = requests.get(
+            statuses_url, headers=headers, params=params, timeout=10
+        )
         response.raise_for_status()
-        results = response.json()
-        return len(results.get("statuses", [])) > 0
+        statuses = response.json()
+
+        for status in statuses:
+            import re
+
+            plain_text = re.sub("<[^<]+?>", "", status.get("content", "")).lower()
+
+            if search_term.lower() in plain_text:
+                return True
+
+        return False
+
     except requests.exceptions.RequestException as e:
         print(f"Error searching Mastodon for similar posts: {str(e)}")
         return True
 
 
 def search_similar_posts_bluesky(post: Post, client: Client) -> bool:
-    # Search for posts in the last 7 days
-    since_date = (datetime.utcnow() - timedelta(days=7)).strftime("%Y-%m-%dT%H:%I:%SZ")
     search_term = post["text"][:30]
-    params = {
-        "q": search_term,
-        "author": BLUESKY_HANDLE,
-        "type": "statuses",
-        "since": since_date,
-    }
+
     try:
-        results = client.app.bsky.feed.search_posts(params=params)
-        return len(results.posts) > 0
-    except requests.exceptions.RequestException as e:
+        response = client.app.bsky.feed.get_author_feed(
+            {"actor": BLUESKY_HANDLE, "limit": 20}
+        )
+
+        for feed_post in response.feed:
+            if search_term.lower() in feed_post.post.record.text.lower():
+                return True
+
+        return False
+
+    except Exception as e:
         print(f"Error searching Bluesky for similar posts: {str(e)}")
-        return True
+        return True  # Err on the side of caution
 
 
 def upload_media_to_mastodon(
@@ -455,9 +469,9 @@ def post_to_mastodon(post: Post, post_dir: Optional[str] = None) -> None:
                     if media_id:
                         media_ids.append(media_id)
 
-        data = {'status': status}
+        data = {"status": status}
         if media_ids:
-            data['media_ids[]'] = media_ids
+            data["media_ids[]"] = media_ids
 
         response = requests.post(url, headers=headers, data=data)
         response.raise_for_status()
