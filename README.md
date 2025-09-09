@@ -33,3 +33,12 @@ The post will be created and opened in your $EDITOR.
 ```
 hugo new 'post/2024-08-14-recently/index.md'
 ```
+
+### Create a new project
+
+```
+hugo new 'project/2025-08-29-holidays/index.md'
+```
+
+- `tease.png` size: 441x152
+
