@@ -13,6 +13,8 @@ import uuid
 from dotenv import load_dotenv
 from PIL import Image
 import io
+import tweepy
+import argparse
 
 load_dotenv()
 
@@ -35,6 +37,11 @@ class Post(TypedDict):
 # https://mastodon.social/api/v1/accounts/lookup?acct=kevinschaul
 MASTODON_USER_ID = "112973733509746771"
 BLUESKY_HANDLE = "kevinschaul.bsky.social"
+
+# Character limits for social networks
+MASTODON_CHAR_LIMIT = 500
+BLUESKY_CHAR_LIMIT = 300
+X_CHAR_LIMIT = 280
 
 
 def get_url_metadata(url: str) -> Dict[str, Optional[str]]:
@@ -245,14 +252,36 @@ def process_github_issues(issues) -> List[Post]:
     return posts
 
 
-def get_posts_from_github() -> List[Post]:
+def get_posts_from_github(issue_id: Optional[int] = None) -> List[Post]:
     """Fetch posts from GitHub issues"""
     g = Github(os.environ["GITHUB_TOKEN"])
     repo = g.get_repo(os.environ["GITHUB_REPOSITORY"])
     repo_owner = repo.owner.login
 
-    issues = repo.get_issues(state="open", creator=repo_owner)
-    return process_github_issues(issues)
+    if issue_id:
+        # Get specific issue by ID
+        try:
+            issue = repo.get_issue(issue_id)
+            if issue.user.login == repo_owner:
+                return process_github_issues([issue])
+            else:
+                print(f"Issue #{issue_id} was not created by repo owner {repo_owner}")
+                return []
+        except Exception as e:
+            print(f"Error fetching issue #{issue_id}: {e}")
+            return []
+    else:
+        # Get all open issues
+        issues = repo.get_issues(state="open", creator=repo_owner)
+        return process_github_issues(issues)
+
+
+def get_post_url(post: Post) -> str:
+    """Generate the URL for a post on kschaul.com"""
+    # Extract just the date part (YYYY-MM-DD) from the ISO timestamp
+    date_part = post["date"].split("T")[0]
+    slug = slugify(f"{date_part}_{post['text'][:30]}")
+    return f"https://www.kschaul.com/link/{slug}/"
 
 
 def slugify(name: str) -> str:
@@ -260,7 +289,7 @@ def slugify(name: str) -> str:
     Returns a valid filename by removing illegal characters
     https://github.com/django/django/blob/main/django/utils/text.py
     """
-    s = str(name).strip().replace(" ", "_")
+    s = str(name).strip().replace(" ", "_").lower()
     s = s.replace("https://", "")
     s = s.replace("http://", "")
     s = s.replace("/", "_")
@@ -268,6 +297,33 @@ def slugify(name: str) -> str:
     if s in {"", ".", ".."}:
         raise Exception("Could not derive file name from '%s'" % name)
     return s
+
+
+def truncate_text_for_platform(post: Post, char_limit: int) -> str:
+    """Truncate post text to fit platform character limit, adding link if needed"""
+    text = post["text"]
+    post_url = get_post_url(post)
+
+    # If text fits within limit, return as-is
+    if len(text) <= char_limit:
+        return text
+
+    # Calculate space needed for "... " + URL
+    link_suffix = f"... {post_url}"
+    available_chars = char_limit - len(link_suffix)
+
+    # Find a good break point (prefer word boundaries)
+    if available_chars > 0:
+        truncated = text[:available_chars]
+        # Try to break at word boundary
+        last_space = truncated.rfind(' ')
+        if last_space > available_chars * 0.7:  # Only use word boundary if it's not too short
+            truncated = truncated[:last_space]
+
+        return truncated + link_suffix
+
+    # If even the URL is too long, just return the URL
+    return post_url
 
 
 def get_post_directory_path(post: Post, content_dir: str = "./content") -> str:
@@ -326,26 +382,49 @@ def download_post_images(post: Post, dest_path: str) -> List[str]:
     return downloaded_images
 
 
-def save_post(post: Post) -> None:
+def save_post(post: Post, platforms: List[str] = None, test_mode: bool = False, force: bool = False, specific_issue: bool = False) -> None:
     print(f"Saving post: {json.dumps(post)}")
 
     post_dir = get_post_directory_path(post)
 
-    # Save the post if it does not already exist
-    if not os.path.isdir(post_dir):
-        os.makedirs(post_dir)
+    # Save the post if it does not already exist, if force is True, or if specific issue was requested
+    post_exists = os.path.isdir(post_dir)
+    should_post = not post_exists or force or specific_issue
 
-        # Download images if any
-        downloaded_images = download_post_images(post, post_dir)
+    if should_post:
+        if not post_exists:
+            os.makedirs(post_dir)
 
-        # Generate and write markdown content
-        markdown_content = generate_markdown_content(post, downloaded_images)
+            # Download images if any
+            downloaded_images = download_post_images(post, post_dir)
 
-        with open(os.path.join(post_dir, "index.md"), "w", encoding="utf-8") as f:
-            f.write(markdown_content)
+            # Generate and write markdown content
+            markdown_content = generate_markdown_content(post, downloaded_images)
 
-        post_to_mastodon(post, post_dir)
-        post_to_bluesky(post, post_dir)
+            with open(os.path.join(post_dir, "index.md"), "w", encoding="utf-8") as f:
+                f.write(markdown_content)
+        else:
+            if force:
+                print(f"Post directory already exists, but force=True so posting anyway...")
+            elif specific_issue:
+                print(f"Post directory already exists, but specific issue requested so posting anyway...")
+
+        # Post to selected platforms
+        platforms = platforms or ["mastodon", "x", "bluesky"]
+
+        if test_mode:
+            print(f"TEST MODE: Would post to platforms: {platforms}")
+            print(f"Post content: {post['text'][:100]}...")
+            return
+
+        if "mastodon" in platforms:
+            post_to_mastodon(post, post_dir)
+        if "x" in platforms:
+            post_to_x(post, post_dir)
+        if "bluesky" in platforms:
+            post_to_bluesky(post, post_dir)
+    else:
+        print(f"Post already exists at {post_dir}. Use --force to repost.")
 
 
 def search_similar_posts_mastodon(post: Post, token: str) -> bool:
@@ -385,6 +464,53 @@ def search_similar_posts_mastodon(post: Post, token: str) -> bool:
         return True
 
 
+def search_similar_posts_x_v2(post: Post, client: tweepy.Client, user_id: str) -> bool:
+    """Check if a similar post already exists on X/Twitter using v2 API"""
+    search_term = post["text"][:30]
+
+    try:
+        # Get recent tweets from the user
+        tweets = client.get_users_tweets(
+            id=user_id,
+            max_results=20,
+            exclude=['retweets', 'replies']
+        )
+
+        if tweets.data:
+            for tweet in tweets.data:
+                if search_term.lower() in tweet.text.lower():
+                    return True
+
+        return False
+
+    except Exception as e:
+        print(f"Error searching X for similar posts: {str(e)}")
+        # If it's an auth error, don't skip posting - let the main post function handle auth
+        if "401" in str(e) or "Unauthorized" in str(e):
+            print("Authentication issue in search - proceeding with post attempt")
+            return False
+        return True  # Err on the side of caution for other errors
+
+
+def search_similar_posts_x(post: Post, api: tweepy.API) -> bool:
+    """Check if a similar post already exists on X/Twitter"""
+    search_term = post["text"][:30]
+
+    try:
+        # Search for recent tweets from the authenticated user
+        tweets = api.user_timeline(count=20, exclude_replies=True, include_rts=False)
+
+        for tweet in tweets:
+            if search_term.lower() in tweet.text.lower():
+                return True
+
+        return False
+
+    except Exception as e:
+        print(f"Error searching X for similar posts: {str(e)}")
+        return True  # Err on the side of caution
+
+
 def search_similar_posts_bluesky(post: Post, client: Client) -> bool:
     search_term = post["text"][:30]
 
@@ -402,6 +528,27 @@ def search_similar_posts_bluesky(post: Post, client: Client) -> bool:
     except Exception as e:
         print(f"Error searching Bluesky for similar posts: {str(e)}")
         return True  # Err on the side of caution
+
+
+def upload_media_to_x(
+    image_path: str, api: tweepy.API, alt_text: Optional[str] = None
+) -> Optional[str]:
+    """Upload an image to X/Twitter using OAuth 1.0a and return the media ID"""
+    try:
+        # Upload media using the v1.1 API
+        media = api.media_upload(image_path)
+
+        # Add alt text if provided
+        if alt_text:
+            api.create_media_metadata(
+                media_id=media.media_id,
+                alt_text=alt_text
+            )
+
+        return str(media.media_id)
+    except Exception as e:
+        print(f"Error uploading image {image_path} to X: {e}")
+        return None
 
 
 def upload_media_to_mastodon(
@@ -447,7 +594,7 @@ def post_to_mastodon(post: Post, post_dir: Optional[str] = None) -> None:
             )
             return
 
-        status = post["text"]
+        status = truncate_text_for_platform(post, MASTODON_CHAR_LIMIT)
         media_ids = []
 
         # Upload images if they exist and we have a post directory
@@ -485,6 +632,67 @@ def post_to_mastodon(post: Post, post_dir: Optional[str] = None) -> None:
         print(f"An error occurred while posting to Mastodon: {str(e)}")
 
 
+def post_to_x(post: Post, post_dir: Optional[str] = None) -> None:
+    """Post to X/Twitter"""
+    try:
+        # Set up X API client with OAuth 1.0a User Context
+        client = tweepy.Client(
+            consumer_key=os.environ["X_CONSUMER_KEY"],
+            consumer_secret=os.environ["X_CONSUMER_SECRET"],
+            access_token=os.environ["X_ACCESS_TOKEN"],
+            access_token_secret=os.environ["X_ACCESS_TOKEN_SECRET"],
+            wait_on_rate_limit=True
+        )
+
+        # Set up v1.1 API for media uploads
+        auth = tweepy.OAuthHandler(
+            os.environ["X_CONSUMER_KEY"],
+            os.environ["X_CONSUMER_SECRET"]
+        )
+        auth.set_access_token(
+            os.environ["X_ACCESS_TOKEN"],
+            os.environ["X_ACCESS_TOKEN_SECRET"]
+        )
+        api = tweepy.API(auth, wait_on_rate_limit=True)
+
+        # Skip duplicate checking for X (requires paid API access)
+
+        status = truncate_text_for_platform(post, X_CHAR_LIMIT)
+        media_ids = []
+
+        # Upload images if they exist and we have a post directory
+        if post.get("images") and post_dir and os.path.isdir(post_dir):
+            # Get all downloaded image files
+            image_files = [
+                f
+                for f in os.listdir(post_dir)
+                if f.endswith((".jpg", ".jpeg", ".png", ".gif", ".webp"))
+            ]
+
+            # Upload each image (match by order since we download in order)
+            for i, image_info in enumerate(post["images"]):
+                if i < len(image_files) and len(media_ids) < 4:  # X allows max 4 images
+                    image_path = os.path.join(post_dir, image_files[i])
+                    media_id = upload_media_to_x(image_path, api, image_info.get("alt"))
+                    if media_id:
+                        media_ids.append(media_id)
+
+        # Post the tweet using v2 API
+        if media_ids:
+            client.create_tweet(text=status, media_ids=media_ids)
+        else:
+            client.create_tweet(text=status)
+
+        print(f"Successfully posted to X: {post['text']}")
+        if media_ids:
+            print(f"  with {len(media_ids)} images")
+    except KeyError as e:
+        print("Warning: Missing X API credentials, so not posting to X")
+        print(e)
+    except Exception as e:
+        print(f"An error occurred while posting to X: {str(e)}")
+
+
 def post_to_bluesky(post: Post, post_dir: Optional[str] = None) -> None:
     try:
         client = Client()
@@ -497,7 +705,7 @@ def post_to_bluesky(post: Post, post_dir: Optional[str] = None) -> None:
 
         # Build text with clickable links
         tb = client_utils.TextBuilder()
-        text = post["text"]
+        text = truncate_text_for_platform(post, BLUESKY_CHAR_LIMIT)
         url_pattern = r"https?://[^\s]+"
 
         # Split text by URLs and rebuild with proper links
@@ -570,11 +778,73 @@ def post_to_bluesky(post: Post, post_dir: Optional[str] = None) -> None:
         print(f"An error occurred while posting to Bluesky: {str(e)}")
 
 
+def parse_args():
+    """Parse command line arguments"""
+    parser = argparse.ArgumentParser(
+        description="Post GitHub issues to social media platforms",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Post all open issues to all platforms
+  python scripts/update_links.py
+
+  # Test mode - don't actually post anything
+  python scripts/update_links.py --test
+
+  # Post only to X
+  python scripts/update_links.py --platforms x
+
+  # Post specific issue to X and Mastodon
+  python scripts/update_links.py --issue 123 --platforms x mastodon
+
+  # Test posting specific issue to X only
+  python scripts/update_links.py --issue 123 --platforms x --test
+        """
+    )
+
+    parser.add_argument(
+        "--platforms",
+        nargs="+",
+        choices=["mastodon", "x", "bluesky"],
+        default=["mastodon", "x", "bluesky"],
+        help="Platforms to post to (default: all platforms)"
+    )
+
+    parser.add_argument(
+        "--test",
+        action="store_true",
+        help="Test mode - show what would be posted without actually posting"
+    )
+
+    parser.add_argument(
+        "--issue",
+        type=int,
+        help="Post specific GitHub issue by ID"
+    )
+
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Force reposting even if post already exists"
+    )
+
+    return parser.parse_args()
+
+
 def main() -> None:
-    posts = get_posts_from_github()
+    args = parse_args()
+
+    posts = get_posts_from_github(issue_id=args.issue)
     print(f"Found {len(posts)} posts.")
+
     for post in posts:
-        save_post(post)
+        save_post(
+            post,
+            platforms=args.platforms,
+            test_mode=args.test,
+            force=args.force,
+            specific_issue=args.issue is not None
+        )
 
 
 if __name__ == "__main__":
