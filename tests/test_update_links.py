@@ -14,12 +14,14 @@ from scripts.update_links import (
     process_github_issues,
     remove_images_from_text,
     process_issue_text,
+    extract_links_from_text,
+    split_text_into_posts,
 )
 
 
 def test_slugify():
     """Test the slugify function handles various inputs correctly"""
-    assert slugify("Hello World") == "Hello_World"
+    assert slugify("Hello World") == "hello_world"
     assert slugify("https://example.com/path") == "example.com_path"
     assert slugify("test!@#$%^&*()") == "test"
     assert slugify("   spaces   ") == "spaces"
@@ -427,3 +429,207 @@ def test_process_github_issues():
     assert posts[1]["date"] == "2025-08-12T12:00:00Z"
     assert posts[1]["text"] == "Third issue"
     assert posts[1]["hash"] == "87"
+
+
+def test_extract_links_from_text():
+    """Test that extract_links_from_text preserves formatting while extracting links"""
+
+    # Test basic link extraction
+    text1 = "Check out this cool article: https://example.com/article and let me know what you think!"
+    text_without_links1, links1 = extract_links_from_text(text1)
+    assert text_without_links1 == "Check out this cool article: and let me know what you think!"
+    assert links1 == ["https://example.com/article"]
+
+    # Test formatting preservation with bullet points and line breaks
+    text2 = """Key features:
+
+- Fast performance: https://example.com/speed
+- Easy to use
+- Great documentation: https://docs.example.com
+
+Overall very good!"""
+
+    text_without_links2, links2 = extract_links_from_text(text2)
+    expected_text2 = """Key features:
+
+- Fast performance:
+- Easy to use
+- Great documentation:
+
+Overall very good!"""
+    assert text_without_links2 == expected_text2
+    assert links2 == ["https://example.com/speed", "https://docs.example.com"]
+
+    # Test punctuation removal from links
+    text3 = "Check out https://example.com/path?param=value, it's great!"
+    text_without_links3, links3 = extract_links_from_text(text3)
+    assert text_without_links3 == "Check out it's great!"
+    assert links3 == ["https://example.com/path?param=value"]  # Comma removed
+
+    # Test multiple links on same line
+    text4 = "Sites: https://one.com https://two.com and https://three.com are good"
+    text_without_links4, links4 = extract_links_from_text(text4)
+    assert text_without_links4 == "Sites: and are good"
+    assert links4 == ["https://one.com", "https://two.com", "https://three.com"]
+
+    # Test the real-world example that was broken
+    text5 = """Lovely analysis of how Claude Code works. Highlights include:
+
+- Runs on one loop. If task is complex, clones itself, with one loop.
+- Uses its small model (Haiku) majority of the time
+- System prompt includes a lot of "IMPORTANT" and "VERY IMPORTANT" instructions, which, lol
+
+https://minusx.ai/blog/decoding-claude-code/"""
+
+    text_without_links5, links5 = extract_links_from_text(text5)
+    expected_text5 = """Lovely analysis of how Claude Code works. Highlights include:
+
+- Runs on one loop. If task is complex, clones itself, with one loop.
+- Uses its small model (Haiku) majority of the time
+- System prompt includes a lot of "IMPORTANT" and "VERY IMPORTANT" instructions, which, lol"""
+
+    assert text_without_links5 == expected_text5
+    assert links5 == ["https://minusx.ai/blog/decoding-claude-code/"]
+
+    # Test no links
+    text6 = "This is just a normal post with no links at all."
+    text_without_links6, links6 = extract_links_from_text(text6)
+    assert text_without_links6 == "This is just a normal post with no links at all."
+    assert links6 == []
+
+    # Test various punctuation scenarios
+    punctuation_tests = [
+        ("Link: https://example.com.", ["https://example.com"]),
+        ("Link: https://example.com!", ["https://example.com"]),
+        ("Link: https://example.com?", ["https://example.com"]),
+        ("Link: https://example.com;", ["https://example.com"]),
+        ("Link: https://example.com:", ["https://example.com"]),
+        ("Link: https://example.com,", ["https://example.com"]),
+        ("Link: https://example.com...", ["https://example.com"]),
+    ]
+
+    for text, expected_links in punctuation_tests:
+        _, extracted_links = extract_links_from_text(text)
+        assert extracted_links == expected_links
+
+
+def test_split_text_into_posts():
+    """Test that split_text_into_posts creates proper thread posts"""
+
+    # Test short text (should not be split)
+    short_text = "This is a short text that should not be split."
+    result = split_text_into_posts(short_text, 280)
+    assert result == [short_text]
+
+    # Test long text that needs splitting
+    long_text = """This is a very long text that should be split into multiple posts. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+
+This should definitely create multiple posts when posted to X with its 280 character limit."""
+
+    result = split_text_into_posts(long_text, 280)
+
+    # Should be split into multiple posts
+    assert len(result) > 1
+
+    # Each post should have thread indicators
+    for i, post in enumerate(result):
+        assert post.startswith(f"({i+1}/{len(result)})")
+        assert len(post) <= 280  # Respect character limit
+
+    # Test with different character limits
+    # Mastodon (500 chars)
+    mastodon_result = split_text_into_posts(long_text, 500)
+    assert len(mastodon_result) < len(result)  # Should need fewer posts
+
+    # Bluesky (300 chars)
+    bluesky_result = split_text_into_posts(long_text, 300)
+    assert len(bluesky_result) >= len(result)  # Might need same or more posts
+
+    # Test paragraph splitting behavior
+    paragraph_text = """First paragraph is here.
+
+Second paragraph is longer and contains more content that might need to be split depending on the character limits.
+
+Third paragraph is short."""
+
+    paragraph_result = split_text_into_posts(paragraph_text, 150)
+    assert len(paragraph_result) > 1
+    for post in paragraph_result:
+        assert len(post) <= 150
+
+    # Test edge case: very long single word (should force split)
+    long_word = "a" * 300
+    word_result = split_text_into_posts(long_word, 280)
+    assert len(word_result) > 1
+    for post in word_result:
+        assert len(post) <= 280
+
+
+def test_x_twitter_formatting_preservation():
+    """Test that X/Twitter posting preserves formatting correctly"""
+
+    # Use the real-world example that was previously broken
+    original_text = """Lovely analysis of how Claude Code works. Highlights include:
+
+- Runs on one loop. If task is complex, clones itself, with one loop.
+- Uses its small model (Haiku) majority of the time
+- System prompt includes a lot of "IMPORTANT" and "VERY IMPORTANT" instructions, which, lol
+
+https://minusx.ai/blog/decoding-claude-code/"""
+
+    # Extract links (as X posting would do)
+    text_without_links, links = extract_links_from_text(original_text)
+
+    # Split into posts (as X posting would do)
+    x_posts = split_text_into_posts(text_without_links, 280)
+
+    # Verify formatting is preserved
+    assert len(x_posts) == 1  # Should fit in one post without the link
+    main_post = x_posts[0]
+
+    # Should preserve line breaks and bullet points
+    assert "\n" in main_post
+    assert "- Runs on one loop" in main_post
+    assert "- Uses its small model" in main_post
+    assert "- System prompt includes" in main_post
+
+    # Should not contain the link
+    assert "https://" not in main_post
+
+    # Link should be extracted separately
+    assert len(links) == 1
+    assert links[0] == "https://minusx.ai/blog/decoding-claude-code/"
+
+    # Test another formatting example
+    formatted_text = """Analysis of tools:
+
+1. Architecture
+   - Single loop design
+   - Self-cloning: https://example.com/architecture
+
+2. Performance
+   - Uses small model: https://anthropic.com/haiku
+   - Fast execution
+
+Check it out: https://claude.ai"""
+
+    text_clean, extracted_links = extract_links_from_text(formatted_text)
+    posts = split_text_into_posts(text_clean, 280)
+
+    # Should preserve numbered lists and indentation
+    full_text = " ".join(posts) if len(posts) > 1 else posts[0]
+    assert "1. Architecture" in full_text
+    assert "2. Performance" in full_text
+    assert "- Single loop design" in full_text
+    assert "- Uses small model" in full_text
+
+    # Should extract all links
+    assert len(extracted_links) == 3
+    expected_links = [
+        "https://example.com/architecture",
+        "https://anthropic.com/haiku",
+        "https://claude.ai"
+    ]
+    assert extracted_links == expected_links

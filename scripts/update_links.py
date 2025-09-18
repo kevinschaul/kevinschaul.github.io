@@ -326,6 +326,112 @@ def truncate_text_for_platform(post: Post, char_limit: int) -> str:
     return post_url
 
 
+def extract_links_from_text(text: str) -> tuple[str, List[str]]:
+    """Extract URLs from text and return (text_without_links, list_of_links)"""
+    # URL pattern that excludes trailing punctuation
+    url_pattern = r'https?://[^\s]+'
+    raw_links = re.findall(url_pattern, text)
+
+    # Clean up links by removing trailing punctuation
+    links = []
+    for link in raw_links:
+        # Remove common trailing punctuation
+        cleaned_link = re.sub(r'[.,;:!?]+$', '', link)
+        links.append(cleaned_link)
+
+    text_without_links = re.sub(url_pattern, '', text)
+
+    # Clean up extra whitespace left by removed links, but preserve line breaks
+    # Replace multiple spaces with single space, but keep newlines
+    text_without_links = re.sub(r'[ \t]+', ' ', text_without_links)  # Collapse spaces/tabs only
+    text_without_links = re.sub(r' *\n *', '\n', text_without_links)  # Clean up spaces around newlines
+    text_without_links = re.sub(r'\n{3,}', '\n\n', text_without_links)  # Limit to max double newlines
+    text_without_links = text_without_links.strip()
+
+    return text_without_links, links
+
+
+def split_text_into_posts(text: str, char_limit: int) -> List[str]:
+    """Split long text into multiple posts for threading"""
+    if len(text) <= char_limit:
+        return [text]
+
+    # Reserve space for thread indicators like "(2/4) "
+    thread_indicator_space = 7  # Space for "(XX/XX) "
+    effective_limit = char_limit - thread_indicator_space
+
+    # First, try to split by paragraphs (double newlines)
+    paragraphs = text.split('\n\n')
+    posts = []
+    current_post = ""
+
+    for paragraph in paragraphs:
+        # If adding this paragraph would exceed the limit
+        if current_post and len(current_post + '\n\n' + paragraph) > effective_limit:
+            # Save current post and start a new one
+            posts.append(current_post.strip())
+            current_post = paragraph
+        elif not current_post:
+            current_post = paragraph
+        else:
+            current_post += '\n\n' + paragraph
+
+        # If a single paragraph is too long, split it by sentences
+        if len(current_post) > effective_limit:
+            # Remove the oversized paragraph from current_post
+            if posts or len(current_post.split('\n\n')) > 1:
+                parts = current_post.split('\n\n')
+                if len(parts) > 1:
+                    current_post = '\n\n'.join(parts[:-1])
+                    posts.append(current_post.strip())
+                    oversized_paragraph = parts[-1]
+                else:
+                    oversized_paragraph = current_post
+                    current_post = ""
+            else:
+                oversized_paragraph = current_post
+                current_post = ""
+
+            # Split oversized paragraph by sentences
+            sentences = re.split(r'(?<=[.!?])\s+', oversized_paragraph)
+            temp_post = ""
+
+            for sentence in sentences:
+                if temp_post and len(temp_post + ' ' + sentence) > effective_limit:
+                    posts.append(temp_post.strip())
+                    temp_post = sentence
+                elif not temp_post:
+                    temp_post = sentence
+                else:
+                    temp_post += ' ' + sentence
+
+                # If even a single sentence is too long, split it by words
+                if len(temp_post) > effective_limit:
+                    words = temp_post.split()
+                    if len(words) > 1:
+                        # Save all but the last word
+                        posts.append(' '.join(words[:-1]))
+                        temp_post = words[-1]
+                    else:
+                        # Single word is too long, force split
+                        posts.append(temp_post[:effective_limit])
+                        temp_post = temp_post[effective_limit:]
+
+            current_post = temp_post
+
+    # Add any remaining content
+    if current_post.strip():
+        posts.append(current_post.strip())
+
+    # Add thread indicators
+    if len(posts) > 1:
+        total_posts = len(posts)
+        for i in range(len(posts)):
+            posts[i] = f"({i+1}/{total_posts}) {posts[i]}"
+
+    return posts
+
+
 def get_post_directory_path(post: Post, content_dir: str = "./content") -> str:
     """Generate the directory path for a post based on its content"""
     # Extract just the date part (YYYY-MM-DD) from the ISO timestamp
@@ -414,7 +520,45 @@ def save_post(post: Post, platforms: List[str] = None, test_mode: bool = False, 
 
         if test_mode:
             print(f"TEST MODE: Would post to platforms: {platforms}")
-            print(f"Post content: {post['text'][:100]}...")
+            print(f"Original post: {post['text']}")
+            print(f"Original length: {len(post['text'])} characters")
+            print()
+
+            for platform in platforms:
+                if platform == "mastodon":
+                    print("=== MASTODON POSTS ===")
+                    mastodon_posts = split_text_into_posts(post["text"], MASTODON_CHAR_LIMIT)
+                    for i, post_text in enumerate(mastodon_posts):
+                        print(f"Post {i+1}: ({len(post_text)} chars) {post_text}")
+                    print()
+
+                elif platform == "x":
+                    print("=== X/TWITTER POSTS ===")
+                    text_without_links, links = extract_links_from_text(post["text"])
+                    x_posts = split_text_into_posts(text_without_links, X_CHAR_LIMIT)
+
+                    print("Main thread:")
+                    for i, post_text in enumerate(x_posts):
+                        print(f"  Post {i+1}: ({len(post_text)} chars) {post_text}")
+
+                    if links:
+                        print("Link replies:")
+                        for i, link in enumerate(links):
+                            print(f"  Link {i+1}: {link}")
+
+                    print(f"Total posts: {len(x_posts) + len(links)}")
+                    print()
+
+                elif platform == "bluesky":
+                    print("=== BLUESKY POSTS ===")
+                    bluesky_posts = split_text_into_posts(post["text"], BLUESKY_CHAR_LIMIT)
+                    for i, post_text in enumerate(bluesky_posts):
+                        print(f"Post {i+1}: ({len(post_text)} chars) {post_text}")
+                    print()
+
+            if post.get("images"):
+                print(f"Images: {len(post['images'])} image(s) would be attached to the first post of each platform")
+
             return
 
         if "mastodon" in platforms:
@@ -594,10 +738,12 @@ def post_to_mastodon(post: Post, post_dir: Optional[str] = None) -> None:
             )
             return
 
-        status = truncate_text_for_platform(post, MASTODON_CHAR_LIMIT)
+        # Split text into multiple posts if needed
+        posts_text = split_text_into_posts(post["text"], MASTODON_CHAR_LIMIT)
         media_ids = []
 
         # Upload images if they exist and we have a post directory
+        # Images will only be attached to the first post
         if post.get("images") and post_dir and os.path.isdir(post_dir):
             # Get all downloaded image files
             image_files = [
@@ -616,13 +762,29 @@ def post_to_mastodon(post: Post, post_dir: Optional[str] = None) -> None:
                     if media_id:
                         media_ids.append(media_id)
 
-        data = {"status": status}
-        if media_ids:
-            data["media_ids[]"] = media_ids
+        # Post the thread
+        in_reply_to_id = None
+        for i, status_text in enumerate(posts_text):
+            data = {"status": status_text}
 
-        response = requests.post(url, headers=headers, data=data)
-        response.raise_for_status()
+            # Add images only to the first post
+            if i == 0 and media_ids:
+                data["media_ids[]"] = media_ids
+
+            # Add reply-to for subsequent posts
+            if in_reply_to_id:
+                data["in_reply_to_id"] = in_reply_to_id
+
+            response = requests.post(url, headers=headers, data=data)
+            response.raise_for_status()
+
+            # Get the ID of the posted status for threading
+            status_data = response.json()
+            in_reply_to_id = status_data["id"]
+
         print(f"Successfully posted to Mastodon: {post['text']}")
+        if len(posts_text) > 1:
+            print(f"  as {len(posts_text)} posts in a thread")
         if media_ids:
             print(f"  with {len(media_ids)} images")
     except KeyError as e:
@@ -657,10 +819,15 @@ def post_to_x(post: Post, post_dir: Optional[str] = None) -> None:
 
         # Skip duplicate checking for X (requires paid API access)
 
-        status = truncate_text_for_platform(post, X_CHAR_LIMIT)
+        # Extract links for X - links will be posted as replies
+        text_without_links, links = extract_links_from_text(post["text"])
+
+        # Split text (without links) into multiple posts if needed
+        posts_text = split_text_into_posts(text_without_links, X_CHAR_LIMIT)
         media_ids = []
 
         # Upload images if they exist and we have a post directory
+        # Images will only be attached to the first post
         if post.get("images") and post_dir and os.path.isdir(post_dir):
             # Get all downloaded image files
             image_files = [
@@ -677,13 +844,39 @@ def post_to_x(post: Post, post_dir: Optional[str] = None) -> None:
                     if media_id:
                         media_ids.append(media_id)
 
-        # Post the tweet using v2 API
-        if media_ids:
-            client.create_tweet(text=status, media_ids=media_ids)
-        else:
-            client.create_tweet(text=status)
+        # Post the thread (text without links)
+        in_reply_to_tweet_id = None
+        for i, status_text in enumerate(posts_text):
+            # Post the tweet using v2 API
+            if i == 0 and media_ids:
+                # First tweet with images
+                response = client.create_tweet(text=status_text, media_ids=media_ids)
+            elif in_reply_to_tweet_id:
+                # Reply tweet
+                response = client.create_tweet(text=status_text, in_reply_to_tweet_id=in_reply_to_tweet_id)
+            else:
+                # First tweet without images
+                response = client.create_tweet(text=status_text)
+
+            # Get the ID of the posted tweet for threading
+            in_reply_to_tweet_id = response.data["id"]
+
+        # Post links as replies if any exist
+        if links:
+            for link in links:
+                response = client.create_tweet(text=link, in_reply_to_tweet_id=in_reply_to_tweet_id)
+                # Update the reply ID for potential future links
+                in_reply_to_tweet_id = response.data["id"]
 
         print(f"Successfully posted to X: {post['text']}")
+        total_posts = len(posts_text) + len(links)
+        if total_posts > 1:
+            if len(posts_text) > 1 and links:
+                print(f"  as {len(posts_text)} text posts + {len(links)} link replies in a thread")
+            elif len(posts_text) > 1:
+                print(f"  as {len(posts_text)} posts in a thread")
+            elif links:
+                print(f"  with {len(links)} links posted as replies")
         if media_ids:
             print(f"  with {len(media_ids)} images")
     except KeyError as e:
@@ -703,28 +896,11 @@ def post_to_bluesky(post: Post, post_dir: Optional[str] = None) -> None:
             print(f"Similar Bluesky post already exists for {post['text']}. Skipping.")
             return
 
-        # Build text with clickable links
-        tb = client_utils.TextBuilder()
-        text = truncate_text_for_platform(post, BLUESKY_CHAR_LIMIT)
-        url_pattern = r"https?://[^\s]+"
-
-        # Split text by URLs and rebuild with proper links
-        last_end = 0
-        for match in re.finditer(url_pattern, text):
-            # Add text before the URL
-            if match.start() > last_end:
-                tb.text(text[last_end : match.start()])
-
-            # Add the URL as a link
-            url = match.group()
-            tb.link(url, url)
-            last_end = match.end()
-
-        # Add any remaining text after the last URL
-        if last_end < len(text):
-            tb.text(text[last_end:])
+        # Split text into multiple posts if needed
+        posts_text = split_text_into_posts(post["text"], BLUESKY_CHAR_LIMIT)
 
         # Upload images if they exist and we have a post directory
+        # Images will only be attached to the first post
         images_to_embed = []
         if post.get("images") and post_dir and os.path.isdir(post_dir):
             # Get all downloaded image files
@@ -760,15 +936,51 @@ def post_to_bluesky(post: Post, post_dir: Optional[str] = None) -> None:
                     except Exception as e:
                         print(f"Error uploading image {image_path} to Bluesky: {e}")
 
-        # Send the post with embedded images
-        if images_to_embed:
-            client.send_post(
-                tb, embed={"$type": "app.bsky.embed.images", "images": images_to_embed}
-            )
-        else:
-            client.send_post(tb)
+        # Post the thread
+        reply_to = None
+        for i, text in enumerate(posts_text):
+            # Build text with clickable links
+            tb = client_utils.TextBuilder()
+            url_pattern = r"https?://[^\s]+"
+
+            # Split text by URLs and rebuild with proper links
+            last_end = 0
+            for match in re.finditer(url_pattern, text):
+                # Add text before the URL
+                if match.start() > last_end:
+                    tb.text(text[last_end : match.start()])
+
+                # Add the URL as a link
+                url = match.group()
+                tb.link(url, url)
+                last_end = match.end()
+
+            # Add any remaining text after the last URL
+            if last_end < len(text):
+                tb.text(text[last_end:])
+
+            # Send the post
+            if i == 0 and images_to_embed:
+                # First post with images
+                response = client.send_post(
+                    tb, embed={"$type": "app.bsky.embed.images", "images": images_to_embed}
+                )
+            elif reply_to:
+                # Reply post
+                response = client.send_post(tb, reply_to=reply_to)
+            else:
+                # First post without images
+                response = client.send_post(tb)
+
+            # Set up reply reference for next post
+            reply_to = {
+                "root": reply_to["root"] if reply_to else {"uri": response.uri, "cid": response.cid},
+                "parent": {"uri": response.uri, "cid": response.cid},
+            }
 
         print(f"Successfully posted to Bluesky: {post['text']}")
+        if len(posts_text) > 1:
+            print(f"  as {len(posts_text)} posts in a thread")
         if images_to_embed:
             print(f"  with {len(images_to_embed)} images")
     except KeyError as e:
