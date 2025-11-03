@@ -121,7 +121,7 @@ def test_remove_images_from_text():
 
     # Test with empty/None input
     assert remove_images_from_text("") == ""
-    assert remove_images_from_text(None) == None
+    assert remove_images_from_text(None) is None
 
 
 def test_process_issue_text():
@@ -134,17 +134,29 @@ def test_process_issue_text():
 
     # Should extract both images with alt text
     assert len(images) == 2
-    
+
     # Check first image
-    image1 = next((img for img in images if "5b6a3d2d-4408-4f25-b3af-93fddee7deb1" in img["src"]), None)
+    image1 = next(
+        (img for img in images if "5b6a3d2d-4408-4f25-b3af-93fddee7deb1" in img["src"]),
+        None,
+    )
     assert image1 is not None
-    assert image1["src"] == "https://github.com/user-attachments/assets/5b6a3d2d-4408-4f25-b3af-93fddee7deb1"
+    assert (
+        image1["src"]
+        == "https://github.com/user-attachments/assets/5b6a3d2d-4408-4f25-b3af-93fddee7deb1"
+    )
     assert image1["alt"] == "Image"
-    
+
     # Check second image
-    image2 = next((img for img in images if "9264ebdb-8818-4b56-a51d-a9af0298b237" in img["src"]), None)
+    image2 = next(
+        (img for img in images if "9264ebdb-8818-4b56-a51d-a9af0298b237" in img["src"]),
+        None,
+    )
     assert image2 is not None
-    assert image2["src"] == "https://github.com/user-attachments/assets/9264ebdb-8818-4b56-a51d-a9af0298b237"
+    assert (
+        image2["src"]
+        == "https://github.com/user-attachments/assets/9264ebdb-8818-4b56-a51d-a9af0298b237"
+    )
     assert image2["alt"] == "Image"
 
     # Should clean the text
@@ -163,19 +175,19 @@ def test_process_issue_text():
     cleaned, extracted = process_issue_text(mixed_text)
 
     assert len(extracted) == 3
-    
+
     # Check HTML image with alt text
     html_img = next((img for img in extracted if "image1.jpg" in img["src"]), None)
     assert html_img is not None
     assert html_img["src"] == "https://example.com/image1.jpg"
     assert html_img["alt"] == "Test Image"
-    
+
     # Check markdown image with alt text
     md_img = next((img for img in extracted if "image2.png" in img["src"]), None)
     assert md_img is not None
     assert md_img["src"] == "https://example.com/image2.png"
     assert md_img["alt"] == "alt text here"
-    
+
     # Check standalone URL (no alt text)
     standalone_img = next((img for img in extracted if "test123" in img["src"]), None)
     assert standalone_img is not None
@@ -195,7 +207,7 @@ def test_process_issue_text():
 
     # Test with None input
     cleaned_none, images_none = process_issue_text(None)
-    assert cleaned_none == None
+    assert cleaned_none is None
     assert images_none == []
 
 
@@ -247,13 +259,19 @@ I've been asking LLMs "Who is Kevin Schaul?" and the results do not disappoint."
         "images": [
             {"src": "https://example.com/image1.jpg", "alt": "A test image"},
             {"src": "https://example.com/image2.png", "alt": None},
-            {"src": "https://example.com/image3.gif", "alt": "Another image"}
+            {"src": "https://example.com/image3.gif", "alt": "Another image"},
         ],
         "hash": "85",
     }
-    test_downloaded_images = ["local_image1.jpg", "local_image2.png", "local_image3.gif"]
-    
-    markdown_with_images = generate_markdown_content(test_post_with_images, test_downloaded_images)
+    test_downloaded_images = [
+        "local_image1.jpg",
+        "local_image2.png",
+        "local_image3.gif",
+    ]
+
+    markdown_with_images = generate_markdown_content(
+        test_post_with_images, test_downloaded_images
+    )
     expected_with_images = """---
 date: 2025-08-11T21:10:27Z
 images:
@@ -302,7 +320,7 @@ def test_download_post_images():
         "text": "Test post with images",
         "images": [
             {"src": "https://example.com/image1.jpg", "alt": "Test image 1"},
-            {"src": "https://example.com/image2.png", "alt": None}
+            {"src": "https://example.com/image2.png", "alt": None},
         ],
         "hash": "85",
     }
@@ -369,16 +387,22 @@ def test_convert_issue_to_post():
     )
     assert post["hash"] == str(issue_data["number"])
     assert len(post["images"]) == 2  # From our fixture
-    
+
     # Check that images have alt text from the fixture
     image_srcs = [img["src"] for img in post["images"]]
-    assert "https://github.com/user-attachments/assets/5b6a3d2d-4408-4f25-b3af-93fddee7deb1" in image_srcs
-    assert "https://github.com/user-attachments/assets/9264ebdb-8818-4b56-a51d-a9af0298b237" in image_srcs
-    
+    assert (
+        "https://github.com/user-attachments/assets/5b6a3d2d-4408-4f25-b3af-93fddee7deb1"
+        in image_srcs
+    )
+    assert (
+        "https://github.com/user-attachments/assets/9264ebdb-8818-4b56-a51d-a9af0298b237"
+        in image_srcs
+    )
+
     # Check alt text is extracted
     for img in post["images"]:
         assert img["alt"] == "Image"  # From fixture
-    
+
     # Verify images are not in the cleaned text
     assert "<img" not in post["text"]
 
@@ -411,24 +435,29 @@ def test_process_github_issues():
     mock_issue3.labels = []  # No labels, should be processed
 
     issues = [mock_issue1, mock_issue2, mock_issue3]
-    posts = process_github_issues(issues)
+    # process_github_issues now returns list of (issue, post) tuples
+    results = process_github_issues(issues, for_social=False)
 
     # Should only process 2 issues (skip the one with do-not-post label)
-    assert len(posts) == 2
+    assert len(results) == 2
 
     # Verify first post - text should now be cleaned of images
-    assert posts[0]["date"] == issue_data["createdAt"]
+    issue1, post1 = results[0]
+    assert issue1 == mock_issue1
+    assert post1["date"] == issue_data["createdAt"]
     assert (
-        posts[0]["text"]
+        post1["text"]
         == 'I\'ve been asking LLMs "Who is Kevin Schaul?" and the results do not disappoint.'
     )
-    assert posts[0]["hash"] == str(issue_data["number"])
-    assert "<img" not in posts[0]["text"]  # Images should be removed
+    assert post1["hash"] == str(issue_data["number"])
+    assert "<img" not in post1["text"]  # Images should be removed
 
     # Verify second post (third issue)
-    assert posts[1]["date"] == "2025-08-12T12:00:00Z"
-    assert posts[1]["text"] == "Third issue"
-    assert posts[1]["hash"] == "87"
+    issue3, post3 = results[1]
+    assert issue3 == mock_issue3
+    assert post3["date"] == "2025-08-12T12:00:00Z"
+    assert post3["text"] == "Third issue"
+    assert post3["hash"] == "87"
 
 
 def test_extract_links_from_text():
@@ -437,7 +466,10 @@ def test_extract_links_from_text():
     # Test basic link extraction
     text1 = "Check out this cool article: https://example.com/article and let me know what you think!"
     text_without_links1, links1 = extract_links_from_text(text1)
-    assert text_without_links1 == "Check out this cool article: and let me know what you think!"
+    assert (
+        text_without_links1
+        == "Check out this cool article: and let me know what you think!"
+    )
     assert links1 == ["https://example.com/article"]
 
     # Test formatting preservation with bullet points and line breaks
@@ -513,6 +545,516 @@ https://minusx.ai/blog/decoding-claude-code/"""
         assert extracted_links == expected_links
 
 
+# ============================================================================
+# THREAD SUPPORT TESTS
+# ============================================================================
+
+
+class TestThreadParsing:
+    """Tests for parsing GitHub issues into thread sections"""
+
+    def test_parse_basic_thread(self):
+        """Test parsing a simple thread with --- separators"""
+        text = """First post in the thread.
+
+---
+
+Second post in the thread.
+
+---
+
+Third post in the thread."""
+
+        from scripts.update_links import parse_thread_sections
+
+        sections = parse_thread_sections(text)
+
+        assert len(sections) == 3
+        assert sections[0]["text"] == "First post in the thread."
+        assert sections[1]["text"] == "Second post in the thread."
+        assert sections[2]["text"] == "Third post in the thread."
+        assert sections[0]["images"] == []
+        assert sections[1]["images"] == []
+        assert sections[2]["images"] == []
+
+    def test_parse_thread_with_images(self):
+        """Test parsing threads where each section has its own images"""
+        with open("tests/fixtures/github_issue_109.json", "r") as f:
+            issue_data = json.load(f)
+
+        from scripts.update_links import parse_thread_sections
+
+        sections = parse_thread_sections(issue_data["body"])
+
+        # Should have 3 sections
+        assert len(sections) == 3
+
+        # First section - intro text, no images
+        assert "I keep a running log" in sections[0]["text"]
+        assert len(sections[0]["images"]) == 0
+
+        # Second section - text about ChatGPT with one image
+        assert "ChatGPT" in sections[1]["text"]
+        assert "wayback machine" in sections[1]["text"]
+        assert len(sections[1]["images"]) == 1
+        assert "da5c35e4-14ee-4cb3-b769-245f1f66d23d" in sections[1]["images"][0]["src"]
+        assert sections[1]["images"][0]["alt"] == "Image"
+
+        # Third section - text about Gemini with one image
+        assert "Gemini" in sections[2]["text"]
+        assert len(sections[2]["images"]) == 1
+        assert "e991f85f-76f8-410b-b293-f0bb4bc74795" in sections[2]["images"][0]["src"]
+        assert sections[2]["images"][0]["alt"] == "Image"
+
+    def test_parse_no_thread(self):
+        """Test that posts without --- work normally"""
+        with open("tests/fixtures/github_issue_no_thread.json", "r") as f:
+            issue_data = json.load(f)
+
+        from scripts.update_links import parse_thread_sections
+
+        sections = parse_thread_sections(issue_data["body"])
+
+        # Should have only 1 section
+        assert len(sections) == 1
+        assert "simple post without any thread separators" in sections[0]["text"]
+        assert sections[0]["images"] == []
+
+    def test_parse_alternate_separators(self):
+        """Test parsing with different markdown separator formats"""
+        from scripts.update_links import parse_thread_sections
+
+        # Test with *** separator
+        text_asterisks = "First post\n\n***\n\nSecond post"
+        sections = parse_thread_sections(text_asterisks)
+        assert len(sections) == 2
+        assert sections[0]["text"] == "First post"
+        assert sections[1]["text"] == "Second post"
+
+        # Test with ___ separator
+        text_underscores = "First post\n\n___\n\nSecond post"
+        sections = parse_thread_sections(text_underscores)
+        assert len(sections) == 2
+        assert sections[0]["text"] == "First post"
+        assert sections[1]["text"] == "Second post"
+
+
+class TestHugoPostGeneration:
+    """Tests for Hugo blog post generation (merged threads)"""
+
+    def test_convert_thread_for_hugo(self):
+        """Test that Hugo posts merge all thread sections and strip ---"""
+        with open("tests/fixtures/github_issue_109.json", "r") as f:
+            issue_data = json.load(f)
+
+        mock_issue = MagicMock()
+        mock_issue.body = issue_data["body"]
+        mock_issue.created_at.isoformat.return_value = issue_data["createdAt"]
+        mock_issue.number = issue_data["number"]
+
+        from scripts.update_links import convert_issue_to_post
+
+        # For Hugo (for_social=False), should return single merged post
+        post = convert_issue_to_post(mock_issue, for_social=False)
+
+        # Should be a single post dict
+        assert isinstance(post, dict)
+
+        # Text should contain all sections merged (no ---)
+        assert "I keep a running log" in post["text"]
+        assert "ChatGPT" in post["text"]
+        assert "Gemini" in post["text"]
+        assert "---" not in post["text"]  # Separator should be removed
+
+        # Should have all images from all sections
+        assert len(post["images"]) == 2
+        image_srcs = [img["src"] for img in post["images"]]
+        assert any("da5c35e4" in src for src in image_srcs)
+        assert any("e991f85f" in src for src in image_srcs)
+
+    def test_convert_single_post_for_hugo(self):
+        """Test that single posts work for Hugo"""
+        with open("tests/fixtures/github_issue_no_thread.json", "r") as f:
+            issue_data = json.load(f)
+
+        mock_issue = MagicMock()
+        mock_issue.body = issue_data["body"]
+        mock_issue.created_at.isoformat.return_value = issue_data["createdAt"]
+        mock_issue.number = issue_data["number"]
+
+        from scripts.update_links import convert_issue_to_post
+
+        hugo_post = convert_issue_to_post(mock_issue, for_social=False)
+        assert isinstance(hugo_post, dict)
+        assert "simple post" in hugo_post["text"]
+
+    def test_generate_markdown_for_thread_issue(self):
+        """Test that Hugo markdown generation works with thread issues (merged)"""
+        with open("tests/fixtures/github_issue_109.json", "r") as f:
+            issue_data = json.load(f)
+
+        mock_issue = MagicMock()
+        mock_issue.body = issue_data["body"]
+        mock_issue.created_at.isoformat.return_value = issue_data["createdAt"]
+        mock_issue.number = issue_data["number"]
+
+        from scripts.update_links import (
+            convert_issue_to_post,
+            generate_markdown_content,
+        )
+
+        # Get Hugo post (merged)
+        hugo_post = convert_issue_to_post(mock_issue, for_social=False)
+
+        # Generate markdown
+        markdown = generate_markdown_content(hugo_post, downloaded_images=[])
+
+        # Should contain merged content
+        assert "I keep a running log" in markdown
+        assert "ChatGPT" in markdown
+        assert "Gemini" in markdown
+
+        # Should NOT contain --- separator
+        # (The separator might appear in frontmatter as YAML, so check in the body)
+        lines = markdown.split("\n")
+        body_started = False
+        body_lines = []
+        for line in lines:
+            if body_started:
+                body_lines.append(line)
+            elif line == "---" and body_lines:
+                # Second ---, body starts after this
+                body_started = True
+            elif line == "---":
+                # First ---, frontmatter starts
+                body_lines.append(line)
+
+        body = "\n".join(body_lines[1:])  # Skip the closing ---
+        # Count occurrences of --- in body (should be 0)
+        separator_count = body.count("\n---\n")
+        assert separator_count == 0, (
+            f"Found {separator_count} thread separators in body"
+        )
+
+
+class TestSocialMediaThreads:
+    """Tests for social media thread generation"""
+
+    def test_convert_thread_for_social(self):
+        """Test that social media posts return list of posts (thread)"""
+        with open("tests/fixtures/github_issue_109.json", "r") as f:
+            issue_data = json.load(f)
+
+        mock_issue = MagicMock()
+        mock_issue.body = issue_data["body"]
+        mock_issue.created_at.isoformat.return_value = issue_data["createdAt"]
+        mock_issue.number = issue_data["number"]
+
+        from scripts.update_links import convert_issue_to_post
+
+        # For social (for_social=True), should return list of posts
+        posts = convert_issue_to_post(mock_issue, for_social=True)
+
+        # Should be a list
+        assert isinstance(posts, list)
+        assert len(posts) == 3
+
+        # Each post should have thread metadata
+        for i, post in enumerate(posts):
+            assert post["thread_index"] == i
+            assert post["thread_total"] == 3
+
+        # First post - intro
+        assert "I keep a running log" in posts[0]["text"]
+        assert len(posts[0]["images"]) == 0
+
+        # Second post - ChatGPT with image
+        assert "ChatGPT" in posts[1]["text"]
+        assert len(posts[1]["images"]) == 1
+
+        # Third post - Gemini with image
+        assert "Gemini" in posts[2]["text"]
+        assert len(posts[2]["images"]) == 1
+
+    def test_convert_single_post_for_social(self):
+        """Test that single posts work for social media"""
+        with open("tests/fixtures/github_issue_no_thread.json", "r") as f:
+            issue_data = json.load(f)
+
+        mock_issue = MagicMock()
+        mock_issue.body = issue_data["body"]
+        mock_issue.created_at.isoformat.return_value = issue_data["createdAt"]
+        mock_issue.number = issue_data["number"]
+
+        from scripts.update_links import convert_issue_to_post
+
+        # Social version - should still be a list with one item
+        social_posts = convert_issue_to_post(mock_issue, for_social=True)
+        assert isinstance(social_posts, list)
+        assert len(social_posts) == 1
+        assert social_posts[0]["thread_index"] == 0
+        assert social_posts[0]["thread_total"] == 1
+
+    def test_thread_post_ordering(self):
+        """Test that thread posts maintain correct order"""
+        with open("tests/fixtures/github_issue_thread_simple.json", "r") as f:
+            issue_data = json.load(f)
+
+        mock_issue = MagicMock()
+        mock_issue.body = issue_data["body"]
+        mock_issue.created_at.isoformat.return_value = issue_data["createdAt"]
+        mock_issue.number = issue_data["number"]
+
+        from scripts.update_links import convert_issue_to_post
+
+        posts = convert_issue_to_post(mock_issue, for_social=True)
+
+        # Verify order is maintained
+        assert "First post" in posts[0]["text"]
+        assert "Second post" in posts[1]["text"]
+        assert "Third post" in posts[2]["text"]
+
+        # Verify thread indices
+        assert posts[0]["thread_index"] == 0
+        assert posts[1]["thread_index"] == 1
+        assert posts[2]["thread_index"] == 2
+
+
+class TestBlueskyLinkCards:
+    """Tests for Bluesky external link card generation"""
+
+    def test_create_link_card_with_metadata(self):
+        """Test creating Bluesky external link embed"""
+        from scripts.update_links import create_bluesky_link_card
+
+        # Mock the metadata fetching
+        with patch("scripts.update_links.get_url_metadata") as mock_get_metadata:
+            mock_get_metadata.return_value = {
+                "title": "Great Article About AI",
+                "description": "An in-depth look at artificial intelligence",
+            }
+
+            card = create_bluesky_link_card("https://example.com/article")
+
+            assert card is not None
+            assert card["$type"] == "app.bsky.embed.external"
+            assert card["external"]["uri"] == "https://example.com/article"
+            assert card["external"]["title"] == "Great Article About AI"
+            assert (
+                card["external"]["description"]
+                == "An in-depth look at artificial intelligence"
+            )
+
+    def test_create_link_card_no_title(self):
+        """Test that link card returns None when no title is found"""
+        from scripts.update_links import create_bluesky_link_card
+
+        with patch("scripts.update_links.get_url_metadata") as mock_get_metadata:
+            mock_get_metadata.return_value = {}
+
+            card = create_bluesky_link_card("https://example.com/no-metadata")
+
+            assert card is None
+
+    def test_extract_first_url_for_link_card(self):
+        """Test extracting first URL from post for link card"""
+        text_with_urls = """Check out this article:
+
+https://example.com/first-link
+
+Also see: https://example.com/second-link"""
+
+        import re
+
+        urls = re.findall(r"https?://[^\s]+", text_with_urls)
+
+        # Should extract URLs in order
+        assert len(urls) == 2
+        assert urls[0] == "https://example.com/first-link"
+
+        # Link card should use the first URL
+        from scripts.update_links import create_bluesky_link_card
+
+        with patch("scripts.update_links.get_url_metadata") as mock_get_metadata:
+            mock_get_metadata.return_value = {"title": "First Link"}
+
+            card = create_bluesky_link_card(urls[0])
+            assert card["external"]["uri"] == "https://example.com/first-link"
+
+
+class TestPlatformExclusion:
+    """Tests for platform exclusion based on labels"""
+
+    def test_get_excluded_platforms_no_labels(self):
+        """Test that no platforms are excluded when no labels present"""
+        from scripts.update_links import get_excluded_platforms
+
+        mock_issue = MagicMock()
+        mock_issue.labels = []
+
+        excluded = get_excluded_platforms(mock_issue)
+        assert excluded == []
+
+    def test_get_excluded_platforms_single_exclusion(self):
+        """Test excluding a single platform"""
+        from scripts.update_links import get_excluded_platforms
+
+        mock_issue = MagicMock()
+        mock_label = MagicMock()
+        mock_label.name = "exclude-blog"
+        mock_issue.labels = [mock_label]
+
+        excluded = get_excluded_platforms(mock_issue)
+        assert excluded == ["blog"]
+
+    def test_get_excluded_platforms_multiple_exclusions(self):
+        """Test excluding multiple platforms"""
+        from scripts.update_links import get_excluded_platforms
+
+        mock_issue = MagicMock()
+
+        label1 = MagicMock()
+        label1.name = "exclude-blog"
+
+        label2 = MagicMock()
+        label2.name = "exclude-mastodon"
+
+        label3 = MagicMock()
+        label3.name = "exclude-x"
+
+        mock_issue.labels = [label1, label2, label3]
+
+        excluded = get_excluded_platforms(mock_issue)
+        assert "blog" in excluded
+        assert "mastodon" in excluded
+        assert "x" in excluded
+        assert len(excluded) == 3
+
+    def test_get_excluded_platforms_all_platforms(self):
+        """Test excluding all platforms"""
+        from scripts.update_links import get_excluded_platforms
+
+        mock_issue = MagicMock()
+
+        labels = []
+        for label_name in [
+            "exclude-blog",
+            "exclude-mastodon",
+            "exclude-x",
+            "exclude-bluesky",
+        ]:
+            label = MagicMock()
+            label.name = label_name
+            labels.append(label)
+
+        mock_issue.labels = labels
+
+        excluded = get_excluded_platforms(mock_issue)
+        assert "blog" in excluded
+        assert "mastodon" in excluded
+        assert "x" in excluded
+        assert "bluesky" in excluded
+        assert len(excluded) == 4
+
+    def test_get_excluded_platforms_mixed_labels(self):
+        """Test that only exclude-* labels are recognized"""
+        from scripts.update_links import get_excluded_platforms
+
+        mock_issue = MagicMock()
+
+        label1 = MagicMock()
+        label1.name = "exclude-blog"
+
+        label2 = MagicMock()
+        label2.name = "some-other-label"
+
+        label3 = MagicMock()
+        label3.name = "do-not-post"
+
+        mock_issue.labels = [label1, label2, label3]
+
+        excluded = get_excluded_platforms(mock_issue)
+        assert excluded == ["blog"]
+
+
+class TestXTwitterSpecialHandling:
+    """Tests for X/Twitter specific link handling"""
+
+    def test_links_always_in_separate_posts(self):
+        """Test that X/Twitter always puts links in separate posts"""
+        # Even for a single post with a link, X should create a second post
+        single_post_with_link = {
+            "date": "2024-10-01T10:00:00Z",
+            "text": "Check out this article: https://example.com/article",
+            "images": [],
+            "thread_index": 0,
+            "thread_total": 1,
+            "hash": "100",
+        }
+
+        # When preparing for X, we should:
+        # 1. Extract the link from the text
+        # 2. Create main post without link
+        # 3. Create a second post with just the link as a reply
+
+        text_without_links, links = extract_links_from_text(
+            single_post_with_link["text"]
+        )
+
+        assert text_without_links == "Check out this article:"
+        assert len(links) == 1
+        assert links[0] == "https://example.com/article"
+
+        # This means even a "single" post becomes a 2-post thread on X:
+        # Post 1: "Check out this article:"
+        # Post 2 (reply): "https://example.com/article"
+
+    def test_multiple_thread_posts_with_links(self):
+        """Test X handling for thread with multiple posts containing links"""
+        # Thread posts with links
+        thread_posts = [
+            {
+                "text": "First post intro: https://example.com/1",
+                "images": [],
+                "thread_index": 0,
+                "thread_total": 2,
+            },
+            {
+                "text": "Second post: https://example.com/2",
+                "images": [],
+                "thread_index": 1,
+                "thread_total": 2,
+            },
+        ]
+
+        # For X, the NEW structure should be:
+        # Post 1: "First post intro:" (link extracted)
+        # Post 2 (reply): "Second post: https://example.com/2" (link kept in thread post)
+        # Post 3 (reply): "https://example.com/1" (link from first post only)
+
+        # Extract links only from the first post
+        is_thread = len(thread_posts) > 1
+        all_links = []
+
+        for post_index, post in enumerate(thread_posts):
+            if post_index == 0:
+                # First post - extract links
+                _, links = extract_links_from_text(post["text"])
+                all_links.extend(links)
+            elif is_thread:
+                # Thread posts after first - keep links in text
+                # No links extracted
+                pass
+
+        # Only the first post's link should be extracted
+        assert len(all_links) == 1
+        assert all_links[0] == "https://example.com/1"
+
+        # Second post should keep its link
+        second_post_text = thread_posts[1]["text"]
+        assert "https://example.com/2" in second_post_text
+
+
 def test_split_text_into_posts():
     """Test that split_text_into_posts creates proper thread posts"""
 
@@ -535,7 +1077,7 @@ This should definitely create multiple posts when posted to X with its 280 chara
 
     # Each post should have thread indicators
     for i, post in enumerate(result):
-        assert post.startswith(f"({i+1}/{len(result)})")
+        assert post.startswith(f"({i + 1}/{len(result)})")
         assert len(post) <= 280  # Respect character limit
 
     # Test with different character limits
@@ -565,6 +1107,96 @@ Third paragraph is short."""
     assert len(word_result) > 1
     for post in word_result:
         assert len(post) <= 280
+
+
+def test_process_issue_text_for_blog():
+    """Test that blog posts keep images inline"""
+    from scripts.update_links import process_issue_text_for_blog
+
+    # Test with HTML img tag
+    text = """Some text before <img src="https://example.com/image1.jpg" alt="Test Image" /> and text after.
+
+More content here."""
+
+    url_to_filename = {
+        "https://example.com/image1.jpg": "local_image1.jpg",
+    }
+
+    result = process_issue_text_for_blog(text, url_to_filename)
+
+    # Should replace URL with local filename, keeping HTML format
+    assert '<img src="local_image1.jpg" alt="Test Image" />' in result
+    assert "https://example.com/image1.jpg" not in result
+    assert "Some text before" in result
+    assert "and text after" in result
+
+    # Test with markdown image
+    text2 = """Check this out:
+
+![My Image](https://example.com/image2.png)
+
+Pretty cool!"""
+
+    url_to_filename2 = {
+        "https://example.com/image2.png": "local_image2.png",
+    }
+
+    result2 = process_issue_text_for_blog(text2, url_to_filename2)
+
+    assert "![My Image](local_image2.png)" in result2
+    assert "example.com" not in result2
+
+    # Test with standalone GitHub URL
+    text3 = """Here's a screenshot:
+
+https://github.com/user-attachments/assets/abc123
+
+What do you think?"""
+
+    url_to_filename3 = {
+        "https://github.com/user-attachments/assets/abc123": "screenshot.jpg",
+    }
+
+    result3 = process_issue_text_for_blog(text3, url_to_filename3)
+
+    # Should replace URL with local filename
+    assert "screenshot.jpg" in result3
+    assert "github.com/user-attachments" not in result3
+
+
+def test_generate_markdown_content_inline():
+    """Test that inline markdown content is generated correctly"""
+    from scripts.update_links import generate_markdown_content_inline
+
+    post = {
+        "date": "2025-08-11T21:10:27Z",
+        "text": "Original text (not used)",
+        "hash": "123",
+        "images": [{"src": "https://example.com/image.jpg", "alt": "Test Image"}],
+    }
+
+    markdown_text = """Here is my post with an image:
+
+![Test Image](local_image.jpg)
+
+Pretty neat!"""
+
+    url_to_filename = {"https://example.com/image.jpg": "local_image.jpg"}
+
+    result = generate_markdown_content_inline(post, markdown_text, url_to_filename)
+
+    # Should have frontmatter
+    assert "---" in result
+    assert "date: 2025-08-11T21:10:27Z" in result
+
+    # Should have inline image in body
+    assert "![Test Image](local_image.jpg)" in result
+    assert "Pretty neat!" in result
+
+    # Should ALSO have images in frontmatter for Hugo template on index page
+    assert "images:" in result
+    assert "- src: local_image.jpg" in result
+    assert 'alt: "Test Image"' in result
 
 
 def test_x_twitter_formatting_preservation():
@@ -630,6 +1262,6 @@ Check it out: https://claude.ai"""
     expected_links = [
         "https://example.com/architecture",
         "https://anthropic.com/haiku",
-        "https://claude.ai"
+        "https://claude.ai",
     ]
     assert extracted_links == expected_links

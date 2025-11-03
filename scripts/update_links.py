@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 
-import json
 import re
 import os
 import requests
-from datetime import datetime, timedelta
+import time
 from typing import Dict, List, Optional, TypedDict
 from bs4 import BeautifulSoup
 from github import Github
@@ -38,7 +37,6 @@ class Post(TypedDict):
 MASTODON_USER_ID = "112973733509746771"
 BLUESKY_HANDLE = "kevinschaul.bsky.social"
 
-# Character limits for social networks
 MASTODON_CHAR_LIMIT = 500
 BLUESKY_CHAR_LIMIT = 300
 X_CHAR_LIMIT = 280
@@ -47,38 +45,123 @@ X_CHAR_LIMIT = 280
 def get_url_metadata(url: str) -> Dict[str, Optional[str]]:
     """Fetch metadata from a URL"""
     try:
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-        }
+        headers = {"User-Agent": "Mozilla/5.0"}
         response = requests.get(url, headers=headers, timeout=10)
         response.raise_for_status()
-
         soup = BeautifulSoup(response.text, "html.parser")
 
-        # Try to get title in order of preference
-        title = None
+        def find_meta(property=None, name=None):
+            tag = (
+                soup.find("meta", property=property)
+                if property
+                else soup.find("meta", attrs={"name": name})
+            )
+            return tag.get("content") if tag else None
 
-        # First try Open Graph title
-        og_title = soup.find("meta", property="og:title")
-        if og_title:
-            title = og_title.get("content")
+        # Get title: og:title -> twitter:title -> <title>
+        title = (
+            find_meta(property="og:title")
+            or find_meta(name="twitter:title")
+            or (soup.find("title").text.strip() if soup.find("title") else None)
+        )
 
-        # Then try Twitter card title
-        if not title:
-            twitter_title = soup.find("meta", attrs={"name": "twitter:title"})
-            if twitter_title:
-                title = twitter_title.get("content")
+        # Get description: og:description -> twitter:description -> description
+        description = (
+            find_meta(property="og:description")
+            or find_meta(name="twitter:description")
+            or find_meta(name="description")
+        )
 
-        # Finally fall back to HTML title tag
-        if not title:
-            title_tag = soup.find("title")
-            if title_tag:
-                title = title_tag.text.strip()
-
-        return {"title": title}
+        return {"title": title, "description": description}
     except Exception as e:
         print(f"Error fetching metadata for {url}: {e}")
         return {}
+
+
+def create_bluesky_link_card(url: str) -> Optional[Dict]:
+    """Create a Bluesky external link embed from URL metadata"""
+    metadata = get_url_metadata(url)
+    if not metadata.get("title"):
+        return None
+
+    return {
+        "$type": "app.bsky.embed.external",
+        "external": {
+            "uri": url,
+            "title": metadata["title"],
+            "description": metadata.get("description", ""),
+        },
+    }
+
+
+def download_images_for_post(post: Post, post_dir: str) -> List[str]:
+    """Download images for a post and return list of local paths"""
+    if not post.get("images"):
+        return []
+
+    os.makedirs(post_dir, exist_ok=True)
+    image_paths = []
+
+    for image_info in post["images"]:
+        filename = download_image(image_info["src"], post_dir)
+        if filename:
+            image_paths.append(os.path.join(post_dir, filename))
+
+    return image_paths
+
+
+def build_bluesky_text_with_links(
+    text: str,
+) -> tuple[client_utils.TextBuilder, Optional[str]]:
+    """
+    Build Bluesky TextBuilder with clickable links
+
+    Returns:
+        (TextBuilder with text and links, first URL found or None)
+    """
+    tb = client_utils.TextBuilder()
+    url_pattern = r"https?://[^\s]+"
+    first_url = None
+    last_end = 0
+
+    for match in re.finditer(url_pattern, text):
+        if first_url is None:
+            first_url = match.group()
+
+        if match.start() > last_end:
+            tb.text(text[last_end : match.start()])
+
+        url = match.group()
+        tb.link(url, url)
+        last_end = match.end()
+
+    if last_end < len(text):
+        tb.text(text[last_end:])
+
+    return tb, first_url
+
+
+def parse_thread_sections(text: str) -> List[Dict]:
+    """
+    Split issue body by markdown horizontal rules (---, ***, ___) into thread sections.
+
+    Returns:
+        List of dicts with 'text' and 'images' keys for each section
+    """
+    if not text:
+        return [{"text": "", "images": []}]
+
+    import re
+
+    separator_pattern = r"\n(?:---+|\*\*\*+|___+)\n"
+    sections_text = re.split(separator_pattern, text)
+
+    sections = []
+    for section_text in sections_text:
+        cleaned_text, images = process_issue_text(section_text)
+        sections.append({"text": cleaned_text, "images": images})
+
+    return sections
 
 
 def process_issue_text(text: str) -> tuple[str, List[ImageInfo]]:
@@ -89,20 +172,15 @@ def process_issue_text(text: str) -> tuple[str, List[ImageInfo]]:
     images = []
     cleaned_text = text
 
-    # Process markdown image syntax: ![alt](url)
     markdown_pattern = r"!\[(.*?)\]\((https?://[^\s\)]+)\)"
     markdown_matches = re.findall(markdown_pattern, text)
     for alt_text, url in markdown_matches:
         images.append({"src": url, "alt": alt_text if alt_text else None})
     cleaned_text = re.sub(r"!\[.*?\]\([^\)]+\)", "", cleaned_text)
 
-    # Process HTML img tags: extract both src and alt attributes
-    # First extract all img tags
     img_tags = re.findall(r"<img[^>]*>", text, re.IGNORECASE)
     for img_tag in img_tags:
-        # Extract src
         src_match = re.search(r'src=["\']([^"\']+)["\']', img_tag, re.IGNORECASE)
-        # Extract alt
         alt_match = re.search(r'alt=["\']([^"\']*)["\']', img_tag, re.IGNORECASE)
 
         if src_match:
@@ -111,37 +189,25 @@ def process_issue_text(text: str) -> tuple[str, List[ImageInfo]]:
             images.append({"src": src_url, "alt": alt_text})
     cleaned_text = re.sub(r"<img[^>]*>", "", cleaned_text, flags=re.IGNORECASE)
 
-    # Process standalone GitHub asset URLs (not already in HTML tags)
-    # These won't have alt text
     github_assets_pattern = (
         r'(?<!src=["\'])https://github\.com/user-attachments/assets/[^\s]+'
     )
-    github_assets = re.findall(
-        github_assets_pattern, cleaned_text
-    )  # Use cleaned_text to avoid HTML duplicates
+    github_assets = re.findall(github_assets_pattern, cleaned_text)
     for url in github_assets:
         images.append({"src": url, "alt": None})
     cleaned_text = re.sub(github_assets_pattern, "", cleaned_text)
 
-    # Process standalone user-attachments URLs (not already in HTML tags)
-    # These won't have alt text
     user_attachments_pattern = (
         r'(?<!src=["\'])https://user-images\.githubusercontent\.com/[^\s]+'
     )
-    user_attachments = re.findall(
-        user_attachments_pattern, cleaned_text
-    )  # Use cleaned_text to avoid HTML duplicates
+    user_attachments = re.findall(user_attachments_pattern, cleaned_text)
     for url in user_attachments:
         images.append({"src": url, "alt": None})
     cleaned_text = re.sub(user_attachments_pattern, "", cleaned_text)
 
-    # Clean up extra whitespace and empty lines
-    cleaned_text = re.sub(
-        r"\n\s*\n", "\n\n", cleaned_text
-    )  # Replace multiple newlines with double newlines
+    cleaned_text = re.sub(r"\n\s*\n", "\n\n", cleaned_text)
     cleaned_text = cleaned_text.strip()
 
-    # Remove duplicate images based on src
     seen_srcs = set()
     unique_images = []
     for img in images:
@@ -150,6 +216,17 @@ def process_issue_text(text: str) -> tuple[str, List[ImageInfo]]:
             seen_srcs.add(img["src"])
 
     return cleaned_text, unique_images
+
+
+def process_issue_text_for_blog(text: str, url_to_filename: Dict[str, str]) -> str:
+    """Replace image URLs with local filenames in blog text"""
+    if not text:
+        return text
+
+    result = text
+    for url, local_filename in url_to_filename.items():
+        result = result.replace(url, local_filename)
+    return result
 
 
 def extract_images_from_issue(issue_body: str) -> List[str]:
@@ -175,13 +252,11 @@ def download_image(image_url: str, dest_path: str) -> Optional[str]:
                 else None
             ),
         }
-        # Remove None values from headers
         headers = {k: v for k, v in headers.items() if v is not None}
 
         response = requests.get(image_url, headers=headers, timeout=30)
         response.raise_for_status()
 
-        # Get file extension from URL or content type
         file_ext = ""
         if "." in image_url.split("/")[-1]:
             file_ext = "." + image_url.split("/")[-1].split(".")[-1].split("?")[0]
@@ -197,7 +272,7 @@ def download_image(image_url: str, dest_path: str) -> Optional[str]:
                 file_ext = ".webp"
 
         if not file_ext:
-            file_ext = ".jpg"  # Default fallback
+            file_ext = ".jpg"
 
         filename = f"{uuid.uuid4().hex}{file_ext}"
         full_path = os.path.join(dest_path, filename)
@@ -217,53 +292,127 @@ def should_skip_issue(issue) -> bool:
     return "do-not-post" in label_names
 
 
-def convert_issue_to_post(issue) -> Post:
-    """Convert a GitHub issue to a Post object"""
-    body = issue.body
+def get_excluded_platforms(issue) -> List[str]:
+    """
+    Get list of platforms to exclude based on issue labels
 
-    # Process text once to get both cleaned text and images
-    text, images = process_issue_text(body)
+    Labels:
+    - exclude-blog: Skip Hugo blog
+    - exclude-mastodon: Skip Mastodon
+    - exclude-x: Skip X/Twitter
+    - exclude-bluesky: Skip Bluesky
 
-    if images:
-        print(f"Found {len(images)} images: {images}")
+    Returns:
+        List of platform names to exclude
+    """
+    label_names = [label.name for label in issue.labels]
+    excluded = []
 
-    return {
-        "date": issue.created_at.isoformat(),
-        "text": text,
-        "images": images,
-        "hash": f"{issue.number}",
+    platform_labels = {
+        "exclude-blog": "blog",
+        "exclude-mastodon": "mastodon",
+        "exclude-x": "x",
+        "exclude-bluesky": "bluesky",
     }
 
+    for label, platform in platform_labels.items():
+        if label in label_names:
+            excluded.append(platform)
 
-def process_github_issues(issues) -> List[Post]:
-    """Process a list of GitHub issues and return Posts"""
-    posts = []
+    return excluded
+
+
+def convert_issue_to_post(issue, for_social: bool = False):
+    """
+    Convert a GitHub issue to Post object(s)
+
+    Args:
+        issue: GitHub issue object
+        for_social: If True, return list of posts for threading on social media
+                   If False, return single merged post for Hugo blog
+
+    Returns:
+        If for_social=True: List[Post] with thread metadata
+        If for_social=False: Single Post dict with merged content
+    """
+    body = issue.body
+    sections = parse_thread_sections(body)
+
+    if not for_social:
+        all_text = "\n\n".join(section["text"] for section in sections)
+        all_images = []
+        for section in sections:
+            all_images.extend(section["images"])
+
+        if all_images:
+            print(f"Found {len(all_images)} images: {all_images}")
+
+        original_body = re.sub(r"\n(?:---+|\*\*\*+|___+)\n", "\n\n", body)
+
+        return {
+            "date": issue.created_at.isoformat(),
+            "text": all_text,
+            "images": all_images,
+            "hash": f"{issue.number}",
+            "original_body": original_body,
+        }
+    else:
+        posts = []
+        for i, section in enumerate(sections):
+            if section["images"]:
+                print(
+                    f"Section {i + 1}: Found {len(section['images'])} images: {section['images']}"
+                )
+
+            posts.append(
+                {
+                    "date": issue.created_at.isoformat(),
+                    "text": section["text"],
+                    "images": section["images"],
+                    "hash": f"{issue.number}",
+                    "thread_index": i,
+                    "thread_total": len(sections),
+                }
+            )
+
+        return posts
+
+
+def process_github_issues(issues, for_social: bool = False):
+    """
+    Process a list of GitHub issues and return Posts
+
+    Args:
+        issues: List of GitHub issue objects
+        for_social: If True, return thread posts for social media
+                   If False, return merged posts for Hugo blog
+
+    Returns:
+        List of Post dicts (or list of list of Posts if for_social=True)
+    """
+    results = []
 
     for issue in issues:
         if should_skip_issue(issue):
             continue
 
-        post = convert_issue_to_post(issue)
-        posts.append(post)
+        post_or_posts = convert_issue_to_post(issue, for_social=for_social)
+        results.append((issue, post_or_posts))
 
-        # Close the issue since it's been processed
-        issue.edit(state="closed")
-
-    return posts
+    return results
 
 
-def get_posts_from_github(issue_id: Optional[int] = None) -> List[Post]:
-    """Fetch posts from GitHub issues"""
+def get_issues_from_github(issue_id: Optional[int] = None):
+    """Fetch issues from GitHub"""
     g = Github(os.environ["GITHUB_TOKEN"])
     repo = g.get_repo(os.environ["GITHUB_REPOSITORY"])
     repo_owner = repo.owner.login
 
     if issue_id:
-        # Get specific issue by ID
         try:
             issue = repo.get_issue(issue_id)
             if issue.user.login == repo_owner:
-                return process_github_issues([issue])
+                return [issue]
             else:
                 print(f"Issue #{issue_id} was not created by repo owner {repo_owner}")
                 return []
@@ -271,14 +420,12 @@ def get_posts_from_github(issue_id: Optional[int] = None) -> List[Post]:
             print(f"Error fetching issue #{issue_id}: {e}")
             return []
     else:
-        # Get all open issues
-        issues = repo.get_issues(state="open", creator=repo_owner)
-        return process_github_issues(issues)
+        issues = list(repo.get_issues(state="open", creator=repo_owner))
+        return issues
 
 
 def get_post_url(post: Post) -> str:
     """Generate the URL for a post on kschaul.com"""
-    # Extract just the date part (YYYY-MM-DD) from the ISO timestamp
     date_part = post["date"].split("T")[0]
     slug = slugify(f"{date_part}_{post['text'][:30]}")
     return f"https://www.kschaul.com/link/{slug}/"
@@ -304,48 +451,37 @@ def truncate_text_for_platform(post: Post, char_limit: int) -> str:
     text = post["text"]
     post_url = get_post_url(post)
 
-    # If text fits within limit, return as-is
     if len(text) <= char_limit:
         return text
 
-    # Calculate space needed for "... " + URL
     link_suffix = f"... {post_url}"
     available_chars = char_limit - len(link_suffix)
 
-    # Find a good break point (prefer word boundaries)
     if available_chars > 0:
         truncated = text[:available_chars]
-        # Try to break at word boundary
-        last_space = truncated.rfind(' ')
-        if last_space > available_chars * 0.7:  # Only use word boundary if it's not too short
+        last_space = truncated.rfind(" ")
+        if last_space > available_chars * 0.7:
             truncated = truncated[:last_space]
 
         return truncated + link_suffix
 
-    # If even the URL is too long, just return the URL
     return post_url
 
 
 def extract_links_from_text(text: str) -> tuple[str, List[str]]:
     """Extract URLs from text and return (text_without_links, list_of_links)"""
-    # URL pattern that excludes trailing punctuation
-    url_pattern = r'https?://[^\s]+'
+    url_pattern = r"https?://[^\s]+"
     raw_links = re.findall(url_pattern, text)
 
-    # Clean up links by removing trailing punctuation
     links = []
     for link in raw_links:
-        # Remove common trailing punctuation
-        cleaned_link = re.sub(r'[.,;:!?]+$', '', link)
+        cleaned_link = re.sub(r"[.,;:!?]+$", "", link)
         links.append(cleaned_link)
 
-    text_without_links = re.sub(url_pattern, '', text)
-
-    # Clean up extra whitespace left by removed links, but preserve line breaks
-    # Replace multiple spaces with single space, but keep newlines
-    text_without_links = re.sub(r'[ \t]+', ' ', text_without_links)  # Collapse spaces/tabs only
-    text_without_links = re.sub(r' *\n *', '\n', text_without_links)  # Clean up spaces around newlines
-    text_without_links = re.sub(r'\n{3,}', '\n\n', text_without_links)  # Limit to max double newlines
+    text_without_links = re.sub(url_pattern, "", text)
+    text_without_links = re.sub(r"[ \t]+", " ", text_without_links)
+    text_without_links = re.sub(r" *\n *", "\n", text_without_links)
+    text_without_links = re.sub(r"\n{3,}", "\n\n", text_without_links)
     text_without_links = text_without_links.strip()
 
     return text_without_links, links
@@ -356,33 +492,27 @@ def split_text_into_posts(text: str, char_limit: int) -> List[str]:
     if len(text) <= char_limit:
         return [text]
 
-    # Reserve space for thread indicators like "(2/4) "
-    thread_indicator_space = 7  # Space for "(XX/XX) "
+    thread_indicator_space = 7
     effective_limit = char_limit - thread_indicator_space
 
-    # First, try to split by paragraphs (double newlines)
-    paragraphs = text.split('\n\n')
+    paragraphs = text.split("\n\n")
     posts = []
     current_post = ""
 
     for paragraph in paragraphs:
-        # If adding this paragraph would exceed the limit
-        if current_post and len(current_post + '\n\n' + paragraph) > effective_limit:
-            # Save current post and start a new one
+        if current_post and len(current_post + "\n\n" + paragraph) > effective_limit:
             posts.append(current_post.strip())
             current_post = paragraph
         elif not current_post:
             current_post = paragraph
         else:
-            current_post += '\n\n' + paragraph
+            current_post += "\n\n" + paragraph
 
-        # If a single paragraph is too long, split it by sentences
         if len(current_post) > effective_limit:
-            # Remove the oversized paragraph from current_post
-            if posts or len(current_post.split('\n\n')) > 1:
-                parts = current_post.split('\n\n')
+            if posts or len(current_post.split("\n\n")) > 1:
+                parts = current_post.split("\n\n")
                 if len(parts) > 1:
-                    current_post = '\n\n'.join(parts[:-1])
+                    current_post = "\n\n".join(parts[:-1])
                     posts.append(current_post.strip())
                     oversized_paragraph = parts[-1]
                 else:
@@ -392,65 +522,56 @@ def split_text_into_posts(text: str, char_limit: int) -> List[str]:
                 oversized_paragraph = current_post
                 current_post = ""
 
-            # Split oversized paragraph by sentences
-            sentences = re.split(r'(?<=[.!?])\s+', oversized_paragraph)
+            sentences = re.split(r"(?<=[.!?])\s+", oversized_paragraph)
             temp_post = ""
 
             for sentence in sentences:
-                if temp_post and len(temp_post + ' ' + sentence) > effective_limit:
+                if temp_post and len(temp_post + " " + sentence) > effective_limit:
                     posts.append(temp_post.strip())
                     temp_post = sentence
                 elif not temp_post:
                     temp_post = sentence
                 else:
-                    temp_post += ' ' + sentence
+                    temp_post += " " + sentence
 
-                # If even a single sentence is too long, split it by words
                 if len(temp_post) > effective_limit:
                     words = temp_post.split()
                     if len(words) > 1:
-                        # Save all but the last word
-                        posts.append(' '.join(words[:-1]))
+                        posts.append(" ".join(words[:-1]))
                         temp_post = words[-1]
                     else:
-                        # Single word is too long, force split
                         posts.append(temp_post[:effective_limit])
                         temp_post = temp_post[effective_limit:]
 
             current_post = temp_post
 
-    # Add any remaining content
     if current_post.strip():
         posts.append(current_post.strip())
 
-    # Add thread indicators
     if len(posts) > 1:
         total_posts = len(posts)
         for i in range(len(posts)):
-            posts[i] = f"({i+1}/{total_posts}) {posts[i]}"
+            posts[i] = f"({i + 1}/{total_posts}) {posts[i]}"
 
     return posts
 
 
 def get_post_directory_path(post: Post, content_dir: str = "./content") -> str:
     """Generate the directory path for a post based on its content"""
-    # Extract just the date part (YYYY-MM-DD) from the ISO timestamp
     date_part = post["date"].split("T")[0]
     slug = slugify(f"{date_part}_{post['text'][:30]}")
     return os.path.join(content_dir, "link", slug)
 
 
 def generate_markdown_content(post: Post, downloaded_images: List[str] = None) -> str:
-    """Generate the markdown content for a post"""
+    """Generate the markdown content for a post (legacy with images in frontmatter)"""
     content = ["---"]
     content.append(f"date: {post['date']}")
 
     if downloaded_images and post.get("images"):
         content.append("images:")
-        # Create a mapping from original src to downloaded filename
         src_to_filename = {}
         if post["images"] and downloaded_images:
-            # Match downloaded filenames to original srcs by order
             for i, downloaded_filename in enumerate(downloaded_images):
                 if i < len(post["images"]):
                     src_to_filename[post["images"][i]["src"]] = downloaded_filename
@@ -461,9 +582,8 @@ def generate_markdown_content(post: Post, downloaded_images: List[str] = None) -
             )
             content.append(f"  - src: {downloaded_filename}")
             if image_info.get("alt"):
-                content.append(f"    alt: \"{image_info['alt']}\"")
+                content.append(f'    alt: "{image_info["alt"]}"')
     elif downloaded_images:
-        # Fallback for backward compatibility when images is just a list of strings
         content.append("images:")
         for image in downloaded_images:
             content.append(f"  - src: {image}")
@@ -471,6 +591,29 @@ def generate_markdown_content(post: Post, downloaded_images: List[str] = None) -
     content.append("---")
     content.append("")
     content.append(post["text"])
+
+    return "\n".join(content)
+
+
+def generate_markdown_content_inline(
+    post: Post, markdown_text: str, url_to_filename: Dict[str, str]
+) -> str:
+    """Generate markdown with inline images and frontmatter images for Hugo template"""
+    content = ["---"]
+    content.append(f"date: {post['date']}")
+
+    if post.get("images") and url_to_filename:
+        content.append("images:")
+        for image_info in post["images"]:
+            local_filename = url_to_filename.get(image_info["src"])
+            if local_filename:
+                content.append(f"  - src: {local_filename}")
+                if image_info.get("alt"):
+                    content.append(f'    alt: "{image_info["alt"]}"')
+
+    content.append("---")
+    content.append("")
+    content.append(markdown_text)
 
     return "\n".join(content)
 
@@ -488,87 +631,130 @@ def download_post_images(post: Post, dest_path: str) -> List[str]:
     return downloaded_images
 
 
-def save_post(post: Post, platforms: List[str] = None, test_mode: bool = False, force: bool = False, specific_issue: bool = False) -> None:
-    print(f"Saving post: {json.dumps(post)}")
+def save_post(
+    post: Post,
+    test_mode: bool = False,
+    force: bool = False,
+    specific_issue: bool = False,
+) -> str:
+    """
+    Save post to Hugo blog
+
+    Returns:
+        Path to the post directory
+    """
+    print("Saving blog post...")
 
     post_dir = get_post_directory_path(post)
 
-    # Save the post if it does not already exist, if force is True, or if specific issue was requested
     post_exists = os.path.isdir(post_dir)
-    should_post = not post_exists or force or specific_issue
+    should_save = not post_exists or force or specific_issue
 
-    if should_post:
-        if not post_exists:
-            os.makedirs(post_dir)
+    if should_save:
+        if not test_mode:
+            if not post_exists:
+                os.makedirs(post_dir)
+            else:
+                if force:
+                    print(
+                        f"Post directory already exists at {post_dir}, but force=True so reposting..."
+                    )
+                elif specific_issue:
+                    print(
+                        f"Post directory already exists at {post_dir}, but specific issue requested so reposting..."
+                    )
 
-            # Download images if any
-            downloaded_images = download_post_images(post, post_dir)
+            url_to_filename = {}
+            if post.get("images"):
+                for image_info in post["images"]:
+                    image_url = image_info["src"]
+                    downloaded_filename = download_image(image_url, post_dir)
+                    if downloaded_filename:
+                        url_to_filename[image_url] = downloaded_filename
+                        print(f"Downloaded image: {downloaded_filename}")
 
-            # Generate and write markdown content
-            markdown_content = generate_markdown_content(post, downloaded_images)
+            if post.get("original_body"):
+                markdown_text = process_issue_text_for_blog(
+                    post["original_body"], url_to_filename
+                )
+                markdown_text, extracted_links = extract_links_from_text(markdown_text)
+                markdown_content = generate_markdown_content_inline(
+                    post, markdown_text, url_to_filename
+                )
+            else:
+                downloaded_images = list(url_to_filename.values())
+                markdown_content = generate_markdown_content(post, downloaded_images)
 
             with open(os.path.join(post_dir, "index.md"), "w", encoding="utf-8") as f:
                 f.write(markdown_content)
+
+            print(f"✓ Saved blog post to {post_dir}")
         else:
-            if force:
-                print(f"Post directory already exists, but force=True so posting anyway...")
-            elif specific_issue:
-                print(f"Post directory already exists, but specific issue requested so posting anyway...")
+            print(f"TEST MODE: Would save blog post to {post_dir}")
+    else:
+        print(f"Blog post already exists at {post_dir}. Use --force to overwrite.")
 
-        # Post to selected platforms
-        platforms = platforms or ["mastodon", "x", "bluesky"]
+    return post_dir
 
-        if test_mode:
-            print(f"TEST MODE: Would post to platforms: {platforms}")
-            print(f"Original post: {post['text']}")
-            print(f"Original length: {len(post['text'])} characters")
+
+def post_to_social_media(
+    posts: List[Post],
+    platforms: List[str],
+    test_mode: bool = False,
+    force: bool = False,
+    specific_issue: bool = False,
+) -> None:
+    """
+    Post a list of posts (thread) to social media platforms
+
+    Args:
+        posts: List of Post dicts with thread metadata
+        platforms: List of platform names to post to
+        test_mode: If True, only print what would be posted
+        force: If True, post even if similar posts exist
+        specific_issue: If True, specific issue was requested
+    """
+    if not posts:
+        return
+
+    first_post = posts[0]
+    post_dir = get_post_directory_path(first_post)
+
+    print(f"\nPosting thread ({len(posts)} post(s)) to social media...")
+
+    if test_mode:
+        print(f"TEST MODE: Would post to platforms: {platforms}")
+        print(f"Thread has {len(posts)} posts")
+        print()
+
+        for i, post in enumerate(posts):
+            print(f"--- Thread Post {i + 1}/{len(posts)} ---")
+            print(f"Text: {post['text'][:100]}...")
+            if post.get("images"):
+                print(f"Images: {len(post['images'])} image(s)")
             print()
 
-            for platform in platforms:
-                if platform == "mastodon":
-                    print("=== MASTODON POSTS ===")
-                    mastodon_posts = split_text_into_posts(post["text"], MASTODON_CHAR_LIMIT)
-                    for i, post_text in enumerate(mastodon_posts):
-                        print(f"Post {i+1}: ({len(post_text)} chars) {post_text}")
-                    print()
+        return
 
-                elif platform == "x":
-                    print("=== X/TWITTER POSTS ===")
-                    text_without_links, links = extract_links_from_text(post["text"])
-                    x_posts = split_text_into_posts(text_without_links, X_CHAR_LIMIT)
-
-                    print("Main thread:")
-                    for i, post_text in enumerate(x_posts):
-                        print(f"  Post {i+1}: ({len(post_text)} chars) {post_text}")
-
-                    if links:
-                        print("Link replies:")
-                        for i, link in enumerate(links):
-                            print(f"  Link {i+1}: {link}")
-
-                    print(f"Total posts: {len(x_posts) + len(links)}")
-                    print()
-
-                elif platform == "bluesky":
-                    print("=== BLUESKY POSTS ===")
-                    bluesky_posts = split_text_into_posts(post["text"], BLUESKY_CHAR_LIMIT)
-                    for i, post_text in enumerate(bluesky_posts):
-                        print(f"Post {i+1}: ({len(post_text)} chars) {post_text}")
-                    print()
-
-            if post.get("images"):
-                print(f"Images: {len(post['images'])} image(s) would be attached to the first post of each platform")
-
-            return
-
-        if "mastodon" in platforms:
-            post_to_mastodon(post, post_dir)
-        if "x" in platforms:
-            post_to_x(post, post_dir)
-        if "bluesky" in platforms:
-            post_to_bluesky(post, post_dir)
-    else:
-        print(f"Post already exists at {post_dir}. Use --force to repost.")
+    first_platform = True
+    if "mastodon" in platforms:
+        if not first_platform:
+            print("Waiting 10 seconds before posting to next platform...")
+            time.sleep(10)
+        post_to_mastodon(posts, post_dir)
+        first_platform = False
+    if "x" in platforms:
+        if not first_platform:
+            print("Waiting 10 seconds before posting to next platform...")
+            time.sleep(10)
+        post_to_x(posts, post_dir)
+        first_platform = False
+    if "bluesky" in platforms:
+        if not first_platform:
+            print("Waiting 10 seconds before posting to next platform...")
+            time.sleep(10)
+        post_to_bluesky(posts, post_dir)
+        first_platform = False
 
 
 def search_similar_posts_mastodon(post: Post, token: str) -> bool:
@@ -613,11 +799,8 @@ def search_similar_posts_x_v2(post: Post, client: tweepy.Client, user_id: str) -
     search_term = post["text"][:30]
 
     try:
-        # Get recent tweets from the user
         tweets = client.get_users_tweets(
-            id=user_id,
-            max_results=20,
-            exclude=['retweets', 'replies']
+            id=user_id, max_results=20, exclude=["retweets", "replies"]
         )
 
         if tweets.data:
@@ -629,11 +812,10 @@ def search_similar_posts_x_v2(post: Post, client: tweepy.Client, user_id: str) -
 
     except Exception as e:
         print(f"Error searching X for similar posts: {str(e)}")
-        # If it's an auth error, don't skip posting - let the main post function handle auth
         if "401" in str(e) or "Unauthorized" in str(e):
             print("Authentication issue in search - proceeding with post attempt")
             return False
-        return True  # Err on the side of caution for other errors
+        return True
 
 
 def search_similar_posts_x(post: Post, api: tweepy.API) -> bool:
@@ -641,7 +823,6 @@ def search_similar_posts_x(post: Post, api: tweepy.API) -> bool:
     search_term = post["text"][:30]
 
     try:
-        # Search for recent tweets from the authenticated user
         tweets = api.user_timeline(count=20, exclude_replies=True, include_rts=False)
 
         for tweet in tweets:
@@ -679,15 +860,10 @@ def upload_media_to_x(
 ) -> Optional[str]:
     """Upload an image to X/Twitter using OAuth 1.0a and return the media ID"""
     try:
-        # Upload media using the v1.1 API
         media = api.media_upload(image_path)
 
-        # Add alt text if provided
         if alt_text:
-            api.create_media_metadata(
-                media_id=media.media_id,
-                alt_text=alt_text
-            )
+            api.create_media_metadata(media_id=media.media_id, alt_text=alt_text)
 
         return str(media.media_id)
     except Exception as e:
@@ -722,270 +898,227 @@ def upload_media_to_mastodon(
         return None
 
 
-def post_to_mastodon(post: Post, post_dir: Optional[str] = None) -> None:
-    url = "https://mastodon.social/api/v1/statuses"
-
+def post_to_mastodon(posts: List[Post], post_dir: Optional[str] = None) -> None:
+    """Post a thread to Mastodon"""
     try:
         token = os.environ["MASTODON_ACCESS_TOKEN"]
-        headers = {
-            "Authorization": f"Bearer {token}",
-        }
+        headers = {"Authorization": f"Bearer {token}"}
 
-        # Check for similar posts
-        if search_similar_posts_mastodon(post, token):
-            print(
-                f"Similar Mastodon post already exists for {post['text'][30:]}. Skipping."
-            )
+        if posts and search_similar_posts_mastodon(posts[0], token):
+            print("Similar Mastodon post already exists. Skipping.")
             return
 
-        # Split text into multiple posts if needed
-        posts_text = split_text_into_posts(post["text"], MASTODON_CHAR_LIMIT)
-        media_ids = []
+        if post_dir:
+            os.makedirs(post_dir, exist_ok=True)
 
-        # Upload images if they exist and we have a post directory
-        # Images will only be attached to the first post
-        if post.get("images") and post_dir and os.path.isdir(post_dir):
-            # Get all downloaded image files
-            image_files = [
-                f
-                for f in os.listdir(post_dir)
-                if f.endswith((".jpg", ".jpeg", ".png", ".gif", ".webp"))
-            ]
-
-            # Upload each image (match by order since we download in order)
-            for i, image_info in enumerate(post["images"]):
-                if i < len(image_files):
-                    image_path = os.path.join(post_dir, image_files[i])
-                    media_id = upload_media_to_mastodon(
-                        image_path, token, image_info.get("alt")
-                    )
-                    if media_id:
-                        media_ids.append(media_id)
-
-        # Post the thread
         in_reply_to_id = None
-        for i, status_text in enumerate(posts_text):
-            data = {"status": status_text}
+        total_posted = 0
 
-            # Add images only to the first post
-            if i == 0 and media_ids:
-                data["media_ids[]"] = media_ids
+        for post in posts:
+            media_ids = []
+            image_paths = download_images_for_post(post, post_dir)
+            for i, image_path in enumerate(image_paths):
+                alt_text = (
+                    post["images"][i].get("alt")
+                    if i < len(post.get("images", []))
+                    else None
+                )
+                media_id = upload_media_to_mastodon(image_path, token, alt_text)
+                if media_id:
+                    media_ids.append(media_id)
 
-            # Add reply-to for subsequent posts
-            if in_reply_to_id:
-                data["in_reply_to_id"] = in_reply_to_id
+            for i, status_text in enumerate(
+                split_text_into_posts(post["text"], MASTODON_CHAR_LIMIT)
+            ):
+                if total_posted > 0:
+                    print("  Waiting 10 seconds before next post...")
+                    time.sleep(10)
 
-            response = requests.post(url, headers=headers, data=data)
-            response.raise_for_status()
+                data = {"status": status_text}
+                if i == 0 and media_ids:
+                    data["media_ids[]"] = media_ids
+                if in_reply_to_id:
+                    data["in_reply_to_id"] = in_reply_to_id
 
-            # Get the ID of the posted status for threading
-            status_data = response.json()
-            in_reply_to_id = status_data["id"]
+                response = requests.post(
+                    "https://mastodon.social/api/v1/statuses",
+                    headers=headers,
+                    data=data,
+                )
+                response.raise_for_status()
+                in_reply_to_id = response.json()["id"]
+                total_posted += 1
 
-        print(f"Successfully posted to Mastodon: {post['text']}")
-        if len(posts_text) > 1:
-            print(f"  as {len(posts_text)} posts in a thread")
-        if media_ids:
-            print(f"  with {len(media_ids)} images")
-    except KeyError as e:
+        print(
+            f"✓ Successfully posted to Mastodon as {total_posted} post(s) in a thread"
+        )
+    except KeyError:
         print("Warning: Missing MASTODON_ACCESS_TOKEN, so not posting to Mastodon")
-        print(e)
     except Exception as e:
         print(f"An error occurred while posting to Mastodon: {str(e)}")
 
 
-def post_to_x(post: Post, post_dir: Optional[str] = None) -> None:
-    """Post to X/Twitter"""
+def post_to_x(posts: List[Post], post_dir: Optional[str] = None) -> None:
+    """Post thread to X/Twitter - links from first post in replies, threads can have links in 2nd+ posts"""
     try:
-        # Set up X API client with OAuth 1.0a User Context
         client = tweepy.Client(
             consumer_key=os.environ["X_CONSUMER_KEY"],
             consumer_secret=os.environ["X_CONSUMER_SECRET"],
             access_token=os.environ["X_ACCESS_TOKEN"],
             access_token_secret=os.environ["X_ACCESS_TOKEN_SECRET"],
-            wait_on_rate_limit=True
+            wait_on_rate_limit=True,
         )
-
-        # Set up v1.1 API for media uploads
         auth = tweepy.OAuthHandler(
-            os.environ["X_CONSUMER_KEY"],
-            os.environ["X_CONSUMER_SECRET"]
+            os.environ["X_CONSUMER_KEY"], os.environ["X_CONSUMER_SECRET"]
         )
         auth.set_access_token(
-            os.environ["X_ACCESS_TOKEN"],
-            os.environ["X_ACCESS_TOKEN_SECRET"]
+            os.environ["X_ACCESS_TOKEN"], os.environ["X_ACCESS_TOKEN_SECRET"]
         )
         api = tweepy.API(auth, wait_on_rate_limit=True)
 
-        # Skip duplicate checking for X (requires paid API access)
+        if post_dir:
+            os.makedirs(post_dir, exist_ok=True)
 
-        # Extract links for X - links will be posted as replies
-        text_without_links, links = extract_links_from_text(post["text"])
-
-        # Split text (without links) into multiple posts if needed
-        posts_text = split_text_into_posts(text_without_links, X_CHAR_LIMIT)
-        media_ids = []
-
-        # Upload images if they exist and we have a post directory
-        # Images will only be attached to the first post
-        if post.get("images") and post_dir and os.path.isdir(post_dir):
-            # Get all downloaded image files
-            image_files = [
-                f
-                for f in os.listdir(post_dir)
-                if f.endswith((".jpg", ".jpeg", ".png", ".gif", ".webp"))
-            ]
-
-            # Upload each image (match by order since we download in order)
-            for i, image_info in enumerate(post["images"]):
-                if i < len(image_files) and len(media_ids) < 4:  # X allows max 4 images
-                    image_path = os.path.join(post_dir, image_files[i])
-                    media_id = upload_media_to_x(image_path, api, image_info.get("alt"))
-                    if media_id:
-                        media_ids.append(media_id)
-
-        # Post the thread (text without links)
+        all_links = []
         in_reply_to_tweet_id = None
-        for i, status_text in enumerate(posts_text):
-            # Post the tweet using v2 API
-            if i == 0 and media_ids:
-                # First tweet with images
-                response = client.create_tweet(text=status_text, media_ids=media_ids)
-            elif in_reply_to_tweet_id:
-                # Reply tweet
-                response = client.create_tweet(text=status_text, in_reply_to_tweet_id=in_reply_to_tweet_id)
-            else:
-                # First tweet without images
-                response = client.create_tweet(text=status_text)
+        text_posts_count = 0
+        is_thread = len(posts) > 1
 
-            # Get the ID of the posted tweet for threading
+        for post_index, post in enumerate(posts):
+            if post_index == 0:
+                text_to_post, links = extract_links_from_text(post["text"])
+                all_links.extend(links)
+            elif is_thread:
+                text_to_post = post["text"]
+            else:
+                text_to_post, links = extract_links_from_text(post["text"])
+                all_links.extend(links)
+
+            media_ids = []
+            image_paths = download_images_for_post(post, post_dir)[:4]
+            for i, image_path in enumerate(image_paths):
+                alt_text = (
+                    post["images"][i].get("alt")
+                    if i < len(post.get("images", []))
+                    else None
+                )
+                media_id = upload_media_to_x(image_path, api, alt_text)
+                if media_id:
+                    media_ids.append(media_id)
+
+            for i, status_text in enumerate(
+                split_text_into_posts(text_to_post, X_CHAR_LIMIT)
+            ):
+                if text_posts_count > 0:
+                    print("  Waiting 10 seconds before next post...")
+                    time.sleep(10)
+
+                kwargs = {"text": status_text}
+                if i == 0 and media_ids:
+                    kwargs["media_ids"] = media_ids
+                if in_reply_to_tweet_id:
+                    kwargs["in_reply_to_tweet_id"] = in_reply_to_tweet_id
+
+                response = client.create_tweet(**kwargs)
+                in_reply_to_tweet_id = response.data["id"]
+                text_posts_count += 1
+
+        for link in all_links:
+            print("  Waiting 10 seconds before next post...")
+            time.sleep(10)
+
+            response = client.create_tweet(
+                text=link, in_reply_to_tweet_id=in_reply_to_tweet_id
+            )
             in_reply_to_tweet_id = response.data["id"]
 
-        # Post links as replies if any exist
-        if links:
-            for link in links:
-                response = client.create_tweet(text=link, in_reply_to_tweet_id=in_reply_to_tweet_id)
-                # Update the reply ID for potential future links
-                in_reply_to_tweet_id = response.data["id"]
-
-        print(f"Successfully posted to X: {post['text']}")
-        total_posts = len(posts_text) + len(links)
-        if total_posts > 1:
-            if len(posts_text) > 1 and links:
-                print(f"  as {len(posts_text)} text posts + {len(links)} link replies in a thread")
-            elif len(posts_text) > 1:
-                print(f"  as {len(posts_text)} posts in a thread")
-            elif links:
-                print(f"  with {len(links)} links posted as replies")
-        if media_ids:
-            print(f"  with {len(media_ids)} images")
-    except KeyError as e:
+        total = text_posts_count + len(all_links)
+        print(f"✓ Successfully posted to X as {total} post(s) in a thread")
+        if all_links:
+            print(f"  ({text_posts_count} text posts + {len(all_links)} link replies)")
+    except KeyError:
         print("Warning: Missing X API credentials, so not posting to X")
-        print(e)
     except Exception as e:
         print(f"An error occurred while posting to X: {str(e)}")
 
 
-def post_to_bluesky(post: Post, post_dir: Optional[str] = None) -> None:
+def post_to_bluesky(posts: List[Post], post_dir: Optional[str] = None) -> None:
+    """Post thread to Bluesky with images or link cards"""
     try:
         client = Client()
         client.login(BLUESKY_HANDLE, os.environ["BLUESKY_APP_PASSWORD"])
 
-        # Check for similar posts
-        if search_similar_posts_bluesky(post, client):
-            print(f"Similar Bluesky post already exists for {post['text']}. Skipping.")
+        if posts and search_similar_posts_bluesky(posts[0], client):
+            print("Similar Bluesky post already exists. Skipping.")
             return
 
-        # Split text into multiple posts if needed
-        posts_text = split_text_into_posts(post["text"], BLUESKY_CHAR_LIMIT)
+        if post_dir:
+            os.makedirs(post_dir, exist_ok=True)
 
-        # Upload images if they exist and we have a post directory
-        # Images will only be attached to the first post
-        images_to_embed = []
-        if post.get("images") and post_dir and os.path.isdir(post_dir):
-            # Get all downloaded image files
-            image_files = [
-                f
-                for f in os.listdir(post_dir)
-                if f.endswith((".jpg", ".jpeg", ".png", ".gif", ".webp"))
-            ]
+        reply_to = None
+        total_posted = 0
 
-            # Upload each image (match by order since we download in order)
-            for i, image_info in enumerate(post["images"]):
-                if i < len(image_files):
-                    image_path = os.path.join(post_dir, image_files[i])
+        for post in posts:
+            if total_posted > 0:
+                print("  Waiting 10 seconds before next post...")
+                time.sleep(10)
+
+            tb, first_url = build_bluesky_text_with_links(post["text"])
+            embed = None
+
+            if post.get("images"):
+                images_to_embed = []
+                image_paths = download_images_for_post(post, post_dir)
+                for i, image_path in enumerate(image_paths):
                     try:
-                        with open(image_path, "rb") as image_file:
-                            image_data = image_file.read()
+                        with open(image_path, "rb") as f:
+                            image_data = f.read()
 
-                        # Get image dimensions for aspect ratio
                         with Image.open(io.BytesIO(image_data)) as img:
                             width, height = img.size
-                            aspect_ratio = {"width": width, "height": height}
 
-                        # Upload the image to Bluesky
                         upload_response = client.upload_blob(image_data)
+                        alt_text = (
+                            post["images"][i].get("alt", "")
+                            if i < len(post["images"])
+                            else ""
+                        )
 
-                        # Create image embed with alt text and aspect ratio
-                        image_embed = {
-                            "alt": image_info.get("alt", ""),
-                            "image": upload_response.blob,
-                            "aspectRatio": aspect_ratio,
-                        }
-                        images_to_embed.append(image_embed)
+                        images_to_embed.append(
+                            {
+                                "alt": alt_text,
+                                "image": upload_response.blob,
+                                "aspectRatio": {"width": width, "height": height},
+                            }
+                        )
                     except Exception as e:
-                        print(f"Error uploading image {image_path} to Bluesky: {e}")
+                        print(f"Error uploading image to Bluesky: {e}")
 
-        # Post the thread
-        reply_to = None
-        for i, text in enumerate(posts_text):
-            # Build text with clickable links
-            tb = client_utils.TextBuilder()
-            url_pattern = r"https?://[^\s]+"
+                if images_to_embed:
+                    embed = {
+                        "$type": "app.bsky.embed.images",
+                        "images": images_to_embed,
+                    }
 
-            # Split text by URLs and rebuild with proper links
-            last_end = 0
-            for match in re.finditer(url_pattern, text):
-                # Add text before the URL
-                if match.start() > last_end:
-                    tb.text(text[last_end : match.start()])
+            elif first_url:
+                embed = create_bluesky_link_card(first_url)
 
-                # Add the URL as a link
-                url = match.group()
-                tb.link(url, url)
-                last_end = match.end()
+            kwargs = {"reply_to": reply_to} if reply_to else {}
+            if embed:
+                kwargs["embed"] = embed
+            response = client.send_post(tb, **kwargs)
 
-            # Add any remaining text after the last URL
-            if last_end < len(text):
-                tb.text(text[last_end:])
-
-            # Send the post
-            if i == 0 and images_to_embed:
-                # First post with images
-                response = client.send_post(
-                    tb, embed={"$type": "app.bsky.embed.images", "images": images_to_embed}
-                )
-            elif reply_to:
-                # Reply post
-                response = client.send_post(tb, reply_to=reply_to)
-            else:
-                # First post without images
-                response = client.send_post(tb)
-
-            # Set up reply reference for next post
             reply_to = {
-                "root": reply_to["root"] if reply_to else {"uri": response.uri, "cid": response.cid},
+                "root": reply_to["root"]
+                if reply_to
+                else {"uri": response.uri, "cid": response.cid},
                 "parent": {"uri": response.uri, "cid": response.cid},
             }
+            total_posted += 1
 
-        print(f"Successfully posted to Bluesky: {post['text']}")
-        if len(posts_text) > 1:
-            print(f"  as {len(posts_text)} posts in a thread")
-        if images_to_embed:
-            print(f"  with {len(images_to_embed)} images")
-    except KeyError as e:
+        print(f"✓ Successfully posted to Bluesky as {total_posted} post(s) in a thread")
+    except KeyError:
         print("Warning: Missing BLUESKY_APP_PASSWORD, so not posting to Bluesky")
-        print(e)
     except Exception as e:
         print(f"An error occurred while posting to Bluesky: {str(e)}")
 
@@ -1011,33 +1144,29 @@ Examples:
 
   # Test posting specific issue to X only
   python scripts/update_links.py --issue 123 --platforms x --test
-        """
+        """,
     )
 
     parser.add_argument(
         "--platforms",
         nargs="+",
-        choices=["mastodon", "x", "bluesky"],
-        default=["mastodon", "x", "bluesky"],
-        help="Platforms to post to (default: all platforms)"
+        choices=["blog", "mastodon", "x", "bluesky"],
+        default=["blog", "mastodon", "x", "bluesky"],
+        help="Platforms to post to (default: blog and all social platforms)",
     )
 
     parser.add_argument(
         "--test",
         action="store_true",
-        help="Test mode - show what would be posted without actually posting"
+        help="Test mode - show what would be posted without actually posting",
     )
 
-    parser.add_argument(
-        "--issue",
-        type=int,
-        help="Post specific GitHub issue by ID"
-    )
+    parser.add_argument("--issue", type=int, help="Post specific GitHub issue by ID")
 
     parser.add_argument(
         "--force",
         action="store_true",
-        help="Force reposting even if post already exists"
+        help="Force reposting even if post already exists",
     )
 
     return parser.parse_args()
@@ -1046,17 +1175,47 @@ Examples:
 def main() -> None:
     args = parse_args()
 
-    posts = get_posts_from_github(issue_id=args.issue)
-    print(f"Found {len(posts)} posts.")
+    issues = get_issues_from_github(issue_id=args.issue)
+    print(f"Found {len(issues)} issue(s).")
 
-    for post in posts:
-        save_post(
-            post,
-            platforms=args.platforms,
-            test_mode=args.test,
-            force=args.force,
-            specific_issue=args.issue is not None
-        )
+    for issue in issues:
+        excluded_platforms = get_excluded_platforms(issue)
+
+        if excluded_platforms:
+            print(
+                f"Issue #{issue.number}: Excluding platforms based on labels: {excluded_platforms}"
+            )
+
+        active_platforms = [p for p in args.platforms if p not in excluded_platforms]
+
+        if not active_platforms:
+            print(f"Issue #{issue.number}: All platforms excluded by labels, skipping.")
+            continue
+
+        social_platforms = [p for p in active_platforms if p != "blog"]
+        include_blog = "blog" in active_platforms
+
+        if include_blog:
+            blog_post = convert_issue_to_post(issue, for_social=False)
+            save_post(
+                blog_post,
+                test_mode=args.test,
+                force=args.force,
+                specific_issue=args.issue is not None,
+            )
+
+        if social_platforms:
+            social_posts = convert_issue_to_post(issue, for_social=True)
+            post_to_social_media(
+                social_posts,
+                platforms=social_platforms,
+                test_mode=args.test,
+                force=args.force,
+                specific_issue=args.issue is not None,
+            )
+
+        if not args.test:
+            issue.edit(state="closed")
 
 
 if __name__ == "__main__":

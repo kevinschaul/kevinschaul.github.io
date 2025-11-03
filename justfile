@@ -28,3 +28,17 @@ clean:
 # Build tailwind css
 css:
     npm run build:tailwind
+
+# Format and lint Python code
+check:
+    uv run ruff check scripts/ tests/
+    uv run ruff format scripts/ tests/ --check
+
+# Fix linting and formatting of Python code
+fix:
+    uv run ruff check scripts/ tests/ --fix
+    uv run ruff format scripts/ tests/
+
+# Run tests
+test:
+    uv run pytest tests/
