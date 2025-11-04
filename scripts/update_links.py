@@ -674,10 +674,8 @@ def save_post(
                         print(f"Downloaded image: {downloaded_filename}")
 
             if post.get("original_body"):
-                markdown_text = process_issue_text_for_blog(
-                    post["original_body"], url_to_filename
-                )
-                markdown_text, extracted_links = extract_links_from_text(markdown_text)
+                # First clean the text (remove img tags, etc) but keep links
+                markdown_text, _ = process_issue_text(post["original_body"])
                 markdown_content = generate_markdown_content_inline(
                     post, markdown_text, url_to_filename
                 )

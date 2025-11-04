@@ -1265,3 +1265,76 @@ Check it out: https://claude.ai"""
         "https://claude.ai",
     ]
     assert extracted_links == expected_links
+
+
+def test_blog_post_with_inline_img_tags():
+    """Test that blog posts remove inline img tags and keep images only in frontmatter"""
+    from scripts.update_links import (
+        convert_issue_to_post,
+        generate_markdown_content_inline,
+        process_issue_text,
+    )
+
+    # Issue body with inline img tags (like GitHub issue #111)
+    issue_body = """Must-read story on Common Crawl.
+
+https://www.theatlantic.com/technology/article.html
+
+<img width="678" height="200" alt="Screenshot 1" src="https://github.com/user-attachments/assets/image1.png" />
+
+<img width="679" height="306" alt="Screenshot 2" src="https://github.com/user-attachments/assets/image2.png" />"""
+
+    # Simulate the save_post flow
+    # Step 1: Clean the text (remove img tags)
+    markdown_text, extracted_images = process_issue_text(issue_body)
+
+    # Step 2: Create url_to_filename mapping (simulating downloaded images)
+    url_to_filename = {
+        "https://github.com/user-attachments/assets/image1.png": "local1.png",
+        "https://github.com/user-attachments/assets/image2.png": "local2.png",
+    }
+
+    # Step 3: Create post dict
+    post = {
+        "date": "2025-11-04T14:52:59+00:00",
+        "text": "unused",
+        "images": extracted_images,
+        "hash": "111",
+    }
+
+    # Step 4: Generate markdown content
+    markdown_content = generate_markdown_content_inline(
+        post, markdown_text, url_to_filename
+    )
+
+    # Verify: No inline img tags in the body
+    assert "<img" not in markdown_content
+    assert "github.com/user-attachments/assets" not in markdown_content
+
+    # Verify: Images are in frontmatter
+    assert "images:" in markdown_content
+    assert "- src: local1.png" in markdown_content
+    assert 'alt: "Screenshot 1"' in markdown_content
+    assert "- src: local2.png" in markdown_content
+    assert 'alt: "Screenshot 2"' in markdown_content
+
+    # Verify: Link is preserved in body
+    assert "https://www.theatlantic.com/technology/article.html" in markdown_content
+    assert "Must-read story on Common Crawl." in markdown_content
+
+    # Verify: Text is after frontmatter delimiter
+    lines = markdown_content.split("\n")
+    # Find where frontmatter ends (second ---)
+    frontmatter_end = 0
+    dash_count = 0
+    for i, line in enumerate(lines):
+        if line == "---":
+            dash_count += 1
+            if dash_count == 2:
+                frontmatter_end = i
+                break
+
+    body = "\n".join(lines[frontmatter_end + 1 :])
+    assert "Must-read story on Common Crawl." in body
+    assert "https://www.theatlantic.com/technology/article.html" in body
+    assert "<img" not in body
