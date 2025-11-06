@@ -45,7 +45,15 @@ X_CHAR_LIMIT = 280
 def get_url_metadata(url: str) -> Dict[str, Optional[str]]:
     """Fetch metadata from a URL"""
     try:
-        headers = {"User-Agent": "Mozilla/5.0"}
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.5",
+            "Accept-Encoding": "gzip, deflate, br",
+            "DNT": "1",
+            "Connection": "keep-alive",
+            "Upgrade-Insecure-Requests": "1"
+        }
         response = requests.get(url, headers=headers, timeout=10)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
@@ -219,13 +227,36 @@ def process_issue_text(text: str) -> tuple[str, List[ImageInfo]]:
 
 
 def process_issue_text_for_blog(text: str, url_to_filename: Dict[str, str]) -> str:
-    """Replace image URLs with local filenames in blog text"""
+    """Replace image URLs with local filenames and convert plain URLs to titled links in blog text"""
     if not text:
         return text
 
     result = text
+
+    # Replace image URLs with local filenames
     for url, local_filename in url_to_filename.items():
         result = result.replace(url, local_filename)
+
+    # Convert plain URLs to titled links for blog posts
+    # Match URLs that aren't already in markdown link format
+    url_pattern = r'(?<!\]\()https?://[^\s)]+(?!\))'
+
+    def replace_with_titled_link(match):
+        url = match.group(0)
+        # Clean up any trailing punctuation
+        url = re.sub(r'[.,;:!?]+$', '', url)
+
+        # Fetch metadata for the URL
+        metadata = get_url_metadata(url)
+        title = metadata.get('title')
+
+        if title:
+            return f"\n\n[{title}]({url})"
+        else:
+            # If we can't get a title, keep the plain URL
+            return url
+
+    result = re.sub(url_pattern, replace_with_titled_link, result)
     return result
 
 
@@ -676,6 +707,8 @@ def save_post(
             if post.get("original_body"):
                 # First clean the text (remove img tags, etc) but keep links
                 markdown_text, _ = process_issue_text(post["original_body"])
+                # Convert plain URLs to titled links for blog posts
+                markdown_text = process_issue_text_for_blog(markdown_text, {})
                 markdown_content = generate_markdown_content_inline(
                     post, markdown_text, url_to_filename
                 )

@@ -1338,3 +1338,81 @@ https://www.theatlantic.com/technology/article.html
     assert "Must-read story on Common Crawl." in body
     assert "https://www.theatlantic.com/technology/article.html" in body
     assert "<img" not in body
+
+
+@patch("scripts.update_links.get_url_metadata")
+def test_process_issue_text_for_blog_converts_plain_url_to_titled_link(
+    mock_get_metadata,
+):
+    """Test that blog posts convert plain URLs to titled markdown links with newlines"""
+    from scripts.update_links import process_issue_text_for_blog
+
+    # Mock the metadata fetch to return a title
+    mock_get_metadata.return_value = {
+        "title": "Meta is earning a fortune on a deluge of fraudulent ads, documents show",
+        "description": "Investigation reveals Meta's ad revenue from fraud",
+    }
+
+    text = "Hell of a story right here https://www.reuters.com/investigations/meta-is-earning-fortune-deluge-fraudulent-ads-documents-show-2025-11-06/"
+    result = process_issue_text_for_blog(text, {})
+
+    # Should convert plain URL to titled link with newlines before it
+    assert (
+        "[Meta is earning a fortune on a deluge of fraudulent ads, documents show]"
+        in result
+    )
+    assert (
+        "https://www.reuters.com/investigations/meta-is-earning-fortune-deluge-fraudulent-ads-documents-show-2025-11-06/"
+        in result
+    )
+    # Check newlines are added before the link
+    assert "\n\n[Meta is earning" in result
+    mock_get_metadata.assert_called_once()
+
+
+@patch("scripts.update_links.get_url_metadata")
+def test_process_issue_text_for_blog_preserves_existing_markdown_links(
+    mock_get_metadata,
+):
+    """Test that existing markdown links are not modified"""
+    from scripts.update_links import process_issue_text_for_blog
+
+    text = "Check out [this link](https://example.com/article)"
+    result = process_issue_text_for_blog(text, {})
+
+    # Should preserve the existing markdown link
+    assert result == "Check out [this link](https://example.com/article)"
+    mock_get_metadata.assert_not_called()
+
+
+@patch("scripts.update_links.get_url_metadata")
+def test_process_issue_text_for_blog_handles_no_title(mock_get_metadata):
+    """Test that URLs without titles are kept as plain URLs"""
+    from scripts.update_links import process_issue_text_for_blog
+
+    # Mock the metadata fetch to return no title
+    mock_get_metadata.return_value = {}
+
+    text = "Visit https://example.com"
+    result = process_issue_text_for_blog(text, {})
+
+    # Should keep plain URL if no title available
+    assert result == "Visit https://example.com"
+    mock_get_metadata.assert_called_once()
+
+
+@patch("scripts.update_links.get_url_metadata")
+def test_process_issue_text_for_blog_strips_trailing_punctuation(mock_get_metadata):
+    """Test that trailing punctuation is stripped from URLs"""
+    from scripts.update_links import process_issue_text_for_blog
+
+    mock_get_metadata.return_value = {"title": "Article Title"}
+
+    text = "Check this: https://example.com/article."
+    result = process_issue_text_for_blog(text, {})
+
+    # Should strip the trailing period from URL
+    assert "[Article Title](https://example.com/article)" in result
+    # The trailing punctuation is removed with the URL
+    assert result == "Check this: \n\n[Article Title](https://example.com/article)"
+    mock_get_metadata.assert_called_once_with("https://example.com/article")
