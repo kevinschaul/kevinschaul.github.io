@@ -42,3 +42,38 @@ fix:
 # Run tests
 test:
     uv run pytest tests/
+
+# Create a new post
+post:
+    #!/usr/bin/env bash
+    # Get post title
+    read -p "Enter post title: " title
+
+    # Generate and confirm slug
+    slug=$(echo "$title" | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g' | sed 's/[^a-z0-9-]//g')
+    read -p "Slug [$slug]: " slug_input
+    slug=${slug_input:-$slug}
+
+    # Generate and confirm date
+    date=$(date +%Y-%m-%d)
+    read -p "Date [$date]: " date_input
+    date=${date_input:-$date}
+
+    # Create directory and file
+    dir="content/post/${date}-${slug}"
+    mkdir -p "$dir"
+    cat > "$dir/index.md" <<EOF
+    ---
+    title: $title
+    date: '$date'
+    slug: $slug
+    tags: []
+    show_on_homepage: yes
+    blurb: ''
+    tease: false
+    ---
+
+    EOF
+    echo "Created new post: $dir/index.md"
+    echo "Opening in editor..."
+    ${EDITOR:-vim} "$dir/index.md"
