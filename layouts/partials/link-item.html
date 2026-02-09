@@ -10,10 +10,10 @@
   {{ if .Params.images }}
     <div>
       {{ range .Params.images }}
-        {{ $image := $.Resources.Get .src }}
+        {{ $image := $.Resources.Get . }}
         <img
           src="{{ $image.RelPermalink }}"
-          alt="{{ .alt }}"
+          alt="{{ $image.Params.alt }}"
           class="mt-2 mb-1 border border-black/10 dark:border-white/10"
         />
       {{ end }}

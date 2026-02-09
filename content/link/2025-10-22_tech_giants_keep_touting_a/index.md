@@ -1,8 +1,11 @@
 ---
 date: 2025-10-22T13:50:21+00:00
 images:
+  - table.png
+resources:
   - src: table.png
-    alt: "Table titled Few social media sites labeled fake videos as AI-generated"
+    params:
+      alt: "Table titled Few social media sites labeled fake videos as AI-generated"
 ---
 
 Tech giants keep touting a system they built to label AI-generated content. But it only works if everyone uses it.

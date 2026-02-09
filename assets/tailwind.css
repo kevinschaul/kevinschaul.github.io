@@ -29,6 +29,15 @@ article code {
 /*   --tw-prose-invert-links: var(--color-purple-400); */
 /* } */
 
+/* Remove quotation marks from blockquotes */
+blockquote {
+  quotes: none;
+}
+blockquote p:first-of-type::before,
+blockquote p:last-of-type::after {
+  content: none;
+}
+
 .link-item p {
   margin-top: 0.2em;
   margin-bottom: 0.5em;

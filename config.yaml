@@ -25,9 +25,12 @@ menu:
       weight: 3
 
 rssLimit: 10
-paginate: 10
+pagination:
+  pagerSize: 10
 
 params:
+  images:
+    - social.jpg
   description: "Visual journalist/hacker covering AI"
   dateFormat: "Jan. 1, 2006"
   color: "gray"
@@ -41,4 +44,3 @@ markup:
   goldmark:
     renderer:
       unsafe: true
-

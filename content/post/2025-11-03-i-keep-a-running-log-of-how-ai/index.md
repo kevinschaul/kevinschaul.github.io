@@ -7,10 +7,15 @@ show_on_homepage: yes
 blurb: ""
 tease: false
 images:
+  - 01c8c216f91f4391a782dc167a7449ac.png
+  - 3cb58244ae8a4777991a76a20c277970.png
+resources:
   - src: 01c8c216f91f4391a782dc167a7449ac.png
-    alt: "Look up a new paper on a small ai model that did well on arc agi. It came out a week or two ago"
+    params:
+      alt: "Look up a new paper on a small ai model that did well on arc agi. It came out a week or two ago"
   - src: 3cb58244ae8a4777991a76a20c277970.png
-    alt: "It looks unavailable to me"
+    params:
+      alt: "It looks unavailable to me"
 ---
 
 I keep a running log of how AI did on real tasks. Notes from the last few weeks: 🧵

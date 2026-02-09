@@ -1,10 +1,15 @@
 ---
 date: 2025-12-17T22:25:38+00:00
 images:
+  - 8ed48f450d1e49a1aa39ae1baf0b2fd3.png
+  - 5b9256ac94e44ab19a157785bb46e041.png
+resources:
   - src: 8ed48f450d1e49a1aa39ae1baf0b2fd3.png
-    alt: "Image"
+    params:
+      alt: "Image"
   - src: 5b9256ac94e44ab19a157785bb46e041.png
-    alt: "Image"
+    params:
+      alt: "Image"
 ---
 
 I partnered with 

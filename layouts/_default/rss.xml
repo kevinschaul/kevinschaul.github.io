@@ -35,10 +35,12 @@
       <description>
         {{ .Content | html }}
         {{ if .Params.images }}
-            {{ $page := . }}
             {{ $imageHTML := "" }}
             {{ range .Params.images }}
-              {{ $imageHTML = printf "%s<img src=\"%s%s\" alt=\"%s\" />" $imageHTML $page.Permalink .src .alt }}
+              {{ $image := $.Resources.Get . }}
+              {{ if $image }}
+                {{ $imageHTML = printf "%s<img src=\"%s\" alt=\"%s\" />" $imageHTML $image.Permalink $image.Params.alt }}
+              {{ end }}
             {{ end }}
             {{ $imageHTML | html }}
         {{ end }}
