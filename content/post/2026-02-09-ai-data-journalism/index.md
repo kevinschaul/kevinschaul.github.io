@@ -6,15 +6,13 @@ tags: [ai]
 show_on_homepage: yes
 blurb: "When you’re doing data journalism, vibes are not enough."
 tease: false
-images:
-  - spreadsheets.jpg
 ---
 
 This morning three colleagues and I [published a story](https://www.washingtonpost.com/technology/2026/02/09/trump-administration-ai-push/) outlining how the federal government is using AI. Here’s how I used Claude Code to help.
 
 Agencies are required to publish a spreadsheet of AI use cases. Unfortunately (and unsurprisingly) each agency posts them in a different place on their website, in a different file format, using different column names and values. OMB will eventually consolidate these, but why wait when we can do it ourselves?
 
-![A small sample of the messiness: Three spreadsheets, each with different headers and columns](spreadsheets.jpg)
+![A small sample of the messiness: Three spreadsheets, each with different headers and columns](feature-spreadsheets.jpg)
 
 Locating, consolidating and cleaning disparate data sources is a classic data journalism task. It’s also a perfect use-case for “agentic” AI systems like Claude Code. Having done similar projects many times before, I had a good sense of the steps and how to structure the files to ensure auditability and idempotence. 
 
