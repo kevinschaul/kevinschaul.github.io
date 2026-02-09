@@ -1,6 +1,6 @@
 ---
 title: "How I used Claude Code in a real data journalism project"
-date: "2026-02-09T10:20:00-06:00"
+date: "2026-02-09T11:20:00-06:00"
 slug: "2026-02-09-ai-data-journalism"
 tags: [ai]
 show_on_homepage: yes
