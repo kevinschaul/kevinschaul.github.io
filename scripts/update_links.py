@@ -600,24 +600,36 @@ def generate_markdown_content(post: Post, downloaded_images: List[str] = None) -
     content.append(f"date: {post['date']}")
 
     if downloaded_images and post.get("images"):
-        content.append("images:")
         src_to_filename = {}
         if post["images"] and downloaded_images:
             for i, downloaded_filename in enumerate(downloaded_images):
                 if i < len(post["images"]):
                     src_to_filename[post["images"][i]["src"]] = downloaded_filename
 
+        content.append("images:")
         for image_info in post["images"]:
             downloaded_filename = src_to_filename.get(
                 image_info["src"], image_info["src"]
             )
-            content.append(f"  - src: {downloaded_filename}")
+            content.append(f"  - {downloaded_filename}")
+
+        resources = []
+        for image_info in post["images"]:
+            downloaded_filename = src_to_filename.get(
+                image_info["src"], image_info["src"]
+            )
             if image_info.get("alt"):
-                content.append(f'    alt: "{image_info["alt"]}"')
+                resources.append((downloaded_filename, image_info["alt"]))
+        if resources:
+            content.append("resources:")
+            for filename, alt in resources:
+                content.append(f"  - src: {filename}")
+                content.append(f"    params:")
+                content.append(f'      alt: "{alt}"')
     elif downloaded_images:
         content.append("images:")
         for image in downloaded_images:
-            content.append(f"  - src: {image}")
+            content.append(f"  - {image}")
 
     content.append("---")
     content.append("")
@@ -638,9 +650,19 @@ def generate_markdown_content_inline(
         for image_info in post["images"]:
             local_filename = url_to_filename.get(image_info["src"])
             if local_filename:
-                content.append(f"  - src: {local_filename}")
-                if image_info.get("alt"):
-                    content.append(f'    alt: "{image_info["alt"]}"')
+                content.append(f"  - {local_filename}")
+
+        resources = []
+        for image_info in post["images"]:
+            local_filename = url_to_filename.get(image_info["src"])
+            if local_filename and image_info.get("alt"):
+                resources.append((local_filename, image_info["alt"]))
+        if resources:
+            content.append("resources:")
+            for filename, alt in resources:
+                content.append(f"  - src: {filename}")
+                content.append(f"    params:")
+                content.append(f'      alt: "{alt}"')
 
     content.append("---")
     content.append("")

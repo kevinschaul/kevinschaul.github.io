@@ -1,8 +1,11 @@
 ---
 date: 2026-02-09T20:35:46+00:00
 images:
+  - 4686cd14583d4d04a6777e1b684ac95b.png
+resources:
   - src: 4686cd14583d4d04a6777e1b684ac95b.png
-    alt: "Number of AI use cases reported by federal government"
+    params:
+      alt: "Number of AI use cases reported by federal government"
 ---
 
 New: How the federal government is using AI
