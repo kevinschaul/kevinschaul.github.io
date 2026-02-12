@@ -34,12 +34,14 @@
       <guid>{{ .Permalink }}</guid>
       <description>
         {{ .Content | html }}
+        {{ $page := . }}
         {{ if .Params.images }}
             {{ $imageHTML := "" }}
             {{ range .Params.images }}
-              {{ $image := $.Resources.Get . }}
+              {{ $image := $page.Resources.Get . }}
               {{ if $image }}
-                {{ $imageHTML = printf "%s<img src=\"%s\" alt=\"%s\" />" $imageHTML $image.Permalink $image.Params.alt }}
+                {{ $alt := $image.Params.alt | default "" }}
+                {{ $imageHTML = printf "%s<img src=\"%s\" alt=\"%s\" />" $imageHTML ($image.Permalink | htmlEscape) ($alt | htmlEscape) }}
               {{ end }}
             {{ end }}
             {{ $imageHTML | html }}
