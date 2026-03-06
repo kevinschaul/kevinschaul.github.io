@@ -5,7 +5,7 @@ author: Kevin Schaul
 category: project
 title: Drilling into the DEA’s pain pill database
 slug: 2019-07-21-dea-database
-external_url: https://www.washingtonpost.com/graphics/2019/investigations/dea-pain-pill-database/
+external_link: https://www.washingtonpost.com/graphics/2019/investigations/dea-pain-pill-database/
 ---
 
 # Drilling into the DEA’s pain pill database

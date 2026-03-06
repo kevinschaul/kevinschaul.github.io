@@ -1,6 +1,9 @@
 """Sphinx configuration for kevinschaul.github.io."""
 
 import datetime
+import glob
+import os
+import shutil
 
 # ── Project info ──────────────────────────────────────────────────────────────
 project = "Kevin Schaul"
@@ -55,6 +58,12 @@ html_theme_options = {
     "description": "Kevin Schaul — Visual journalist/hacker covering AI",
 }
 
+_srcdir = os.path.dirname(__file__)
+_project_slugs_with_images = {
+    os.path.basename(os.path.dirname(p))
+    for p in glob.glob(os.path.join(_srcdir, "project", "*", "tease.png"))
+}
+
 html_context = {
     "current_year": datetime.datetime.now().year,
     "nav_links": [
@@ -62,7 +71,11 @@ html_context = {
         {"name": "LLM evals", "url": "https://kschaul.com/llm-evals/", "external": True},
         {"name": "Follow", "url": "follow", "external": False},
     ],
+    "project_slugs_with_images": _project_slugs_with_images,
 }
+
+# ── Templates ─────────────────────────────────────────────────────────────────
+templates_path = ["_templates"]
 
 # ── Static files ──────────────────────────────────────────────────────────────
 html_static_path = ["_static"]
@@ -88,3 +101,18 @@ suppress_warnings = ["toc.not_included", "myst.header", "myst.xref_missing"]
 
 # Use dirhtml builder by default (produces clean /path/ URLs)
 # Run: sphinx-build -b dirhtml sphinx-site _build/dirhtml
+
+
+def _copy_tease_images(app, exception):
+    """Copy project tease.png files to the output directory."""
+    if exception:
+        return
+    for src in glob.glob(os.path.join(app.srcdir, "project", "*", "tease.png")):
+        slug = os.path.basename(os.path.dirname(src))
+        dst_dir = os.path.join(app.outdir, "project", slug)
+        os.makedirs(dst_dir, exist_ok=True)
+        shutil.copy2(src, os.path.join(dst_dir, "tease.png"))
+
+
+def setup(app):
+    app.connect("build-finished", _copy_tease_images)

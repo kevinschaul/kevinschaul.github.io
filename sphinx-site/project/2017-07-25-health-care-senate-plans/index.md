@@ -5,7 +5,7 @@ author: Kevin Schaul
 category: project
 title: Which health-care plans the Senate rejected (and who voted ‘no’)
 slug: 2017-07-25-health-care-senate-plans
-external_url: https://www.washingtonpost.com/graphics/2017/politics/health-care-senate-amendment-votes/
+external_link: https://www.washingtonpost.com/graphics/2017/politics/health-care-senate-amendment-votes/
 ---
 
 # Which health-care plans the Senate rejected (and who voted ‘no’)

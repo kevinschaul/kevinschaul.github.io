@@ -5,7 +5,7 @@ author: Kevin Schaul
 category: project
 title: Follow a mile-by-mile map of the total solar eclipse
 slug: solar-eclipse-map
-external_url: https://www.washingtonpost.com/science/interactive/2024/map-totality-solar-eclipse-locations/
+external_link: https://www.washingtonpost.com/science/interactive/2024/map-totality-solar-eclipse-locations/
 ---
 
 # Follow a mile-by-mile map of the total solar eclipse

@@ -1,0 +1,56 @@
+{%- extends "page.html" -%}
+
+{%- block body -%}
+
+{%- macro postlink(post) -%}
+  {%- if post.external_link -%}{{- post.external_link -}}{%- else -%}{{- pathto(post.docname) -}}{%- endif -%}
+{%- endmacro -%}
+
+{%- if collection.label == "link" -%}
+
+{# ── Link posts: stream of full content ───────────────────── #}
+<h1>Short posts</h1>
+<div class="link-stream">
+  {%- for post in collection -%}
+  <div class="link-item">
+    <time><a href="{{ pathto(post.docname) }}">{{ post.date.strftime("%B %-d, %Y") }}</a></time>
+    {{ post.to_html(collection.docname, fulltext=True) | safe }}
+  </div>
+  {%- endfor -%}
+</div>
+
+{%- elif collection.label == "project" -%}
+
+{# ── Projects: grid with teaser images, links to external URL ─ #}
+<h1>Projects</h1>
+<div class="projects-grid">
+  {%- for post in collection -%}
+  {%- set slug = post.docname.split('/')[-2] -%}
+  <div class="project-item">
+    {%- if slug in project_slugs_with_images -%}
+    <a href="{{ postlink(post) }}">
+      <img src="{{ slug }}/tease.png" alt="{{ post.title }}" loading="lazy">
+    </a>
+    {%- endif -%}
+    <p class="my-0"><a href="{{ postlink(post) }}">{{ post.title }}</a></p>
+    <time class="post-date">{{ post.date.strftime("%B %-d, %Y") }}</time>
+  </div>
+  {%- endfor -%}
+</div>
+
+{%- else -%}
+
+{# ── Default: simple list ──────────────────────────────────── #}
+<h1>{{ collection }}</h1>
+<ul class="ablog-blog-post-list">
+  {%- for post in collection -%}
+  <li>
+    <p class="post-title"><a href="{{ postlink(post) }}">{{ post.title }}</a></p>
+    <p class="post-date">{{ post.date.strftime("%B %-d, %Y") }}</p>
+  </li>
+  {%- endfor -%}
+</ul>
+
+{%- endif -%}
+
+{%- endblock -%}

@@ -5,7 +5,7 @@ author: Kevin Schaul
 category: project
 title: These women won their primaries. Will they be elected in November?
 slug: 2018-05-14-women-congress-governor
-external_url: https://www.washingtonpost.com/graphics/2018/politics/women-congress-governor-primaries/
+external_link: https://www.washingtonpost.com/graphics/2018/politics/women-congress-governor-primaries/
 ---
 
 # These women won their primaries. Will they be elected in November?

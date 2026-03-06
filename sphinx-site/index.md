@@ -10,10 +10,11 @@ title: Kevin Schaul
 :::{postlist} 3
 :category: link
 :date: "%B %-d, %Y"
-:format: "{title}"
+:format: "{date}"
+:excerpts:
 :::
 
-[More short posts →](link/index)
+[More short posts →](blog/category/link/index)
 ::::
 
 ::::{container} homepage-card
@@ -27,7 +28,7 @@ title: Kevin Schaul
 :format: "{title}"
 :::
 
-[More projects →](project/index)
+[More projects →](blog/category/project/index)
 ::::
 
 ::::{container} homepage-card
@@ -41,5 +42,5 @@ title: Kevin Schaul
 :format: "{title}"
 :::
 
-[More blog posts →](post/index)
+[More blog posts →](blog/category/blog/index)
 ::::
