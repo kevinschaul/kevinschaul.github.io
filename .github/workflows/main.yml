@@ -1,5 +1,4 @@
-# Sample workflow for building and deploying a Hugo site to GitHub Pages
-name: Deploy Hugo site to Pages
+name: Deploy Sphinx site to Pages
 
 on:
   # Runs on pushes targeting the default branch
@@ -7,7 +6,7 @@ on:
     branches:
       - main
 
-  # Runs when issues are opened or edited
+  # Runs when issues are opened or edited (for the link-update script)
   issues:
     types: [opened, edited]
 
@@ -21,23 +20,19 @@ permissions:
   id-token: write
   issues: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+# Allow only one concurrent deployment; don't cancel in-progress runs.
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
-# Default to bash
 defaults:
   run:
     shell: bash
 
 jobs:
-  # Build job
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.155.3
       MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
       BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -46,43 +41,24 @@ jobs:
       X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
       X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
     steps:
-      - name: Install Hugo CLI
-        run: |
-          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
-          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: recursive
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
 
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
 
+      - name: Install Python dependencies
+        run: uv sync
+
       - name: Update links and posts
+        run: uv run scripts/update_links.py
+
+      - name: Commit and push updated content if changed
         run: |
-          uv run scripts/update_links.py
-
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v5
-
-      - name: Build with Hugo
-        env:
-          HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
-          HUGO_ENVIRONMENT: production
-          TZ: America/Los_Angeles
-        run: |
-          hugo \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"
-
-      - name: Commit and push if it changed
-        run: |-
           git config user.name "Automated"
           git config user.email "actions@users.noreply.github.com"
           git add -A
@@ -90,12 +66,25 @@ jobs:
           git commit -m "Latest data: ${timestamp}" || exit 0
           git push
 
+      - name: Prepare static assets
+        run: make static-prep
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build with Sphinx (dirhtml — clean URLs)
+        run: |
+          uv run sphinx-build \
+            -b dirhtml \
+            -D html_baseurl="${{ steps.pages.outputs.base_url }}/" \
+            . _build/dirhtml
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public
+          path: ./_build/dirhtml
 
-  # Deployment job
   deploy:
     environment:
       name: github-pages
