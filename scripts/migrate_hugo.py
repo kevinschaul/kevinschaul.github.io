@@ -25,6 +25,7 @@ from pathlib import Path
 import yaml
 
 REPO_ROOT = Path(__file__).parent.parent
+SPHINX_ROOT = REPO_ROOT / "sphinx-site"  # output goes here
 CONTENT_ROOT = REPO_ROOT / "content"
 
 
@@ -32,6 +33,18 @@ CONTENT_ROOT = REPO_ROOT / "content"
 
 FRONT_MATTER_RE = re.compile(r"^---\n(.*?)\n---\n?", re.DOTALL)
 YOUTUBE_RE = re.compile(r'\{\{<\s*youtube\s+([A-Za-z0-9_-]+)\s*>\}\}')
+HEADING_RE = re.compile(r"^#+ ", re.MULTILINE)
+
+
+def ensure_title_heading(title: str, body: str) -> str:
+    """Prepend '# Title' if the body has no top-level heading.
+
+    Hugo renders the title from front matter via templates; Sphinx needs it
+    as the first heading in the document body.
+    """
+    if title and not HEADING_RE.search(body):
+        return f"# {title}\n\n{body.lstrip()}"
+    return body
 
 
 def parse_hugo_file(path: Path) -> tuple[dict, str]:
@@ -169,7 +182,7 @@ def migrate_post(src_dir: Path, dry_run: bool = False) -> Path | None:
     tags = tags_to_list(hugo_fm.get("tags"))
 
     # Output path: post/YYYY/MM/DD/slug/index.md
-    dest_dir = REPO_ROOT / "post" / date.strftime("%Y/%m/%d") / slug
+    dest_dir = SPHINX_ROOT / "post" / date.strftime("%Y/%m/%d") / slug
     dest = dest_dir / "index.md"
 
     fm = build_ablog_front_matter(
@@ -181,6 +194,7 @@ def migrate_post(src_dir: Path, dry_run: bool = False) -> Path | None:
     )
 
     body = rewrite_shortcodes(body)
+    body = ensure_title_heading(title, body)
     print(f"  post: {src_dir.name} → post/{date.strftime('%Y/%m/%d')}/{slug}/")
     write_sphinx_file(dest, fm, body, dry_run=dry_run)
     copy_assets(src_dir, dest_dir, dry_run=dry_run)
@@ -204,7 +218,7 @@ def migrate_til(src_dir: Path, dry_run: bool = False) -> Path | None:
     tags = tags_to_list(hugo_fm.get("tags"))
 
     # Output path: til/YYYY/MM/DD/slug/index.md
-    dest_dir = REPO_ROOT / "til" / date.strftime("%Y/%m/%d") / slug
+    dest_dir = SPHINX_ROOT / "til" / date.strftime("%Y/%m/%d") / slug
     dest = dest_dir / "index.md"
 
     fm = build_ablog_front_matter(
@@ -216,6 +230,7 @@ def migrate_til(src_dir: Path, dry_run: bool = False) -> Path | None:
     )
 
     body = rewrite_shortcodes(body)
+    body = ensure_title_heading(title, body)
     print(f"  til:  {src_dir.name} → til/{date.strftime('%Y/%m/%d')}/{slug}/")
     write_sphinx_file(dest, fm, body, dry_run=dry_run)
     copy_assets(src_dir, dest_dir, dry_run=dry_run)
@@ -240,7 +255,7 @@ def migrate_link(src_dir: Path, dry_run: bool = False) -> Path | None:
     tags = tags_to_list(hugo_fm.get("tags"))
 
     # Output path: link/slug/index.md (preserve existing Hugo URL pattern)
-    dest_dir = REPO_ROOT / "link" / slug
+    dest_dir = SPHINX_ROOT / "link" / slug
     dest = dest_dir / "index.md"
 
     fm = build_ablog_front_matter(
@@ -252,6 +267,7 @@ def migrate_link(src_dir: Path, dry_run: bool = False) -> Path | None:
     )
 
     body = rewrite_shortcodes(body)
+    body = ensure_title_heading(title, body)
     print(f"  link: {src_dir.name} → link/{slug}/")
     write_sphinx_file(dest, fm, body, dry_run=dry_run)
     copy_assets(src_dir, dest_dir, dry_run=dry_run)
@@ -276,7 +292,7 @@ def migrate_project(src_dir: Path, dry_run: bool = False) -> Path | None:
     external_url = hugo_fm.get("external_url")
 
     # Output path: project/slug/index.md
-    dest_dir = REPO_ROOT / "project" / slug
+    dest_dir = SPHINX_ROOT / "project" / slug
     dest = dest_dir / "index.md"
 
     fm = build_ablog_front_matter(
@@ -293,6 +309,7 @@ def migrate_project(src_dir: Path, dry_run: bool = False) -> Path | None:
         body = f"Redirecting to [{external_url}]({external_url}) …\n"
 
     body = rewrite_shortcodes(body)
+    body = ensure_title_heading(title, body)
     print(f"  proj: {src_dir.name} → project/{slug}/")
     write_sphinx_file(dest, fm, body, dry_run=dry_run)
     copy_assets(src_dir, dest_dir, dry_run=dry_run)
