@@ -1,0 +1,82 @@
+{%- extends "basic/layout.html" -%}
+
+{%- block htmltitle -%}
+<title>{% if pagename != "index" %}{{ title|striptags|e }} - {% endif %}{{ project }}</title>
+{%- endblock -%}
+
+{%- block extrahead -%}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="{{ theme_description }}">
+<link rel="preload stylesheet" as="style" href="{{ pathto('_static/style.css', 1) }}">
+<link rel="icon" href="{{ pathto('favicon.ico', 1) }}">
+{%- if ablog is defined -%}
+<link rel="alternate" type="application/rss+xml" title="{{ project }}" href="{{ pathto('atom.xml', 1) }}">
+{%- endif -%}
+{{ super() }}
+{%- endblock -%}
+
+{%- block relbar1 %}{%- endblock -%}
+{%- block relbar2 %}{%- endblock -%}
+{%- block sidebar1 %}{%- endblock -%}
+{%- block sidebar2 %}{%- endblock -%}
+
+{%- block body_tag -%}
+<body>
+<script>
+(function() {
+  function setTheme(dark) {
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  }
+  var mq = window.matchMedia('(prefers-color-scheme: dark)');
+  setTheme(mq.matches);
+  setTimeout(function() {}, 10);
+  mq.addEventListener('change', function(e) { setTheme(e.matches); });
+})();
+</script>
+{%- endblock -%}
+
+{%- block header -%}
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <div class="header-left">
+        <a href="{{ pathto('index') }}" class="avatar-link">
+          <img src="{{ pathto('_static/headshot.jpg', 1) }}" alt="{{ project }}" class="avatar">
+        </a>
+        <div class="header-text">
+          <a href="{{ pathto('index') }}" class="site-name">{{ project }}</a>
+          <p class="tagline">{{ theme_tagline }}</p>
+        </div>
+      </div>
+      <nav class="main-nav">
+        {%- for link in nav_links | default([]) -%}
+        {%- if link.external -%}
+        <a href="{{ link.url }}">{{ link.name }}</a>
+        {%- else -%}
+        <a href="{{ pathto(link.url) }}">{{ link.name }}</a>
+        {%- endif -%}
+        {%- endfor -%}
+      </nav>
+    </div>
+  </div>
+</header>
+{%- endblock -%}
+
+{%- block document -%}
+<main class="site-main">
+  <div class="container">
+    <div role="main">
+      {%- block body -%}{{ body }}{%- endblock -%}
+    </div>
+  </div>
+</main>
+{%- endblock -%}
+
+{%- block footer -%}
+<footer class="site-footer">
+  <div class="container">
+    <span>&copy; {{ current_year | default(2025) }} Kevin Schaul</span>
+  </div>
+</footer>
+{%- endblock -%}
