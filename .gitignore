@@ -2,11 +2,17 @@
 .Rproj.user
 .Rhistory
 Thumbs.db
+# Hugo build artifacts
 .hugo_build.lock
 public/*
 !public/CNAME
+# Sphinx build output
+_build/
+# Python
 __pycache__
 .python-version
+.venv
+# Tools / secrets
 .aider*
 .claude
 .env

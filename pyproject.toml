@@ -1,24 +1,35 @@
 [project]
 name = "kevinschaul-github-io"
 version = "0.1.0"
-description = "Add your description here"
+description = "Kevin Schaul's personal site — built with Sphinx + ABlog"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
+    # Social media / link fetching scripts
     "atproto>=0.0.61",
     "beautifulsoup4>=4.13.4",
     "pillow>=10.0.0",
     "pygithub>=2.7.0",
-    "pytest>=8.4.1",
-    "pytest-mock>=3.15.1",
     "python-dotenv>=1.1.1",
     "requests>=2.32.4",
-    "requests-mock>=1.12.1",
     "tweepy>=4.16.0",
+    # Sphinx site
+    "sphinx>=8.0",
+    "ablog>=0.11",
+    "myst-parser>=4.0",
+    "sphinx-autobuild>=2024.0",
+    # Migration + content scripts
+    "pyyaml>=6.0",
 ]
 
 [dependency-groups]
 dev = [
     "pytest>=8.4.1",
+    "pytest-mock>=3.15.1",
+    "requests-mock>=1.12.1",
     "ruff>=0.14.3",
 ]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["sphinx_kschaul_theme*"]
