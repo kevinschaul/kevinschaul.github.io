@@ -2,7 +2,7 @@
 
 <div class="mb-8">
   <h2 class="text-sm uppercase mt-0 mb-1 opacity-60">Tagged</h2>
-  <h1 class="mt-0 mb-0">#{{ .Title }}</h1>
+  <h1 class="mt-0 mb-0">{{ .Title }}</h1>
 </div>
 
 {{ $labels := dict "project" "Project" "post" "Blog post" "link" "Short post" }}
@@ -12,7 +12,17 @@
 >
   <div class="divide-y divide-solid divide-black/10">
     {{ range sort .Pages "Date" "desc" }}
+    {{ $page := . }}
     <div class="py-2">
+      {{ if eq .Type "project" }}
+        {{ with .Resources.GetMatch "tease.png" }}
+        <div class="mb-2">
+          <a href="{{ $page.Params.external_url | default $page.Permalink }}">
+            <img src="{{ .Permalink }}" alt="{{ $page.Title }}" class="w-full" loading="lazy" />
+          </a>
+        </div>
+        {{ end }}
+      {{ end }}
       <p class="my-0">
         <a href="{{ .Params.external_url | default .Permalink }}">{{ .Title }}</a>
       </p>
