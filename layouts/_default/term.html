@@ -5,51 +5,25 @@
   <h1 class="mt-0 mb-0">#{{ .Title }}</h1>
 </div>
 
-{{ $projects := sort (where .Pages "Type" "project") "Date" "desc" }}
-{{ $posts := sort (where .Pages "Type" "post") "Date" "desc" }}
-{{ $links := sort (where .Pages "Type" "link") "Date" "desc" }}
+{{ $labels := dict "project" "Project" "post" "Blog post" "link" "Short post" }}
 
-<!-- Projects with this tag -->
-{{ with $projects }}
 <div
   class="rounded-lg bg-white dark:bg-black border border-black/10 dark:border-white/10 p-5 mb-8"
 >
-  <h2 class="text-sm uppercase mt-0 mb-4">Projects</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    {{ range . }}{{ partial "project-item.html" . }}{{ end }}
-  </div>
-</div>
-{{ end }}
-
-<!-- Blog posts with this tag -->
-{{ with $posts }}
-<div
-  class="rounded-lg bg-white dark:bg-black border border-black/10 dark:border-white/10 p-5 mb-8"
->
-  <h2 class="text-sm uppercase mt-0 mb-4">Blog posts</h2>
   <div class="divide-y divide-solid divide-black/10">
-    {{ range . }}
-    <div class="post-item pb-2">
-      <p class="mb-0"><a href="{{ .Permalink }}">{{ .Title }}</a></p>
+    {{ range sort .Pages "Date" "desc" }}
+    <div class="py-2">
+      <p class="my-0">
+        <a href="{{ .Params.external_url | default .Permalink }}">{{ .Title }}</a>
+      </p>
       <time class="text-xs text-gray-500">
         {{ .Date | time.Format ":date_medium" }}
+        <span class="mx-1">&middot;</span>
+        {{ index $labels .Type | default .Type }}
       </time>
     </div>
     {{ end }}
   </div>
 </div>
-{{ end }}
-
-<!-- Short posts with this tag -->
-{{ with $links }}
-<div
-  class="rounded-lg bg-white dark:bg-black border border-black/10 dark:border-white/10 p-5 mb-8"
->
-  <h2 class="text-sm uppercase mt-0 mb-4">Short posts</h2>
-  <div class="divide-y divide-solid divide-black/10">
-    {{ range . }}{{ partial "link-item.html" . }}{{ end }}
-  </div>
-</div>
-{{ end }}
 
 {{- end -}}
