@@ -8,5 +8,5 @@ tease: true
 blurb: ''
 external_url: 'https://www.washingtonpost.com/technology/2025/11/22/ai-bubble-economy-evidence/'
 categories: []
-tags: []
+tags: [data-viz]
 ---
