@@ -4,6 +4,7 @@ title: Kevin Schaul
 theme: paper
 publishDir: public
 timeZone: America/Chicago
+capitalizeListTitles: false
 
 permalinks:
   til: /til/:year/:month/:day/:slug/
