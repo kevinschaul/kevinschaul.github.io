@@ -8,5 +8,6 @@ show_on_homepage: true
 tease: true
 blurb: "House Republicans released their long-awaited tax plan Nov. 2. How could the proposed changes to these policies affect your taxes?"
 external_url: "https://www.washingtonpost.com/graphics/2017/politics/tax-breaks/"
+tags: [data-viz]
 ---
 

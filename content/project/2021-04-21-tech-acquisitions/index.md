@@ -8,5 +8,6 @@ show_on_homepage: true
 tease: true
 blurb: ""
 external_url: "https://www.washingtonpost.com/technology/interactive/2021/amazon-apple-facebook-google-acquisitions/"
+tags: [data-viz]
 ---
 

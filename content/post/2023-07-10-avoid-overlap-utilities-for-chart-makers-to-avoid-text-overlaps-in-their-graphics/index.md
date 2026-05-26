@@ -2,7 +2,7 @@
 title: 'avoid-overlap: Utilities for chart-makers to avoid text overlaps in their graphics'
 date: '2023-07-10 9:15:00'
 slug: avoid-overlap-utilities-for-chart-makers-to-avoid-text-overlaps-in-their-graphics
-tags: [d3, frontend]
+tags: [d3, frontend, data-viz]
 show_on_homepage: yes
 tease: true
 ---

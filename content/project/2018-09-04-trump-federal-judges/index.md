@@ -8,5 +8,6 @@ show_on_homepage: false
 tease: false
 blurb: "Dozens of Trump’s picks for lower federal courts have already been installed, leaving a conservative imprint on the nation’s judiciary."
 external_url: "https://www.washingtonpost.com/graphics/2018/politics/trump-federal-judges/"
+tags: [data-viz]
 ---
 

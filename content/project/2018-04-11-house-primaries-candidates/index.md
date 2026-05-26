@@ -8,5 +8,6 @@ show_on_homepage: true
 tease: true
 blurb: "According to an analysis of political donor networks, this year’s Democratic midterm candidates are the most liberal in decades."
 external_url: "https://www.washingtonpost.com/graphics/2018/politics/house-primaries-candidates/"
+tags: [data-viz]
 ---
 
