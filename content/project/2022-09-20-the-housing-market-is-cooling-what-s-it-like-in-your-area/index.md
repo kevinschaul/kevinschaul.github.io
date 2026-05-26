@@ -8,6 +8,6 @@ tease: true
 blurb: ''
 external_url: 'https://www.washingtonpost.com/business/interactive/2022/cooling-housing-market/'
 categories: []
-tags: []
+tags: [data-viz]
 ---
 
