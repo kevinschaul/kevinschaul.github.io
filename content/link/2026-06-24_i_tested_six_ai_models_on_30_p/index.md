@@ -17,6 +17,5 @@ What counts as “neutral” (and whether that should be the goal) is really har
 Full eval code, prompts and responses are on GitHub. Let me know if you run it on other models!
 
 Story -> https://wapo.st/3QEBMi3
-GitHub -> 
 
-[GitHub - washingtonpost/political-bias-llm-eval: Evaluating political lean in AI model responses](https://github.com/washingtonpost/political-bias-llm-eval)
+GitHub -> https://github.com/washingtonpost/political-bias-llm-eval
