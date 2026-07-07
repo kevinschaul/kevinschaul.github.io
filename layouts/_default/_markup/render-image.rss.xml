@@ -1,6 +1,0 @@
-{{- $image := .Page.Resources.GetMatch .Destination -}}
-{{- if $image -}}
-<img src="{{ $image.Permalink }}" alt="{{ .Text }}" />
-{{- else -}}
-<img src="{{ .Destination | absURL }}" alt="{{ .Text }}" />
-{{- end -}}
