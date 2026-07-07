@@ -13,7 +13,7 @@ Well I just learned there's a built-in for this now: [`Intl.NumberFormat()`](htt
 
 In my case, I wanted 62,829,251,930 to become `62.8 billion`, and 5,760,646,320 to become `5.8 billion`. This formatter does it!
 
-```
+```js
 const format = Intl.NumberFormat('en-us', {
   // "compact" rounds and adds suffixes like "billion"
   notation: 'compact',

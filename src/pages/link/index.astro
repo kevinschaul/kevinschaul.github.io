@@ -1,0 +1,18 @@
+---
+import { getCollection } from "astro:content"
+import SiteLayout from "../../layouts/SiteLayout.astro"
+import LinkItem from "../../components/LinkItem.astro"
+import Pagination from "../../components/Pagination.astro"
+import { notDraft, paginate, sortByDateDesc } from "../../lib/collections"
+
+const entries = sortByDateDesc((await getCollection("link")).filter(notDraft))
+const pages = paginate(entries)
+---
+
+<SiteLayout title="Short posts" canonical="/link/" rssHref="/link/index.xml">
+  <h2 class="t-kicker">Short posts</h2>
+  <div class="t-stream">
+    {pages[0].map((entry) => <LinkItem entry={entry} />)}
+  </div>
+  <Pagination page={1} totalPages={pages.length} basePath="/link/" />
+</SiteLayout>

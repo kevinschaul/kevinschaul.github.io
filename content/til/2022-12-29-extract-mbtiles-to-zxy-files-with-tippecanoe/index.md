@@ -9,9 +9,8 @@ The next time you need to extract an .mbtiles file into tile files, reach for [t
 
 It turns out you can the embedded command [`tile-join`](https://github.com/mapbox/tippecanoe#tile-join) for this task:
 
-```
+```bash
 $ tile-join --force --no-tile-compression --no-tile-size-limit --output-to-directory tiles 2017-07-03_north-america.mbtiles --minimum-zoom 6 --maximum-zoom 10
 ```
 
 h/t [yuiseki](https://scrapbox.io/yuiseki/How_to_create_your_own_vector_tile_web_maps)
-

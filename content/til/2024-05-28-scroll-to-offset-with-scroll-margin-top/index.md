@@ -12,7 +12,7 @@ perfect spacing of your page!
 
 Just add:
 
-```
+```css
 .my-element {
   scroll-margin-top: 60px;
 }
@@ -21,8 +21,7 @@ Just add:
 And then this will scroll to 60px above the
 element:
 
-```
+```js
 document.querySelector(".my-element")
   .scrollIntoView({ block: "start" })
 ```
-

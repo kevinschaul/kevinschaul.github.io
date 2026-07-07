@@ -9,12 +9,12 @@ If you've got R code that takes a while to run (a query? complex analysis?), che
 
 Let's say you want to get census data from tidycensus, but you don’t want to keep hitting the API. Instead of writing:
 
-```
+```r
 cbsa_pop <- get_decennial(geography='cbsa', variables='P1_001N', year=2020)
 ```
 
 You write:
-```
+```r
 cbsa_pop <- cache_rds({
   get_decennial(geography='cbsa', variables='P1_001N', year=2020)
 })

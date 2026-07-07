@@ -1,0 +1,32 @@
+---
+import { getCollection, render } from "astro:content"
+import SiteLayout from "../layouts/SiteLayout.astro"
+import { summarize } from "../lib/text"
+
+export async function getStaticPaths() {
+  const entries = (await getCollection("page")).filter(
+    (entry) => entry.id !== "_index" && !entry.data.draft,
+  )
+  return entries.map((entry) => ({
+    params: { slug: entry.id.replace(/\.md$/, "") },
+    props: { entry },
+  }))
+}
+
+const { entry } = Astro.props
+const { Content } = await render(entry)
+const slug = entry.id.replace(/\.md$/, "")
+const body = entry.body ?? ""
+---
+
+<SiteLayout
+  title={entry.data.title}
+  description={entry.data.blurb ?? summarize(body)}
+  canonical={`/${slug}/`}
+  isPage
+>
+  <article>
+    {entry.data.title && <h1>{entry.data.title}</h1>}
+    <Content />
+  </article>
+</SiteLayout>

@@ -14,7 +14,7 @@ The way I understand it, MCP is basically a standard for LLM tool-calling. It le
 
 First I [hooked up Claude to Adobe Illustrator](https://github.com/kevinschaul/illustrator-mcp-server). The tool exposes two abilities: Take a screenshot of the Illustrator window, and execute a script within Illustrator. With just these simple tools, I was able to paste in a message from a copy editor, asking it to find the Illustrator file and make the changes. To my absolute surprise, it just worked:
 
-{{< youtube 590PCbBhM4w >}}
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;"><iframe src="https://www.youtube-nocookie.com/embed/590PCbBhM4w" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen loading="lazy" title="YouTube video"></iframe></div>
 
 ... almost. It misunderstood that we needed to lowercase the "S" in "soldiers," too. But I can still barely believe that Claude could do that task. With a little more prompt tuning, I bet this can be a useable workflow.
 

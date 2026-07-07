@@ -9,7 +9,7 @@ tags: [command line, js, nodejs]
 
 Wow, a lifesaver command right here:
 
-```
+```bash
 npm ls TROUBLESOME_PACKAGE
 ```
 

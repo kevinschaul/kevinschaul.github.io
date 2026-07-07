@@ -2,9 +2,6 @@
 .Rproj.user
 .Rhistory
 Thumbs.db
-.hugo_build.lock
-public/*
-!public/CNAME
 __pycache__
 .python-version
 .aider*
@@ -12,3 +9,7 @@ __pycache__
 .env
 node_modules
 analytics
+
+# Astro
+dist/
+.astro/

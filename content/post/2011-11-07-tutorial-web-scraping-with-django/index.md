@@ -21,7 +21,7 @@ Here's the site we want to scrape (and a great example of how "open" government 
 
 The models.py file is very simple, containing only the fields we want to scrape.
 
-```
+```python
 from django.db import models
   
 class Case(models.Model):
@@ -39,7 +39,7 @@ This should be self-explanatory if you're at all familiar with Django; if not, I
 
 Using requests and lxml, scraping in python is downright enjoyable. Look how easy it is to grab a site's source and convert it into a useful object:
     
-```
+```python
 r = requests.get(url)
 root = lxml.html.fromstring(r.content)
 ```
@@ -50,7 +50,7 @@ Take a look at the source code of the [court dockets site](http://www.mnd.uscour
 
 Luckily, one of these tables has an attribute that we can immediately jump to. Here's the code I'm using to get the contents we want:
     
-```
+```python
 import requests
 import lxml
 from lxml import html
@@ -71,13 +71,13 @@ The text_content() function takes what's inside an html element sans html tags, 
 
 Django commands are scripts that can do whatever you like, easily invoked through the command line:
     
-```
+```bash
 python manage.py nameofacommand
 ```
 
 This is great to keep everything inside a Django project, and the scripts are easily accessible. These files are stored inside your app -> management -> commands (my full path is minnpost/dockets/management/commands/scrapedockets.py). If you don't have these folders already, create them, but don't forget to add __init.py__ files. I turned my scraping code into a command called scrapedockets.py  - full code below.
 
-```
+```python
 from django.core.management.base import BaseCommand
 from minnpost.dockets.models import Case
 
@@ -134,26 +134,26 @@ To make this worthwhile, we need it to run on its own every half hour. Unix syst
 
 I created a script, scrapedockets.sh, which simply calls the Django command we just walked through.
 
-```
+```bash
 #!/bin/bash
 python manage.py scrapedockets
 ```
 
 Don't forget to make it executable:
 
-```
+```bash
 sudo chmod +x scrapedockets.sh
 ```
 
 I used a crontab on the default user to call the scrapedockets.sh Django command every half hour. Edit your crontab using the command:
 
-```
+```bash
 crontab -e
 ```
 
 Each line is something you want cron to do. Here's what mine looks like:
 
-```
+```bash
 */30 * * * * /opt/django-projects/minnpost/scripts/scrapedockets.sh >> /opt/log/scrapedockets.log
 ```
 
@@ -164,4 +164,3 @@ If everything is set up, your Django database should start filling up with infor
 **If you know a better way, please share!**
 
 I'm far from an expert, so if you see something fishy here, leave a comment or tweet at @kevinschaul.
-

@@ -1,0 +1,37 @@
+---
+import type { CollectionEntry } from "astro:content"
+import { entryPath } from "../lib/site"
+import { formatDateMedium } from "../lib/urls"
+import { summarize } from "../lib/text"
+
+interface Props {
+  entry: CollectionEntry<"project">
+}
+
+const { entry } = Astro.props
+const href = entry.data.external_url ?? entryPath(entry)
+const teaseImages = import.meta.glob("../../content/project/**/tease.png", {
+  eager: true,
+  query: "?url",
+  import: "default",
+}) as Record<string, string>
+const tease = teaseImages[`../../content/project/${entry.id}/tease.png`]
+const summary = entry.body ? summarize(entry.body) : ""
+---
+
+<div class="project-item">
+  {
+    tease && (
+      <a href={href}>
+        <img src={tease} alt={entry.data.title || ""} loading="lazy" />
+      </a>
+    )
+  }
+  <p>
+    <a href={href}>{entry.data.title}</a>
+  </p>
+  <time class="t-meta" datetime={String(entry.data.date || "")}>
+    {formatDateMedium(entry.data.date)}
+  </time>
+  {summary && <div class="project-summary">{summary}</div>}
+</div>

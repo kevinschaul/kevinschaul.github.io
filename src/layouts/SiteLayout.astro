@@ -1,0 +1,50 @@
+---
+import BaseLayout from "@kevinschaul/theme/components/BaseLayout.astro"
+import { SITE, absoluteUrl } from "../lib/site"
+
+interface Props {
+  title?: string | null
+  description?: string
+  canonical?: string
+  image?: string
+  article?: {
+    section: string
+    published: string
+    modified: string
+    wordCount: number
+    keywords: string[]
+  }
+  isPage?: boolean
+  externalUrl?: string
+  rssHref?: string
+}
+
+const {
+  title,
+  description = SITE.description,
+  canonical,
+  image = SITE.image,
+  article,
+  isPage = false,
+  externalUrl,
+  rssHref = "/index.xml",
+} = Astro.props
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical ? absoluteUrl(canonical) : undefined}
+  image={image}
+  article={article}
+  isPage={isPage}
+  externalUrl={externalUrl}
+  siteTitle={SITE.title}
+  tagline={SITE.description}
+  nav={SITE.nav}
+  rssHref={absoluteUrl(rssHref)}
+  cloudflareToken={SITE.cloudflareToken}
+>
+  <slot name="head" slot="head" />
+  <slot />
+</BaseLayout>

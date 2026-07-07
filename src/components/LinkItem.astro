@@ -1,0 +1,42 @@
+---
+import { render, type CollectionEntry } from "astro:content"
+import { entryPath } from "../lib/site"
+import { formatDateMedium } from "../lib/urls"
+
+interface Props {
+  entry: CollectionEntry<"link">
+}
+
+const { entry } = Astro.props
+const { Content } = await render(entry)
+const linkImages = import.meta.glob("../../content/link/**/*.{png,jpg,jpeg,webp,gif}", {
+  eager: true,
+  query: "?url",
+  import: "default",
+}) as Record<string, string>
+const images = (entry.data.images ?? [])
+  .map((src) => {
+    const resource = entry.data.resources?.find((item) => item.src === src)
+    return {
+      src: linkImages[`../../content/link/${entry.id}/${src}`],
+      alt: resource?.params?.alt ?? "",
+    }
+  })
+  .filter((image) => image.src)
+---
+
+<div class="link-item">
+  <time class="t-meta">
+    <a href={entryPath(entry)}>{formatDateMedium(entry.data.date)}</a>
+  </time>
+  <Content />
+  {
+    images.length > 0 && (
+      <div class="link-item-images">
+        {images.map((image) => (
+          <img src={image.src} alt={image.alt} loading="lazy" />
+        ))}
+      </div>
+    )
+  }
+</div>

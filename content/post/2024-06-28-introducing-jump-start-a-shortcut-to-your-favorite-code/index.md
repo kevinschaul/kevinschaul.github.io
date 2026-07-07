@@ -20,7 +20,7 @@ I'm calling the system `jump-start`. It's a lightweight system to organize that 
 
 Above is a screenshot of my starter for creating a React component that draws a line chart using d3. I write code like this very often, but it is not something I want to package up. The flexibility of tweaking this chart is crucial. With `jump-start`, now when I need to write some code to draw a line chart, I can locate the command on my website:
 
-```
+```bash
 npx tiged kevinschaul/jump-start/react-d3/LineChart
 ```
 

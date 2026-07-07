@@ -12,26 +12,22 @@ This code was developed as an integral piece of the [Seattle Times Election Guid
 
 How simple?
 
-```
+```bash
 pip install django-wordpress-rss
 ```
 
     
-```
+```python
 WORDPRESS_RSS_BASE_URL = 'http://www.kevinschaul.com'
 ```
 
-    
-```
-```
-```
-```
-<ul>```
+```html
+{% get_wordpress_rss "category-slug" as wordpress_items %}
+<ul>
+{% for item in wordpress_items %}
     <li><a href="{{ item.href }}">{{ item.title }}</a></li>
+{% endfor %}
 </ul>
-```
-```
 ```
 
 Have ideas for improvement? [Open up an issue on GitHub](https://github.com/kevinschaul/django-wordpress-rss/issues).
-

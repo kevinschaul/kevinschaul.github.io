@@ -12,7 +12,7 @@ I always struggle to write JSON in R in exactly the format I need. I figured out
 To nest a table like this:
 
 
-```
+```txt
 ## # A tibble: 2 × 3
 ##   col_to_nest another_col a_third_col
 ##   <chr>             <dbl>       <dbl>
@@ -32,7 +32,7 @@ data %>%
   toJSON(pretty=T) # Or write_json('filename.json', pretty=T)
 ```
 
-```
+```json
 ## {
 ##   "col_value_a": {
 ##       "another_col": 1213691,

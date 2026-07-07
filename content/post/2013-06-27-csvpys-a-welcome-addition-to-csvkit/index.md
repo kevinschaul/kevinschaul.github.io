@@ -22,7 +22,7 @@ Use it to compute medians, distinguish important value boundaries, properly capi
 
 As a short example, pretend we have a csv containing White House salaries from 2012:
 
-```
+```bash
 $ csvcut some-white-house-salaries-2012-cut.csv | csvlook
 ```
 
@@ -44,7 +44,7 @@ Our news application does something special for those with Salaries over $100,00
 
 With csvpys:
 
-```
+```bash
 $ csvpys -s Bankroller "int(c[2]) >= 100000" some-white-house-salaries-2012-cut.csv | csvlook
 ```
 
@@ -63,4 +63,3 @@ $ csvpys -s Bankroller "int(c[2]) >= 100000" some-white-house-salaries-2012-cut.
     |----------------------+--------+-------------|
 
 Just add that to your Makefile, and you'll never accidentally mangle your data again. How's that for automation?
-

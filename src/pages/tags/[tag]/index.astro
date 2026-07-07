@@ -1,0 +1,46 @@
+---
+import { getCollection } from "astro:content"
+import SiteLayout from "../../../layouts/SiteLayout.astro"
+import Pagination from "../../../components/Pagination.astro"
+import PostList from "../../../components/PostList.astro"
+import ProjectItem from "../../../components/ProjectItem.astro"
+import LinkItem from "../../../components/LinkItem.astro"
+import { collectTags, notDraft, paginate, sortByDateDesc } from "../../../lib/collections"
+
+export async function getStaticPaths() {
+  const allEntries = [
+    ...(await getCollection("post")).filter(notDraft),
+    ...(await getCollection("til")).filter(notDraft),
+    ...(await getCollection("link")).filter(notDraft),
+    ...(await getCollection("project")).filter(notDraft),
+  ]
+  const tags = collectTags(allEntries)
+  return [...tags.entries()].map(([tag, { title }]) => {
+    const entries = sortByDateDesc(
+      allEntries.filter((entry) =>
+        (entry.data.tags ?? []).some((entryTag) => entryTag?.toLowerCase() === tag),
+      ),
+    )
+    const pages = paginate(entries)
+    return {
+      params: { tag: tag.toLowerCase().replace(/\s+/g, "-") },
+      props: { title, items: pages[0], totalPages: pages.length },
+    }
+  })
+}
+
+const { title, items, totalPages } = Astro.props
+const posts = items.filter((entry) => entry.collection === "post" || entry.collection === "til")
+const links = items.filter((entry) => entry.collection === "link")
+const projects = items.filter((entry) => entry.collection === "project")
+---
+
+<SiteLayout title={`Tagged ${title}`} canonical={`/tags/${Astro.params.tag}/`} rssHref={`/tags/${Astro.params.tag}/index.xml`}>
+  <h1>Tagged {title}</h1>
+  {posts.length > 0 && <PostList entries={posts} />}
+  <div class="t-stream">
+    {links.map((entry) => <LinkItem entry={entry} />)}
+  </div>
+  {projects.length > 0 && <div class="t-grid">{projects.map((entry) => <ProjectItem entry={entry} />)}</div>}
+  <Pagination page={1} totalPages={totalPages} basePath={`/tags/${Astro.params.tag}/`} />
+</SiteLayout>

@@ -9,9 +9,8 @@ Huge: Node v23+ lets you run typescript directly! No more transpiling.
 
 Try it out with nvm:
 
-```
+```bash
 nvm install 23
 nvm use 23
 node my-file.ts
 ```
-

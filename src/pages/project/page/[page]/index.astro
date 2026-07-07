@@ -1,0 +1,26 @@
+---
+import { getCollection } from "astro:content"
+import SiteLayout from "../../../../layouts/SiteLayout.astro"
+import Pagination from "../../../../components/Pagination.astro"
+import ProjectItem from "../../../../components/ProjectItem.astro"
+import { notDraft, paginate, sortByDateDesc } from "../../../../lib/collections"
+
+export async function getStaticPaths() {
+  const entries = sortByDateDesc((await getCollection("project")).filter(notDraft))
+  const pages = paginate(entries)
+  return pages.slice(1).map((items, index) => ({
+    params: { page: String(index + 2) },
+    props: { items, page: index + 2, totalPages: pages.length },
+  }))
+}
+
+const { items, page, totalPages } = Astro.props
+---
+
+<SiteLayout title={`Projects, page ${page}`} canonical={`/project/page/${page}/`} rssHref="/project/index.xml">
+  <h2 class="t-kicker">Projects</h2>
+  <div class="t-grid">
+    {items.map((entry) => <ProjectItem entry={entry} />)}
+  </div>
+  <Pagination page={page} totalPages={totalPages} basePath="/project/" />
+</SiteLayout>

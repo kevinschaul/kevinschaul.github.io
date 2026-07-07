@@ -1,0 +1,59 @@
+---
+import { getCollection, render } from "astro:content"
+import SiteLayout from "../../../../../../layouts/SiteLayout.astro"
+import { datedParams, entryPath, tagUrl } from "../../../../../../lib/site"
+import { formatDateMedium } from "../../../../../../lib/urls"
+import { countWords, publishedISO, summarize } from "../../../../../../lib/text"
+import { notDraft } from "../../../../../../lib/collections"
+
+export async function getStaticPaths() {
+  const entries = (await getCollection("til")).filter(notDraft)
+  return entries.flatMap((entry) => {
+    const params = datedParams(entry)
+    return params ? [{ params, props: { entry } }] : []
+  })
+}
+
+const { entry } = Astro.props
+const { Content } = await render(entry)
+const body = entry.body ?? ""
+const description = entry.data.blurb ?? summarize(body)
+const published = publishedISO(entry.data.date)
+---
+
+<SiteLayout
+  title={entry.data.title}
+  description={description}
+  canonical={entryPath(entry)}
+  isPage
+  article={{
+    section: entry.collection,
+    published,
+    modified: published,
+    wordCount: countWords(body),
+    keywords: (entry.data.tags ?? []).filter(Boolean),
+  }}
+>
+  <article>
+    <header>
+      <h1>{entry.data.title}</h1>
+      <div class="t-meta">
+        <time datetime={published}>{formatDateMedium(entry.data.date)}</time>
+        <span> · </span>
+        <span>{entry.data.author || "Kevin Schaul"}</span>
+      </div>
+    </header>
+    <Content />
+    {
+      entry.data.tags?.length > 0 && (
+        <footer class="t-tags">
+          {entry.data.tags.filter(Boolean).map((tag) => (
+            <a class="t-tag" href={tagUrl(tag)}>
+              {tag}
+            </a>
+          ))}
+        </footer>
+      )
+    }
+  </article>
+</SiteLayout>

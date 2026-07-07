@@ -12,7 +12,7 @@ maintained. Fortunately [memfs](https://github.com/streamich/memfs) is a
 drop-in alternative — if you know this secret: You’ve got to add a mock fs
 call.
 
-```
+```js
 import { vol, fs } from "memfs";
 import { vi, describe, test, expect, beforeEach, afterEach } from "vitest";
 
@@ -27,7 +27,7 @@ vi.mock("fs", async () => {
 
 Then, you can set up a fake filesystem for your test:
 
-```
+```js
 describe('my-suite', () => {
   afterEach(() => {
     vol.reset();

@@ -1,23 +1,21 @@
 {
   "name": "kevinschaul.github.io",
-  "version": "1.0.0",
-  "description": "## Installation",
-  "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
+  "type": "module",
+  "private": true,
   "scripts": {
-    "copy-assets": "cp themes/paper/static/*.svg static/css",
-    "dev:tailwind": "npx @tailwindcss/cli -i ./assets/tailwind.css -o ./static/css/main.css --watch=always",
-    "build:tailwind": "npx @tailwindcss/cli -i ./assets/tailwind.css -o ./static/css/main.css",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "astro dev --host 0.0.0.0",
+    "build": "astro build",
+    "preview": "astro preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.11",
-    "@tailwindcss/typography": "^0.5.16",
-    "tailwindcss": "^4.1.11"
+    "@astrojs/rss": "^4.0.12",
+    "@kevinschaul/theme": "github:kevinschaul/kschaul-astro-theme",
+    "astro": "^5.12.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "prettier": {
+    "semi": false
   }
 }

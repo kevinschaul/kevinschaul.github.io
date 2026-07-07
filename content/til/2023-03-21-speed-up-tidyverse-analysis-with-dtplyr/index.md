@@ -9,7 +9,7 @@ I've got a ~15 million rows dataset that I need to do cleaning on. I'm a big [ti
 
 Well, TIL about [dtplyr](https://dtplyr.tidyverse.org/), which lets you write `dplyr` code but gain the speed of `data.table`:
 
-```
+```r
 library(data.table)
 library(dtplyr)
 library(dplyr, warn.conflicts=FALSE)
@@ -27,4 +27,3 @@ data_lazy %>%
 Take a look at the `immutable` argument in the docs. This runs soooo much faster.
 
 Pair that with [a previous TIL about caching R code](https://www.kschaul.com/til/2022/08/18/caching-r-code-with-cache-rds/). Boom.
-
