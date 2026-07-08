@@ -12,7 +12,6 @@ const common = z
     // keep raw — URL parts depend on Hugo's naive-date semantics (urls.ts)
     date: z.union([z.string(), z.date()]).optional(),
     slug: z.string().optional(),
-    draft: z.boolean().default(false),
     tags: z.array(z.string().nullable()).nullable().default([]),
     author: z.string().nullable().optional(),
     blurb: z.string().optional(),
@@ -29,24 +28,24 @@ const common = z
   .passthrough()
 
 const post = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./content/post", generateId: keepName }),
+  loader: glob({ pattern: ["**/*.md", "!**/_index.md"], base: "./content/post", generateId: keepName }),
   schema: common,
 })
 
 const til = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./content/til", generateId: keepName }),
+  loader: glob({ pattern: ["**/*.md", "!**/_index.md"], base: "./content/til", generateId: keepName }),
   schema: common,
 })
 
 const link = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./content/link", generateId: keepName }),
+  loader: glob({ pattern: ["**/*.md", "!**/_index.md"], base: "./content/link", generateId: keepName }),
   schema: common.extend({
     images: z.array(z.string()).default([]),
   }),
 })
 
 const project = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./content/project", generateId: keepName }),
+  loader: glob({ pattern: ["**/*.md", "!**/_index.md"], base: "./content/project", generateId: keepName }),
   schema: common.extend({
     external_url: z.string().optional(),
     weight: z.number().optional(),

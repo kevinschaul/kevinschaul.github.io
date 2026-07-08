@@ -1,21 +1,21 @@
 ---
 import { getCollection, render } from "astro:content"
-import SiteLayout from "../layouts/SiteLayout.astro"
-import LinkItem from "../components/LinkItem.astro"
-import ProjectItem from "../components/ProjectItem.astro"
-import PostList from "../components/PostList.astro"
-import { notDraft, sortByDateDesc } from "../lib/collections"
+import SiteLayout from "@/layouts/SiteLayout.astro"
+import LinkItem from "@/components/LinkItem.astro"
+import ProjectItem from "@/components/ProjectItem.astro"
+import PostList from "@/components/PostList.astro"
+import { sortByDateDesc } from "@/lib/collections"
 
 const home = await getCollection("page").then((entries) =>
   entries.find((entry) => entry.id === "_index"),
 )
-const posts = sortByDateDesc((await getCollection("post")).filter(notDraft))
-const links = sortByDateDesc((await getCollection("link")).filter(notDraft))
-const projects = sortByDateDesc((await getCollection("project")).filter(notDraft))
+const posts = sortByDateDesc(await getCollection("post"))
+const links = sortByDateDesc(await getCollection("link"))
+const projects = sortByDateDesc(await getCollection("project"))
 const { Content } = home ? await render(home) : { Content: null }
 ---
 
-<SiteLayout title={null}>
+<SiteLayout title={null} canonical="/">
   {Content && <Content />}
 
   <section class="t-card">

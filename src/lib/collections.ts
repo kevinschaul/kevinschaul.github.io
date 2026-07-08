@@ -4,10 +4,6 @@ import { hugoDateParts } from "./urls"
 type Sections = "post" | "til" | "link" | "project"
 export type SectionEntry = CollectionEntry<Sections>
 
-export function notDraft(e: { id?: string; data: { draft?: boolean } }): boolean {
-  return !e.data.draft && e.id !== "_index"
-}
-
 export function sortByDateDesc<T extends { data: { date?: string | Date } }>(
   entries: T[],
 ): T[] {
@@ -50,6 +46,11 @@ export function paginate<T>(entries: T[]): T[][] {
   return pages.length ? pages : [[]]
 }
 
-export function pageUrl(section: string, page: number): string {
-  return page === 1 ? `/${section}/` : `/${section}/page/${page}/`
+// getStaticPaths entries for /section/page/N/ (page 1 is the section index)
+export function paginatedPaths<T>(entries: T[]) {
+  const pages = paginate(entries)
+  return pages.slice(1).map((items, index) => ({
+    params: { page: String(index + 2) },
+    props: { items, page: index + 2, totalPages: pages.length },
+  }))
 }

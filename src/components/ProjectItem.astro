@@ -1,8 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content"
-import { entryPath } from "../lib/site"
-import { formatDateMedium } from "../lib/urls"
-import { summarize } from "../lib/text"
+import { entryPath } from "@/lib/site"
+import { formatDateMedium } from "@/lib/urls"
 
 interface Props {
   entry: CollectionEntry<"project">
@@ -16,7 +15,6 @@ const teaseImages = import.meta.glob("../../content/project/**/tease.png", {
   import: "default",
 }) as Record<string, string>
 const tease = teaseImages[`../../content/project/${entry.id}/tease.png`]
-const summary = entry.body ? summarize(entry.body) : ""
 ---
 
 <div class="project-item">
@@ -33,5 +31,4 @@ const summary = entry.body ? summarize(entry.body) : ""
   <time class="t-meta" datetime={String(entry.data.date || "")}>
     {formatDateMedium(entry.data.date)}
   </time>
-  {summary && <div class="project-summary">{summary}</div>}
 </div>

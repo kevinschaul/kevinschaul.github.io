@@ -1,14 +1,15 @@
 import rss from "@astrojs/rss"
 import { getCollection } from "astro:content"
 import type { APIContext } from "astro"
-import { collectTags, notDraft, sortByDateDesc } from "../../../lib/collections"
-import { SITE } from "../../../lib/site"
-import { feedOptions, getAllFeedEntries } from "../../../lib/rss"
+import { collectTags, sortByDateDesc } from "@/lib/collections"
+import { SITE } from "@/lib/site"
+import { feedOptions, getAllFeedEntries } from "@/lib/rss"
+import { urlize } from "@/lib/urls"
 
 export async function getStaticPaths() {
   const tags = collectTags(await getAllFeedEntries())
   return [...tags.entries()].map(([tag, { title }]) => ({
-    params: { tag: tag.toLowerCase().replace(/\s+/g, "-") },
+    params: { tag: urlize(tag) },
     props: { tag, title },
   }))
 }
@@ -16,10 +17,10 @@ export async function getStaticPaths() {
 export async function GET(context: APIContext) {
   const { tag, title } = context.props as { tag: string; title: string }
   const allEntries = [
-    ...(await getCollection("post")).filter(notDraft),
-    ...(await getCollection("til")).filter(notDraft),
-    ...(await getCollection("link")).filter(notDraft),
-    ...(await getCollection("project")).filter(notDraft),
+    ...(await getCollection("post")),
+    ...(await getCollection("til")),
+    ...(await getCollection("link")),
+    ...(await getCollection("project")),
   ]
   const entries = sortByDateDesc(
     allEntries.filter((entry) =>

@@ -1,11 +1,11 @@
 ---
 import { getCollection } from "astro:content"
-import SiteLayout from "../../layouts/SiteLayout.astro"
-import Pagination from "../../components/Pagination.astro"
-import PostList from "../../components/PostList.astro"
-import { notDraft, paginate, sortByDateDesc } from "../../lib/collections"
+import SiteLayout from "@/layouts/SiteLayout.astro"
+import Pagination from "@/components/Pagination.astro"
+import PostList from "@/components/PostList.astro"
+import { paginate, sortByDateDesc } from "@/lib/collections"
 
-const entries = sortByDateDesc((await getCollection("til")).filter(notDraft))
+const entries = sortByDateDesc(await getCollection("til"))
 const pages = paginate(entries)
 ---
 

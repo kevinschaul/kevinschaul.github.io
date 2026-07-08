@@ -1,13 +1,12 @@
 ---
 import { getCollection, render } from "astro:content"
-import SiteLayout from "../../../../../../layouts/SiteLayout.astro"
-import { datedParams, entryPath, tagUrl } from "../../../../../../lib/site"
-import { formatDateMedium } from "../../../../../../lib/urls"
-import { countWords, publishedISO, summarize } from "../../../../../../lib/text"
-import { notDraft } from "../../../../../../lib/collections"
+import SiteLayout from "@/layouts/SiteLayout.astro"
+import { datedParams, entryPath, tagUrl } from "@/lib/site"
+import { formatDateMedium } from "@/lib/urls"
+import { countWords, publishedISO, summarize } from "@/lib/text"
 
 export async function getStaticPaths() {
-  const entries = (await getCollection("til")).filter(notDraft)
+  const entries = await getCollection("til")
   return entries.flatMap((entry) => {
     const params = datedParams(entry)
     return params ? [{ params, props: { entry } }] : []

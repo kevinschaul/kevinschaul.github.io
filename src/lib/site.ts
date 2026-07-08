@@ -1,11 +1,11 @@
 import type { CollectionEntry } from "astro:content"
-import { datedPath, sectionPath, tagPath, hugoDateParts } from "./urls"
+import { datedPath, sectionPath, tagPath, hugoDateParts, urlize } from "./urls"
 
 export const SITE = {
   title: "Kevin Schaul",
   description: "Visual journalist/hacker covering AI",
-  url: "https://www.kschaul.com",
-  image: "https://www.kschaul.com/social.jpg",
+  url: "https://kschaul.com",
+  image: "https://kschaul.com/social.jpg",
   cloudflareToken: "570754c1f24b46e79d87fb55ce121c4d",
   nav: [
     { label: "About", href: "/contact/" },
@@ -18,7 +18,7 @@ type Section = "post" | "til" | "link" | "project"
 type Entry = CollectionEntry<Section>
 
 export function entrySlug(entry: Entry): string {
-  return entry.data.slug ?? entry.id
+  return urlize(entry.data.slug ?? entry.id)
 }
 
 export function absoluteUrl(path: string): string {
