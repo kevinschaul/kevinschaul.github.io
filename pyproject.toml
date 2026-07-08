@@ -22,3 +22,8 @@ dev = [
     "pytest>=8.4.1",
     "ruff>=0.14.3",
 ]
+
+[tool.uv]
+# atproto pins cryptography<47; override for the fix to GHSA OpenSSL
+# advisories (remove once atproto relaxes its pin)
+override-dependencies = ["cryptography>=48.0.1"]
