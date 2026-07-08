@@ -6,7 +6,7 @@ We're about to get flooded with deepfakes.
 
 Here's an AI-generated clip of me "asking" Sam Altman what they train their systems on (made in 10 seconds with Sora 2):
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;"><iframe src="https://www.youtube-nocookie.com/embed/M2a0TrrKy24" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen loading="lazy" title="YouTube video"></iframe></div>
+https://youtu.be/M2a0TrrKy24
 
 Here are a couple real answers, if you're still into that whole truth thing:
 

@@ -6,7 +6,7 @@ New: I asked readers what websites they want, then fired up Claude Cowork to bui
 
 We're entering a new era of software built specifically for you.
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;"><iframe src="https://www.youtube-nocookie.com/embed/ftEaFpPHZ9E" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen loading="lazy" title="YouTube video"></iframe></div>
+https://youtu.be/ftEaFpPHZ9E
 
 I spoke with Eliot Peper, who built a hyperlocal surf forecasting app for his area. He summed it up best:
 

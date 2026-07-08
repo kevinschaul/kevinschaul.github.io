@@ -1,4 +1,5 @@
 import { defineConfig } from "astro/config"
+import { remarkYoutubeEmbed } from "./src/lib/remark-youtube-embed.ts"
 
 export default defineConfig({
   site: "https://www.kschaul.com",
@@ -6,4 +7,7 @@ export default defineConfig({
   publicDir: "static",
   outDir: "dist",
   trailingSlash: "ignore",
+  markdown: {
+    remarkPlugins: [remarkYoutubeEmbed],
+  },
 })
