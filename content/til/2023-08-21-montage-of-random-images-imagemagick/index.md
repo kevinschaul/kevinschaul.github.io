@@ -11,7 +11,7 @@ It ain't pretty but this will let you use [ImageMagick's](https://imagemagick.or
 
 First, generate a text file with the image filenames in it, in random order. The `sed` commands put a `"` character at the beginning and end of the filename, otherwise ImageMagick freaks out.
 
-```
+```bash
 ls my-images | \
   shuf | \
   sed 's/^/"/' | \
@@ -21,6 +21,6 @@ ls my-images | \
 
 Then use that file of filenames as input, using the `@` operator.
 
-```
+```bash
 magick montage @randomly_ordered_images.txt mosaic.jpg
 ```

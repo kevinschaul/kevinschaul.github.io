@@ -7,7 +7,7 @@ tags: [R]
 
 To create a new TIL post using blogdown/Hugo:
 
-```
+```r
 library(blogdown)
 blogdown::new_post('your-new-til-slug-here', kind='til', subdir='til')
 ```

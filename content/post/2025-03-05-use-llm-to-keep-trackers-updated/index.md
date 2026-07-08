@@ -48,7 +48,7 @@ Being familiar with Python/pytest and being extremely particular about exactly h
 
 I wrote my analysis script to test how different prompts would perform across a sample of my test cases. Claude helped me write [this analysis function](https://kschaul.com/jump-start/?path=/docs/python-pytest-evals-helpers--docs), which outputs a table like this:
 
-```
+```text
 ===== Metrics by Prompt Template =====
 Template ID  Sample Size  Accuracy   Precision  Recall     F1
 -----------------------------------------------------------------

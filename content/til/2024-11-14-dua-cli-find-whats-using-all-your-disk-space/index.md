@@ -7,7 +7,7 @@ tags: [command line]
 
 Next time you get that dreaded warning that your disk is nearly full, try out [dua-cli](https://github.com/Byron/dua-cli).
 
-```
+```bash
 # Install
 brew install dua-cli
 
@@ -17,7 +17,7 @@ dua interactive
 
 Navigate around your file tree with arrow keys or vim bindings. Mark files for delete with "x". Press "q" to quit. The files you marked for deletion get printed to stdout. Theoretically you could pipe that to `xargs rm` but hell no. Just double check it, copy it to your clipboard and then:
 
-```
+```bash
 # Prints what rm would do
 pbpaste | xargs rm -v
 

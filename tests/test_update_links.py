@@ -275,11 +275,16 @@ I've been asking LLMs "Who is Kevin Schaul?" and the results do not disappoint."
     expected_with_images = """---
 date: 2025-08-11T21:10:27Z
 images:
+  - local_image1.jpg
+  - local_image2.png
+  - local_image3.gif
+resources:
   - src: local_image1.jpg
-    alt: "A test image"
-  - src: local_image2.png
+    params:
+      alt: "A test image"
   - src: local_image3.gif
-    alt: "Another image"
+    params:
+      alt: "Another image"
 ---
 
 I've been asking LLMs "Who is Kevin Schaul?" and the results do not disappoint."""
@@ -291,8 +296,8 @@ I've been asking LLMs "Who is Kevin Schaul?" and the results do not disappoint."
     expected_legacy = """---
 date: 2025-08-11T21:10:27Z
 images:
-  - src: image1.jpg
-  - src: image2.png
+  - image1.jpg
+  - image2.png
 ---
 
 I've been asking LLMs "Who is Kevin Schaul?" and the results do not disappoint."""

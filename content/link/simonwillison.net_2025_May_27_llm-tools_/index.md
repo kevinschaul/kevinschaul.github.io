@@ -1,5 +1,6 @@
 ---
 date: 2025-05-29 14:16:24+00:00
+slug: simonwillison.net_2025_may_27_llm-tools_
 tags:
 - link
 title: Large Language Models can run tools in your terminal with LLM 0.26

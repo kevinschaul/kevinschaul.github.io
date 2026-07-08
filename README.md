@@ -2,15 +2,22 @@
 
 ## Installation
 
-Requires Hugo
+Requires Node.js 20+.
+
+```
+npm install
+```
 
 ## Development
 
-    hugo serve
+```
+npm run dev
+```
 
 ## Deploy
 
-Happens automatically with GitHub Pages
+Happens automatically with GitHub Pages. The workflow builds the Astro site and
+publishes `dist/`.
 
 ### `til` utility
 
@@ -31,14 +38,19 @@ The post will be created and opened in your $EDITOR.
 ### Create a new post
 
 ```
-hugo new 'post/2024-08-14-recently/index.md'
+just post
 ```
 
 ### Create a new project
 
-```
-hugo new 'project/2025-08-29-holidays/index.md'
-```
-
 - `tease.png` size: 441x152
 
+### Embed a YouTube video
+
+Paste the video link on its own line (a `youtube.com/watch?v=`, `youtu.be/`,
+or embed URL) — it's automatically turned into a responsive embed. `start`/
+`end`/`t` query params carry through if you want a specific clip:
+
+```
+https://youtu.be/dQw4w9WgXcQ
+```

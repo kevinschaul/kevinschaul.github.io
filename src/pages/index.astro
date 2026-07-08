@@ -1,0 +1,42 @@
+---
+import { getCollection, render } from "astro:content"
+import SiteLayout from "../layouts/SiteLayout.astro"
+import LinkItem from "../components/LinkItem.astro"
+import ProjectItem from "../components/ProjectItem.astro"
+import PostList from "../components/PostList.astro"
+import { notDraft, sortByDateDesc } from "../lib/collections"
+
+const home = await getCollection("page").then((entries) =>
+  entries.find((entry) => entry.id === "_index"),
+)
+const posts = sortByDateDesc((await getCollection("post")).filter(notDraft))
+const links = sortByDateDesc((await getCollection("link")).filter(notDraft))
+const projects = sortByDateDesc((await getCollection("project")).filter(notDraft))
+const { Content } = home ? await render(home) : { Content: null }
+---
+
+<SiteLayout title={null}>
+  {Content && <Content />}
+
+  <section class="t-card">
+    <h2 class="t-kicker">Short posts</h2>
+    <div class="t-stream">
+      {links.slice(0, 3).map((entry) => <LinkItem entry={entry} />)}
+    </div>
+    <p><a href="/link/">More short posts →</a></p>
+  </section>
+
+  <section class="t-card">
+    <h2 class="t-kicker">Projects</h2>
+    <div class="t-grid">
+      {projects.slice(0, 4).map((entry) => <ProjectItem entry={entry} />)}
+    </div>
+    <p><a href="/project/">More projects →</a></p>
+  </section>
+
+  <section class="t-card">
+    <h2 class="t-kicker">Blog posts</h2>
+    <PostList entries={posts.slice(0, 3)} />
+    <p><a href="/post/">More blog posts →</a></p>
+  </section>
+</SiteLayout>

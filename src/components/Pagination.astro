@@ -1,0 +1,26 @@
+---
+interface Props {
+  page: number
+  totalPages: number
+  basePath: string
+}
+
+const { page, totalPages, basePath } = Astro.props
+const pageHref = (n: number) => (n === 1 ? basePath : `${basePath}page/${n}/`)
+---
+
+{
+  totalPages > 1 && (
+    <nav class="t-pagination" aria-label="Pagination">
+      <div>
+        {page > 1 && <a href={pageHref(page - 1)}>← Previous</a>}
+      </div>
+      <div class="t-pagination-center t-meta">
+        Page {page} of {totalPages}
+      </div>
+      <div class="t-pagination-next">
+        {page < totalPages && <a href={pageHref(page + 1)}>Next →</a>}
+      </div>
+    </nav>
+  )
+}

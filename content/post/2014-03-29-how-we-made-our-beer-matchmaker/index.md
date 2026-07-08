@@ -63,7 +63,7 @@ Otherwise, a 10-point difference in IBUs would mask a 0.10 difference in ABV,
 though the latter is more substantial.
 
 The mathematics in JavaScript:
-```
+```js
 // Distances will be saved in a two-dimensional array. The first
 // dimension will be the source node, and the second will be the
 // destination. The value will be the distance between them.
@@ -88,7 +88,7 @@ over the course of the project. To introduce readers to this type of chart, we
 live-visualized their attribute choices. On slider `change`, I called the
 following function:
 
-```
+```js
 function updateCustomChart() {
   innerChart
     .datum({
@@ -112,4 +112,3 @@ building a national version as an exercise for the reader.
 
 [Beer Me,
 Minnesota!](http://apps.startribune.com/news/20140313-beer-me-minnesota/)
-

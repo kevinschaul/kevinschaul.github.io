@@ -1,0 +1,26 @@
+---
+import { getCollection } from "astro:content"
+import SiteLayout from "../../../../layouts/SiteLayout.astro"
+import LinkItem from "../../../../components/LinkItem.astro"
+import Pagination from "../../../../components/Pagination.astro"
+import { notDraft, paginate, sortByDateDesc } from "../../../../lib/collections"
+
+export async function getStaticPaths() {
+  const entries = sortByDateDesc((await getCollection("link")).filter(notDraft))
+  const pages = paginate(entries)
+  return pages.slice(1).map((items, index) => ({
+    params: { page: String(index + 2) },
+    props: { items, page: index + 2, totalPages: pages.length },
+  }))
+}
+
+const { items, page, totalPages } = Astro.props
+---
+
+<SiteLayout title={`Short posts, page ${page}`} canonical={`/link/page/${page}/`} rssHref="/link/index.xml">
+  <h2 class="t-kicker">Short posts</h2>
+  <div class="t-stream">
+    {items.map((entry) => <LinkItem entry={entry} />)}
+  </div>
+  <Pagination page={page} totalPages={totalPages} basePath="/link/" />
+</SiteLayout>

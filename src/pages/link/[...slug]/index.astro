@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content"
+import SiteLayout from "../../../layouts/SiteLayout.astro"
+import LinkItem from "../../../components/LinkItem.astro"
+import { sectionParams, entryPath } from "../../../lib/site"
+import { countWords, publishedISO, summarize } from "../../../lib/text"
+import { notDraft } from "../../../lib/collections"
+
+export async function getStaticPaths() {
+  const entries = (await getCollection("link")).filter(notDraft)
+  return entries.map((entry) => ({
+    params: sectionParams(entry),
+    props: { entry },
+  }))
+}
+
+const { entry } = Astro.props
+const body = entry.body ?? ""
+const description = entry.data.blurb ?? summarize(body)
+const published = publishedISO(entry.data.date)
+---
+
+<SiteLayout
+  title={entry.data.title || "Short post"}
+  description={description}
+  canonical={entryPath(entry)}
+  isPage
+  article={{
+    section: entry.collection,
+    published,
+    modified: published,
+    wordCount: countWords(body),
+    keywords: (entry.data.tags ?? []).filter(Boolean),
+  }}
+>
+  <LinkItem entry={entry} />
+</SiteLayout>

@@ -10,7 +10,6 @@ Just tried out Atlas (OpenAI's new browser). Asked it to find me some cheap ram.
 
 (Video sped up 5x)
 
-{{<youtube 2-_jxltiK9E >}}
+https://youtu.be/2-_jxltiK9E
 
 My lukewarm take is that this might work sometimes for some tasks. But woof are the privacy and security implications bad. The risk/reward is hopelessly unbalanced.
-

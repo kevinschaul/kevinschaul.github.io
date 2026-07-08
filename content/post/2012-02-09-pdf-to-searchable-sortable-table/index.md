@@ -15,9 +15,9 @@ We want to convert the pdf to a fixed-width text file. This means the text file 
 
 My stellar boss [Kaeti Hinck](https://twitter.com/#!/kaeti) recommended I check out [xpdf](http://www.foolabs.com/xpdf/download.html), a command-line tool with a handy pdf-to-text option. Download and install according to the instructions. To convert the pdf, use this command:
 
-{% highlight bash linenos %}
+```bash
 pdftotext -layout name_of_pdf.pdf name_of_output.txt
-{% endhighlight %}
+```
 
 Check out the text file you just created. It should look very much like the pdf; the spacing is key.
 
@@ -44,4 +44,3 @@ The toughest part was getting the data into a csv file, but thanks to a few open
 Again, [check out the final deployed table](http://www.minnpost.com/data/marriage-amendment-funds-oppose/).
 
 The editors at MinnPost are always stretching my talents, and I always strive to let others take from what I've learned. Feel free to show me a better way, or to say hello.
-

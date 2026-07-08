@@ -1,0 +1,24 @@
+---
+import { getCollection } from "astro:content"
+import SiteLayout from "../../../../layouts/SiteLayout.astro"
+import Pagination from "../../../../components/Pagination.astro"
+import PostList from "../../../../components/PostList.astro"
+import { notDraft, paginate, sortByDateDesc } from "../../../../lib/collections"
+
+export async function getStaticPaths() {
+  const entries = sortByDateDesc((await getCollection("til")).filter(notDraft))
+  const pages = paginate(entries)
+  return pages.slice(1).map((items, index) => ({
+    params: { page: String(index + 2) },
+    props: { items, page: index + 2, totalPages: pages.length },
+  }))
+}
+
+const { items, page, totalPages } = Astro.props
+---
+
+<SiteLayout title={`TIL, page ${page}`} canonical={`/til/page/${page}/`} rssHref="/til/index.xml">
+  <h2 class="t-kicker">TIL</h2>
+  <PostList entries={items} />
+  <Pagination page={page} totalPages={totalPages} basePath="/til/" />
+</SiteLayout>

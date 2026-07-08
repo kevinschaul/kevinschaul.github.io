@@ -1,0 +1,16 @@
+---
+import { getCollection } from "astro:content"
+import SiteLayout from "../../layouts/SiteLayout.astro"
+import Pagination from "../../components/Pagination.astro"
+import PostList from "../../components/PostList.astro"
+import { notDraft, paginate, sortByDateDesc } from "../../lib/collections"
+
+const entries = sortByDateDesc((await getCollection("til")).filter(notDraft))
+const pages = paginate(entries)
+---
+
+<SiteLayout title="TIL" canonical="/til/" rssHref="/til/index.xml">
+  <h2 class="t-kicker">TIL</h2>
+  <PostList entries={pages[0]} />
+  <Pagination page={1} totalPages={pages.length} basePath="/til/" />
+</SiteLayout>

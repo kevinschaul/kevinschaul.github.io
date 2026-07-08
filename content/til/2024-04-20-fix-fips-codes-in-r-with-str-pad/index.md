@@ -9,7 +9,7 @@ FIPS codes for U.S. counties need leading zeros, but often your data doesn't hav
 
 stringr makes fixing that a breeze:
 
-```
+```r
 data %>%
   mutate(
     fips = str_pad(fips, 5, pad="0")

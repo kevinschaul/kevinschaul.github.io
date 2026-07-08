@@ -11,7 +11,7 @@ TIL about [entr](https://github.com/eradman/entr), a command that lets you run a
 
 I was working on a project where I had to run a build command whenever I saved a file. Once I installed `entr` (`brew install entr`), it took me about 5 seconds to figure out how to use it for this purpose.
 
-```
+```bash
 find apple-news/ | entr -s 'npm run bespoke'
 ```
 

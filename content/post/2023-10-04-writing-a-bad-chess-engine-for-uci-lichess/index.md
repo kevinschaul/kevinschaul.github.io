@@ -41,7 +41,7 @@ Here is [the code to choose what move to play](https://github.com/kevinschaul/ba
 
 It's surprisingly easy to play against a bot that implements UCI. You just need to have a chess GUI, and point it to your engine. I've been using `xboard` to play. Here's how I can start my engine:
 
-```
+```bash
 xboard -fcp badchess/badchess.py -fd . -fUCI
 ```
 

@@ -25,7 +25,7 @@ The real power of virtual machines comes from creating pathways between them
 and the physical machine running them. To run a Python web server (from the
 command line):
 
-```
+```bash
 $ python -m SimpleHTTPServer
 ```
 
@@ -48,9 +48,8 @@ fallback images to replace the &ldquo;broken&rdquo; content.
 `depict` takes a screenshot of a given HTML element. It can be used quite
 creatively, but in it&rsquo;s simplest form looks something like this:
 
-```
+```bash
 $ depict http://0.0.0.0:1337 complex-chart.png -s '#chart'
 ```
 
 Those are all of my IE-debugging secrets. I&rsquo;d love to hear yours.
-

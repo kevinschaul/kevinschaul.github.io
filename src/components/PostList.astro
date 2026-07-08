@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from "astro:content"
+import { entryPath } from "../lib/site"
+import { formatDateMedium } from "../lib/urls"
+
+interface Props {
+  entries: CollectionEntry<"post" | "til">[]
+}
+
+const { entries } = Astro.props
+---
+
+<div class="t-stream">
+  {
+    entries.map((entry) => (
+      <div class="post-item">
+        <p>
+          <a href={entryPath(entry)}>{entry.data.title}</a>
+        </p>
+        <time class="t-meta" datetime={String(entry.data.date || "")}>
+          {formatDateMedium(entry.data.date)}
+        </time>
+      </div>
+    ))
+  }
+</div>
