@@ -1,18 +1,19 @@
 ---
 import { getCollection } from "astro:content"
-import SiteLayout from "../../../../../layouts/SiteLayout.astro"
-import Pagination from "../../../../../components/Pagination.astro"
-import PostList from "../../../../../components/PostList.astro"
-import ProjectItem from "../../../../../components/ProjectItem.astro"
-import LinkItem from "../../../../../components/LinkItem.astro"
-import { collectTags, notDraft, paginate, sortByDateDesc } from "../../../../../lib/collections"
+import SiteLayout from "@/layouts/SiteLayout.astro"
+import Pagination from "@/components/Pagination.astro"
+import PostList from "@/components/PostList.astro"
+import ProjectItem from "@/components/ProjectItem.astro"
+import LinkItem from "@/components/LinkItem.astro"
+import { collectTags, paginate, sortByDateDesc } from "@/lib/collections"
+import { urlize } from "@/lib/urls"
 
 export async function getStaticPaths() {
   const allEntries = [
-    ...(await getCollection("post")).filter(notDraft),
-    ...(await getCollection("til")).filter(notDraft),
-    ...(await getCollection("link")).filter(notDraft),
-    ...(await getCollection("project")).filter(notDraft),
+    ...(await getCollection("post")),
+    ...(await getCollection("til")),
+    ...(await getCollection("link")),
+    ...(await getCollection("project")),
   ]
   const tags = collectTags(allEntries)
   return [...tags.entries()].flatMap(([tag, { title }]) => {
@@ -23,7 +24,7 @@ export async function getStaticPaths() {
     )
     const pages = paginate(entries)
     return pages.slice(1).map((items, index) => ({
-      params: { tag: tag.toLowerCase().replace(/\s+/g, "-"), page: String(index + 2) },
+      params: { tag: urlize(tag), page: String(index + 2) },
       props: { title, items, page: index + 2, totalPages: pages.length },
     }))
   })

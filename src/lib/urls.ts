@@ -74,9 +74,13 @@ export function sectionPath(section: string, id: string): string {
   return `/${section}/${id}/`
 }
 
+// Hugo urlize: lowercase, spaces to hyphens
+export function urlize(s: string): string {
+  return s.toLowerCase().replace(/\s+/g, "-")
+}
+
 export function tagPath(tag: string): string {
-  // Hugo urlize: lowercase, spaces to hyphens
-  return `/tags/${tag.toLowerCase().replace(/\s+/g, "-")}/`
+  return `/tags/${urlize(tag)}/`
 }
 
 // Hugo's :date_medium, e.g. "Apr 10, 2025"
@@ -91,15 +95,4 @@ export function formatDateMedium(rawDate: string | Date | undefined): string {
     day: "numeric",
     timeZone: "UTC",
   })
-}
-
-// RFC 822 for RSS pubDate, rendered with the source offset intact is
-// overkill — Hugo emits the stored zone; -0500/-0600 vs Z only shifts
-// display. Use UTC consistently.
-export function rfc822(rawDate: string | Date | undefined): string {
-  const parts = hugoDateParts(rawDate)
-  if (!parts) return ""
-  const d = rawDate instanceof Date ? rawDate : new Date(String(rawDate))
-  const valid = !isNaN(d.getTime()) ? d : parts.date
-  return valid.toUTCString().replace("GMT", "+0000")
 }

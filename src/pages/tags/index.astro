@@ -1,0 +1,23 @@
+---
+import SiteLayout from "@/layouts/SiteLayout.astro"
+import { collectTags } from "@/lib/collections"
+import { getAllFeedEntries } from "@/lib/rss"
+import { tagPath } from "@/lib/urls"
+
+const tags = [...collectTags(await getAllFeedEntries()).entries()].sort(
+  ([a], [b]) => a.localeCompare(b),
+)
+---
+
+<SiteLayout title="Tags" canonical="/tags/">
+  <h2 class="t-kicker">Tags</h2>
+  <div class="t-tags">
+    {
+      tags.map(([tag, { count }]) => (
+        <a class="t-tag" href={tagPath(tag)}>
+          {tag} <span class="t-meta">{count}</span>
+        </a>
+      ))
+    }
+  </div>
+</SiteLayout>

@@ -1,13 +1,12 @@
 ---
 import { getCollection } from "astro:content"
-import SiteLayout from "../../../layouts/SiteLayout.astro"
-import LinkItem from "../../../components/LinkItem.astro"
-import { sectionParams, entryPath } from "../../../lib/site"
-import { countWords, publishedISO, summarize } from "../../../lib/text"
-import { notDraft } from "../../../lib/collections"
+import SiteLayout from "@/layouts/SiteLayout.astro"
+import LinkItem from "@/components/LinkItem.astro"
+import { sectionParams, entryPath } from "@/lib/site"
+import { countWords, publishedISO, summarize } from "@/lib/text"
 
 export async function getStaticPaths() {
-  const entries = (await getCollection("link")).filter(notDraft)
+  const entries = await getCollection("link")
   return entries.map((entry) => ({
     params: sectionParams(entry),
     props: { entry },

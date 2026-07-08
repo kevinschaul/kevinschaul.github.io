@@ -1,11 +1,11 @@
 ---
 import { getCollection } from "astro:content"
-import SiteLayout from "../../layouts/SiteLayout.astro"
-import LinkItem from "../../components/LinkItem.astro"
-import Pagination from "../../components/Pagination.astro"
-import { notDraft, paginate, sortByDateDesc } from "../../lib/collections"
+import SiteLayout from "@/layouts/SiteLayout.astro"
+import LinkItem from "@/components/LinkItem.astro"
+import Pagination from "@/components/Pagination.astro"
+import { paginate, sortByDateDesc } from "@/lib/collections"
 
-const entries = sortByDateDesc((await getCollection("link")).filter(notDraft))
+const entries = sortByDateDesc(await getCollection("link"))
 const pages = paginate(entries)
 ---
 

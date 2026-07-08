@@ -1,11 +1,11 @@
 ---
 import { getCollection, render } from "astro:content"
-import SiteLayout from "../layouts/SiteLayout.astro"
-import { summarize } from "../lib/text"
+import SiteLayout from "@/layouts/SiteLayout.astro"
+import { summarize } from "@/lib/text"
 
 export async function getStaticPaths() {
   const entries = (await getCollection("page")).filter(
-    (entry) => entry.id !== "_index" && !entry.data.draft,
+    (entry) => entry.id !== "_index",
   )
   return entries.map((entry) => ({
     params: { slug: entry.id.replace(/\.md$/, "") },

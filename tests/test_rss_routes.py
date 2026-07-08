@@ -21,19 +21,23 @@ def test_rss_route_files_exist():
     assert [route for route in routes if not (ROOT / route).exists()] == []
 
 
-def test_rss_routes_share_feed_options():
-    routes = [
-        "src/pages/index.xml.ts",
+def test_rss_routes_share_feed_helpers():
+    section_routes = [
         "src/pages/post/index.xml.ts",
         "src/pages/link/index.xml.ts",
         "src/pages/project/index.xml.ts",
         "src/pages/til/index.xml.ts",
+    ]
+    custom_routes = [
+        "src/pages/index.xml.ts",
         "src/pages/tags/[tag]/index.xml.ts",
     ]
 
     offenders = [
+        route for route in section_routes if "sectionFeed(" not in read(route)
+    ] + [
         route
-        for route in routes
+        for route in custom_routes
         if "feedOptions(" not in read(route) or "@astrojs/rss" not in read(route)
     ]
 
