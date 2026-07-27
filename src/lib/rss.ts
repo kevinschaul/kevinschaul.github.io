@@ -16,6 +16,33 @@ function htmlSummary(body: string): string {
   return summarize(body)
 }
 
+// Entry images live in frontmatter (data.images), not the Markdown body, so
+// they need to be resolved to built asset URLs and appended separately.
+const contentImages = import.meta.glob(
+  "../../content/{post,til,link,project}/**/*.{png,jpg,jpeg,webp,gif}",
+  { eager: true, query: "?url", import: "default" },
+) as Record<string, string>
+
+function escapeAttr(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+}
+
+function imagesHtml(entry: FeedEntry): string {
+  return (entry.data.images ?? [])
+    .map((src) => {
+      const url = contentImages[`../../content/${entry.collection}/${entry.id}/${src}`]
+      if (!url) return ""
+      const resource = entry.data.resources?.find((item) => item.src === src)
+      const alt = resource?.params?.alt ?? ""
+      return `<img src="${escapeAttr(absoluteUrl(url))}" alt="${escapeAttr(alt)}" />`
+    })
+    .join("")
+}
+
 export const RSS_LIMIT = 10
 
 export type FeedEntry = CollectionEntry<"post" | "til" | "link" | "project">
@@ -55,7 +82,7 @@ export function feedOptions(
     items: entries.slice(0, RSS_LIMIT).map((entry) => ({
       title: entry.collection === "link" ? (entry.data.title ?? "") : entry.data.title || entry.id,
       pubDate: entry.data.date ? new Date(entry.data.date) : undefined,
-      description: entry.data.blurb ?? htmlSummary(entry.body ?? ""),
+      description: (entry.data.blurb ?? htmlSummary(entry.body ?? "")) + imagesHtml(entry),
       link: absoluteUrl(entryPath(entry)),
     })),
   }
