@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 
+import hashlib
 import re
 import os
 import requests
 import time
 from typing import Dict, List, Optional, TypedDict
+from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 from github import Github
 from atproto import Client, client_utils
-import uuid
 from dotenv import load_dotenv
 from PIL import Image
 import io
@@ -80,25 +81,44 @@ def get_url_metadata(url: str) -> Dict[str, Optional[str]]:
             or find_meta(name="description")
         )
 
-        return {"title": title, "description": description}
+        # Get preview image: og:image -> twitter:image
+        image = find_meta(property="og:image") or find_meta(name="twitter:image")
+        if image:
+            image = urljoin(url, image)
+
+        return {"title": title, "description": description, "image": image}
     except Exception as e:
         print(f"Error fetching metadata for {url}: {e}")
         return {}
 
 
-def create_bluesky_link_card(url: str) -> Optional[Dict]:
-    """Create a Bluesky external link embed from URL metadata"""
+def create_bluesky_link_card(url: str, client: Optional[Client] = None) -> Optional[Dict]:
+    """Create a Bluesky external link embed from URL metadata, including a
+    thumbnail image when one is available, matching the card Bluesky itself
+    generates when a link is posted directly through the app."""
     metadata = get_url_metadata(url)
     if not metadata.get("title"):
         return None
 
+    external = {
+        "uri": url,
+        "title": metadata["title"],
+        "description": metadata.get("description", ""),
+    }
+
+    image_url = metadata.get("image")
+    if image_url and client is not None:
+        try:
+            response = requests.get(image_url, timeout=10)
+            response.raise_for_status()
+            upload_response = client.upload_blob(response.content)
+            external["thumb"] = upload_response.blob
+        except Exception as e:
+            print(f"Error uploading Bluesky link card thumbnail {image_url}: {e}")
+
     return {
         "$type": "app.bsky.embed.external",
-        "external": {
-            "uri": url,
-            "title": metadata["title"],
-            "description": metadata.get("description", ""),
-        },
+        "external": external,
     }
 
 
@@ -305,7 +325,10 @@ def download_image(image_url: str, dest_path: str) -> Optional[str]:
         if not file_ext:
             file_ext = ".jpg"
 
-        filename = f"{uuid.uuid4().hex}{file_ext}"
+        # Content-addressed so re-downloading the same image (e.g. the
+        # workflow reprocessing an issue) reuses the existing file instead
+        # of leaving an orphaned duplicate behind.
+        filename = f"{hashlib.sha256(response.content).hexdigest()}{file_ext}"
         full_path = os.path.join(dest_path, filename)
 
         with open(full_path, "wb") as f:
@@ -1029,6 +1052,15 @@ def post_to_x(posts: List[Post], post_dir: Optional[str] = None) -> None:
         )
         api = tweepy.API(auth, wait_on_rate_limit=True)
 
+        if posts:
+            try:
+                user_id = client.get_me().data.id
+                if search_similar_posts_x_v2(posts[0], client, user_id):
+                    print("Similar X post already exists. Skipping.")
+                    return
+            except Exception as e:
+                print(f"Could not check for similar X posts, proceeding: {e}")
+
         if post_dir:
             os.makedirs(post_dir, exist_ok=True)
 
@@ -1154,7 +1186,7 @@ def post_to_bluesky(posts: List[Post], post_dir: Optional[str] = None) -> None:
                     }
 
             elif first_url:
-                embed = create_bluesky_link_card(first_url)
+                embed = create_bluesky_link_card(first_url, client)
 
             kwargs = {"reply_to": reply_to} if reply_to else {}
             if embed:
