@@ -14,3 +14,4 @@ He grew up in the Windy City suburbs, where he developed a deep love for Chicago
 - [GitHub](https://www.github.com/kevinschaul)
 - [RSS](/index.xml)
 - firstname.lastname@gmail.com
+- Signal: @kschaul.20

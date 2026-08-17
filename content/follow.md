@@ -5,6 +5,7 @@ title: Where to find Kevin
 **Everything**
 - [RSS](/index.xml)
 - firstname.lastname@gmail.com
+- Signal: @kschaul.20
 
 **Socials**
 - [Bluesky](https://bsky.app/profile/kevinschaul.bsky.social)
