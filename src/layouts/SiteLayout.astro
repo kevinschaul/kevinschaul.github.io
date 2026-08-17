@@ -45,6 +45,12 @@ const {
   rssHref={absoluteUrl(rssHref)}
   cloudflareToken={SITE.cloudflareToken}
 >
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; base-uri 'self'; connect-src 'self' https://cloudflareinsights.com; font-src 'self'; form-action 'self'; frame-src https://bandcamp.com https://www.youtube-nocookie.com; img-src 'self' data: https:; object-src 'none'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'"
+    slot="head"
+  />
+  <meta name="referrer" content="strict-origin-when-cross-origin" slot="head" />
   <slot name="head" slot="head" />
   <slot />
 </BaseLayout>

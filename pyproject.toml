@@ -26,4 +26,4 @@ dev = [
 [tool.uv]
 # atproto pins cryptography<47; override for the fix to GHSA OpenSSL
 # advisories (remove once atproto relaxes its pin)
-override-dependencies = ["cryptography>=48.0.1"]
+override-dependencies = ["cryptography>=50.0.0"]
