@@ -1,0 +1,233 @@
+---
+import SiteLayout from "@/layouts/SiteLayout.astro"
+import "leaflet/dist/leaflet.css"
+
+const DEFAULT_CENTER: [number, number] = [38.9072, -77.0369]
+---
+
+<SiteLayout title="Map distance" canonical="/tools/map-distance/" isPage>
+  <h1>Map distance</h1>
+  <p class="t-muted">
+    Click the map to drop points and trace a route. Drag a point to adjust
+    it, or right-click (long-press on mobile) a point to remove it.
+  </p>
+
+  <div class="tool-toolbar">
+    <div class="tool-readout">
+      <strong id="tool-distance">0.00 mi</strong>
+      <span id="tool-empty" class="t-muted">Click the map to start</span>
+    </div>
+    <div class="tool-actions">
+      <div class="tool-units" role="group" aria-label="Units">
+        <button type="button" class="tool-unit-btn is-active" data-unit="mi">
+          mi
+        </button>
+        <button type="button" class="tool-unit-btn" data-unit="km">km</button>
+      </div>
+      <button type="button" id="tool-undo">Undo point</button>
+      <button type="button" id="tool-clear">Clear route</button>
+    </div>
+  </div>
+
+  <div id="map" class="tool-map" data-lat={DEFAULT_CENTER[0]} data-lng={DEFAULT_CENTER[1]}></div>
+</SiteLayout>
+
+<style>
+  .tool-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin: 1.5rem 0 0.75rem;
+    padding: 0.75rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .tool-readout {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    font-size: 1.1rem;
+  }
+
+  .tool-readout #tool-empty {
+    font-size: 0.85rem;
+  }
+
+  .tool-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .tool-units {
+    display: inline-flex;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .tool-unit-btn,
+  #tool-undo,
+  #tool-clear {
+    font: inherit;
+    font-size: 0.85rem;
+    color: var(--fg);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.4rem 0.75rem;
+    cursor: pointer;
+  }
+
+  .tool-unit-btn {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .tool-unit-btn + .tool-unit-btn {
+    border-left: 1px solid var(--border);
+  }
+
+  .tool-unit-btn.is-active {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  #tool-undo:hover,
+  #tool-clear:hover,
+  .tool-unit-btn:hover:not(.is-active) {
+    background: var(--surface-hover);
+  }
+
+  .tool-map {
+    height: 60vh;
+    min-height: 360px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+  }
+</style>
+
+<script>
+  import L from "leaflet"
+  import iconUrl from "leaflet/dist/images/marker-icon.png?url"
+  import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png?url"
+  import shadowUrl from "leaflet/dist/images/marker-shadow.png?url"
+
+  // Leaflet's default icon path detection doesn't work with bundled assets;
+  // dropping the overridden method falls back to using the URLs as-is.
+  delete (L.Icon.Default.prototype as unknown as { _getIconUrl?: unknown })._getIconUrl
+  L.Icon.Default.mergeOptions({ iconRetinaUrl, iconUrl, shadowUrl })
+
+  const mapEl = document.getElementById("map") as HTMLElement | null
+  const distanceEl = document.getElementById("tool-distance")
+  const emptyEl = document.getElementById("tool-empty")
+  const undoBtn = document.getElementById("tool-undo")
+  const clearBtn = document.getElementById("tool-clear")
+  const unitBtns = document.querySelectorAll<HTMLButtonElement>(".tool-unit-btn")
+
+  if (mapEl && distanceEl && emptyEl && undoBtn && clearBtn) {
+    const defaultLat = Number(mapEl.dataset.lat)
+    const defaultLng = Number(mapEl.dataset.lng)
+
+    const map = L.map(mapEl).setView([defaultLat, defaultLng], 13)
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19,
+    }).addTo(map)
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => map.setView([pos.coords.latitude, pos.coords.longitude], 14),
+        () => {},
+        { timeout: 5000 },
+      )
+    }
+
+    const points: L.Marker[] = []
+    const polyline = L.polyline([], { color: "#6b21a8", weight: 4 }).addTo(map)
+    let unit: "mi" | "km" = "mi"
+
+    const toRad = (deg: number) => (deg * Math.PI) / 180
+
+    const haversineKm = (a: L.LatLng, b: L.LatLng) => {
+      const R = 6371
+      const dLat = toRad(b.lat - a.lat)
+      const dLng = toRad(b.lng - a.lng)
+      const lat1 = toRad(a.lat)
+      const lat2 = toRad(b.lat)
+      const h =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2
+      return 2 * R * Math.asin(Math.sqrt(h))
+    }
+
+    const refresh = () => {
+      const latlngs = points.map((marker) => marker.getLatLng())
+      polyline.setLatLngs(latlngs)
+
+      let km = 0
+      for (let i = 1; i < latlngs.length; i++) {
+        km += haversineKm(latlngs[i - 1], latlngs[i])
+      }
+      const value = unit === "mi" ? km * 0.621371 : km
+      distanceEl.textContent = `${value.toFixed(2)} ${unit}`
+      emptyEl.hidden = points.length > 0
+    }
+
+    const removePoint = (marker: L.Marker) => {
+      const idx = points.indexOf(marker)
+      if (idx === -1) return
+      map.removeLayer(marker)
+      points.splice(idx, 1)
+      refresh()
+    }
+
+    const addPoint = (latlng: L.LatLng) => {
+      const marker = L.marker(latlng, { draggable: true })
+      marker.on("drag", refresh)
+      marker.on("dragend", refresh)
+      marker.on("contextmenu", (e) => {
+        L.DomEvent.preventDefault(e.originalEvent)
+        removePoint(marker)
+      })
+      marker.addTo(map)
+      points.push(marker)
+      refresh()
+    }
+
+    map.on("click", (e) => addPoint(e.latlng))
+
+    undoBtn.addEventListener("click", () => {
+      const last = points[points.length - 1]
+      if (last) removePoint(last)
+    })
+
+    clearBtn.addEventListener("click", () => {
+      for (const marker of points.splice(0)) {
+        map.removeLayer(marker)
+      }
+      refresh()
+    })
+
+    for (const btn of unitBtns) {
+      btn.addEventListener("click", () => {
+        unit = btn.dataset.unit === "km" ? "km" : "mi"
+        for (const other of unitBtns) {
+          other.classList.toggle("is-active", other === btn)
+        }
+        refresh()
+      })
+    }
+
+    refresh()
+  }
+</script>

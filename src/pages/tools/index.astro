@@ -1,0 +1,28 @@
+---
+import SiteLayout from "@/layouts/SiteLayout.astro"
+
+const tools = [
+  {
+    title: "Map distance",
+    href: "/tools/map-distance/",
+    description:
+      "Click points on a map to trace a route and measure its distance — handy for planning a run or walk.",
+  },
+]
+---
+
+<SiteLayout title="Tools" canonical="/tools/" isPage>
+  <h1>Tools</h1>
+  <div class="t-grid">
+    {
+      tools.map((tool) => (
+        <div class="t-card">
+          <p>
+            <a href={tool.href}>{tool.title}</a>
+          </p>
+          <p class="t-muted">{tool.description}</p>
+        </div>
+      ))
+    }
+  </div>
+</SiteLayout>

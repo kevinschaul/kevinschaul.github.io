@@ -10,6 +10,7 @@ export const SITE = {
   nav: [
     { label: "About", href: "/contact/" },
     { label: "LLM evals", href: "https://kschaul.com/llm-evals/" },
+    { label: "Tools", href: "/tools/" },
     { label: "Follow", href: "/follow/" },
   ],
 }
